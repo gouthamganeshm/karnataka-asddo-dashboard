@@ -15,3 +15,5 @@ roll-csv/
 
 # QA output contains real elector names — keep it local.
 qa-results.json
+qa-full.log
+qa-full-results.json

@@ -215,6 +215,14 @@ jobs:
       - name: Build site data
         run: node scripts/3-build-site-data.mjs
 
+      # 100% verification, using both halves already on this runner: every
+      # extracted row must be present and correct in the built buckets. Doing
+      # this against the live site instead would need ~65,000 bucket requests
+      # and ~52,000 PDFs, which Pages rate-limits, and would test the CDN rather
+      # than the pipeline. Non-zero exit here means nothing gets published.
+      - name: Verify the build against every source row
+        run: node --max-old-space-size=6144 scripts/verify-build.mjs
+
       - name: Sanity-check the lookup before publishing
         run: node scripts/smoke-test.mjs
 
