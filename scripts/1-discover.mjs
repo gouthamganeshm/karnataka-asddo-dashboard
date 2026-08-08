@@ -80,7 +80,13 @@ function parseDistricts(html) {
 async function resolveDistrictPage(url) {
   let html;
   try {
-    html = await getText(url, { tries: 2, timeoutMs: 30000 });
+    // These nic.in hosts 504 intermittently and recover minutes later --
+    // Bangalore Rural looked permanently dead on that basis for weeks, and one
+    // crawl lost Chikkaballapur and Mandya the same way. There are only ten of
+    // these pages in the whole run, so retrying hard costs seconds and is the
+    // difference between a district being imported and being dropped. It
+    // matters more now that an empty district fails the import outright.
+    html = await getText(url, { tries: 5, timeoutMs: 30000 });
   } catch (err) {
     return { folderIds: [], pdfs: [], error: err.message };
   }
