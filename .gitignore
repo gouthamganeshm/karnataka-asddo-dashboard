@@ -17,3 +17,6 @@ roll-csv/
 qa-results.json
 qa-full.log
 qa-full-results.json
+
+# Query output: named extracts of individuals. Keep out of the public repo.
+young-deaths*.csv

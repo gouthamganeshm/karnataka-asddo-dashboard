@@ -9,7 +9,9 @@ import { fileURLToPath } from 'node:url';
 
 export const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..', '..');
 export const CACHE = resolve(ROOT, 'cache');
-export const DOCS = resolve(ROOT, 'docs');
+// ASDDO_DOCS redirects a build somewhere other than the published docs/ tree,
+// so a partial test build cannot overwrite the live data.
+export const DOCS = process.env.ASDDO_DOCS ? resolve(process.env.ASDDO_DOCS) : resolve(ROOT, 'docs');
 
 const UA =
   'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 ' +

@@ -1,6 +1,9 @@
 /* Stage 2 — fetch each booth PDF from Drive, parse it in memory, keep only the
  * rows. The PDF bytes are never written to disk.
  *
+ * Some districts publish a taluk as a single .zip of booth PDFs. Those are
+ * fetched once per archive and opened in memory too — nothing is unpacked.
+ *
  * The whole state is ~32,000 PDFs / ~5.7 GB of paper that we care about only
  * long enough to read a table out of. Streaming turns that into a few hundred
  * MB of NDJSON and leaves nothing to clean up.
@@ -20,6 +23,7 @@ import {
   CACHE, driveDownloadUrl, fmtBytes, get, log, pool, progress, readJson, writeJson
 } from './lib/common.mjs';
 import { looksScanned, parseBoothPdf } from './lib/pdf.mjs';
+import { listZipEntries } from './lib/zip.mjs';
 
 const OUT_DIR = resolve(CACHE, 'extracted');
 const args = process.argv.slice(2);
@@ -40,6 +44,31 @@ await mkdir(OUT_DIR, { recursive: true });
 
 const slug = (s) => s.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
 
+/** Identifies a booth for the resume ledger: a Drive id, a URL, or one entry
+ *  inside an archive. */
+const fileKey = (file) =>
+  file.zipId || file.zipUrl ? `${file.zipId ?? file.zipUrl}#${file.entry}` : (file.id ?? file.url);
+
+/**
+ * Archives, fetched once and kept open for as long as the district is running.
+ *
+ * A taluk's zip holds ~250 booths, so fetching it per booth would mean pulling
+ * the same few MB 250 times. Keyed by a Promise so concurrent workers hitting
+ * the same archive share one fetch instead of racing.
+ */
+const archives = new Map();
+function openArchive(file) {
+  const id = file.zipId ?? file.zipUrl;
+  if (!archives.has(id)) {
+    archives.set(id, (async () => {
+      const buf = await get(file.zipUrl ?? driveDownloadUrl(file.zipId));
+      report.bytes += buf.length;
+      return new Map(listZipEntries(buf).map((e) => [e.name, e]));
+    })());
+  }
+  return archives.get(id);
+}
+
 const report = {
   files: 0, skipped: 0, failed: 0, scanned: 0, empty: 0, rows: 0, bytes: 0,
   unmappedReasons: {}, byDistrict: {}
@@ -57,8 +86,7 @@ for (const district of manifest.districts) {
   const jobs = [];
   for (const ac of district.acs) {
     for (const file of ac.files) {
-      // Drive files are keyed by id; PDFs hosted on a district site by URL.
-      const key = file.id ?? file.url;
+      const key = fileKey(file);
       if (key && !done.has(key)) jobs.push({ ac, file, key });
     }
   }
@@ -76,7 +104,15 @@ for (const district of manifest.districts) {
 
     let buf;
     try {
-      buf = await get(file.url ?? driveDownloadUrl(file.id));
+      if (file.zipId || file.zipUrl) {
+        // Already-decompressed bytes; `report.bytes` counted the archive once.
+        const entry = (await openArchive(file)).get(file.entry);
+        if (!entry) throw new Error(`no entry ${file.entry}`);
+        buf = entry.read();
+      } else {
+        buf = await get(file.url ?? driveDownloadUrl(file.id));
+        report.bytes += buf.length;
+      }
     } catch {
       report.failed++;
       return;
@@ -86,7 +122,6 @@ for (const district of manifest.districts) {
       report.failed++;
       return;
     }
-    report.bytes += buf.length;
 
     if (looksScanned(buf)) {
       report.scanned++;
@@ -109,8 +144,10 @@ for (const district of manifest.districts) {
         acName: ac.name,
         partNo: file.partNo ?? null,
         partName: file.partName ?? '',
-        fileId: file.id ?? '',
-        fileUrl: file.url ?? '',
+        // For a booth that came out of an archive, the citizen's source link is
+        // the archive itself — that is what the district actually published.
+        fileId: file.id ?? file.zipId ?? '',
+        fileUrl: file.url ?? file.zipUrl ?? '',
         generatedOn: file.generatedOn ?? ''
       }) + '\n';
       districtRows++;
@@ -125,6 +162,7 @@ for (const district of manifest.districts) {
   );
 
   await new Promise((r) => out.end(r));
+  archives.clear();          // release this district's archive buffers
   progress('');
   log(`${district.name}: ${districtRows} rows from ${jobs.length} booths`);
   report.byDistrict[district.name] = districtRows;

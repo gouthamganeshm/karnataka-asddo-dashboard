@@ -10,6 +10,12 @@
        district -> AC -> PDFs, others district -> AC -> date -> PDFs, others
        wrap everything in a redundant folder of the same name.
 
+   On top of that, two districts publish a whole taluk as a single .zip of booth
+   PDFs rather than a folder of loose files. Matching only *.pdf found nothing
+   there and dropped Vijayanagara — ~1,000 booths — out of the site without a
+   single error, so archives are opened here and their entries treated as
+   ordinary booths.
+
    So nothing here assumes a shape. Drive folders are walked recursively until
    PDFs turn up, and the booth's identity is taken from the file name, which
    carries state, AC, part and generation timestamp:
@@ -23,10 +29,11 @@
 
 import { resolve } from 'node:path';
 import {
-  CACHE, decodeEntities, getText, listDriveFolder, log, pool, progress,
-  readJson, writeJson
+  CACHE, decodeEntities, driveDownloadUrl, get, getText, listDriveFolder, log, pool,
+  progress, readJson, writeJson
 } from './lib/common.mjs';
 import { NOT_A_BOOTH_LIST, parseBoothName } from './lib/naming.mjs';
+import { listZipEntries, looksZip } from './lib/zip.mjs';
 
 const SOURCE = 'https://ceo.karnataka.gov.in/asddo.html';
 const MANIFEST = resolve(CACHE, 'manifest.json');
@@ -89,10 +96,78 @@ async function resolveDistrictPage(url) {
       [...html.matchAll(/href="([^"]+\.pdf)"/gi)].map((m) => new URL(decodeEntities(m[1]), base).href)
     )
   ];
-  return { folderIds, pdfs, error: null };
+  // Same reason as on the Drive side: a district may hand out an archive rather
+  // than loose PDFs, and matching only .pdf loses it entirely.
+  const zips = [
+    ...new Set(
+      [...html.matchAll(/href="([^"]+\.zip)"/gi)].map((m) => new URL(decodeEntities(m[1]), base).href)
+    )
+  ];
+  return { folderIds, pdfs, zips, error: null };
 }
 
 // ------------------------------------------------------------------- drive
+
+// Notes about archives that could not be opened, surfaced at the end of the run
+// so a district never disappears silently the way Vijayanagara did.
+const archiveNotes = [];
+
+/**
+ * Some districts publish a whole taluk as one .zip of booth PDFs instead of a
+ * Drive folder of loose files. Open it here, at discovery time, so the manifest
+ * describes real booths — the archives are a few MB each, and only the entry
+ * list is kept.
+ *
+ * Each entry becomes an ordinary file record carrying `zipId` + `entry`, which
+ * is all stage 2 needs to pull that one PDF back out. The booth's identity still
+ * comes from its file name inside the archive, which follows the same
+ * S10_<ac>_<part>_<name>_<timestamp> convention as the loose files.
+ */
+async function expandArchive(file, trail) {
+  let buf;
+  try {
+    buf = await get(file.url ?? driveDownloadUrl(file.id));
+  } catch (err) {
+    archiveNotes.push(`${file.name}: could not fetch (${err.message})`);
+    return [];
+  }
+  if (!looksZip(buf)) {
+    archiveNotes.push(`${file.name}: not a zip (${buf.subarray(0, 4).toString('latin1')})`);
+    return [];
+  }
+
+  let entries;
+  try {
+    entries = listZipEntries(buf);
+  } catch (err) {
+    archiveNotes.push(`${file.name}: ${err.message}`);
+    return [];
+  }
+
+  const out = [];
+  let other = 0;
+  for (const entry of entries) {
+    const base = entry.name.split('/').pop();
+    if (!/\.pdf$/i.test(base)) { other++; continue; }
+    if (NOT_A_BOOTH_LIST.test(base)) continue;
+    out.push({
+      id: null,
+      zipId: file.id ?? null,
+      zipUrl: file.url ?? null,
+      entry: entry.name,
+      name: base,
+      trail: [...trail, file.name]
+    });
+  }
+  // A .rar nested inside a .zip is the one case here that stays unreadable
+  // without a third-party decoder; say so rather than reporting zero booths.
+  if (!out.length && other) {
+    archiveNotes.push(
+      `${file.name}: holds no PDFs, only ${entries.map((e) => e.name.split('/').pop()).join(', ')}`
+    );
+  }
+  return out;
+}
 
 /** Walk a Drive folder to any depth, collecting every PDF with its folder trail. */
 async function collectPdfs(folderId, trail = [], depth = 0, seen = new Set()) {
@@ -109,8 +184,11 @@ async function collectPdfs(folderId, trail = [], depth = 0, seen = new Set()) {
   const out = [];
   const folders = entries.filter((e) => e.isFolder);
   for (const file of entries) {
-    if (!file.isFolder && /\.pdf$/i.test(file.name) && !NOT_A_BOOTH_LIST.test(file.name)) {
+    if (file.isFolder || NOT_A_BOOTH_LIST.test(file.name)) continue;
+    if (/\.pdf$/i.test(file.name)) {
       out.push({ id: file.id, name: file.name, trail });
+    } else if (/\.zip$/i.test(file.name)) {
+      out.push(...await expandArchive(file, trail));
     }
   }
   for (const folder of folders) {
@@ -144,7 +222,13 @@ function acFromTrail(trail, acNo) {
     if (no < 1 || no > 224) continue;
     if (acNo != null && no !== acNo) continue;
 
-    const label = m[2].replace(/\bASDD?O?\b.*$/i, '').replace(/[\s._-]+$/, '').trim();
+    // The trail can end at an archive ("104 HRP ASSDO List.zip"), so drop any
+    // extension before it becomes a constituency name.
+    const label = m[2]
+      .replace(/\.(zip|rar|7z|pdf)$/i, '')
+      .replace(/\bASDD?O?\b.*$/i, '')
+      .replace(/[\s._-]+$/, '')
+      .trim();
     // "07-2026" leaves no letters behind; a constituency name has some.
     if (!/[A-Za-z]{3}/.test(label)) continue;
     return { no, name: label };
@@ -182,6 +266,11 @@ function groupIntoAcs(files) {
     ac.files.push({
       id: file.id,
       url: file.url ?? null,
+      // Set only for a booth that lives inside an archive; stage 2 fetches the
+      // archive once and reads this entry out of it.
+      ...(file.zipId || file.zipUrl
+        ? { zipId: file.zipId ?? null, zipUrl: file.zipUrl ?? null, entry: file.entry }
+        : {}),
       name: file.name,
       acNo: file.acNo,
       partNo: file.partNo,
@@ -243,12 +332,15 @@ for (const district of districts) {
   let roots = [];
   let directPdfs = [];
 
+  let directZips = [];
+
   if (district.folderId) {
     roots = [district.folderId];
   } else {
     const resolved = await resolveDistrictPage(district.pageUrl);
     roots = resolved.folderIds;
     directPdfs = resolved.pdfs;
+    directZips = resolved.zips ?? [];
     if (resolved.error) problems.push(`${district.name}: ${resolved.error}`);
   }
 
@@ -260,6 +352,9 @@ for (const district of districts) {
   // PDFs served by the district site itself, not Drive.
   for (const url of directPdfs) {
     found.push({ id: null, url, name: decodeURIComponent(url.split('/').pop()), trail: [] });
+  }
+  for (const url of directZips) {
+    found.push(...await expandArchive({ url, name: decodeURIComponent(url.split('/').pop()) }, []));
   }
 
   const acs = groupIntoAcs(found);
@@ -292,6 +387,10 @@ const totals = manifest.districts.reduce(
 log(`\nManifest: ${manifest.districts.length} districts ` +
     `(${totals.withData} with data), ${totals.acs} constituencies, ${totals.files} booth PDFs`);
 log(`  ${MANIFEST}`);
+if (archiveNotes.length) {
+  log(`\n  ${archiveNotes.length} archive(s) could not be opened:`);
+  for (const n of archiveNotes) log(`    ${n}`);
+}
 if (problems.length) {
   log(`\n  ${problems.length} district(s) need attention:`);
   for (const p of problems) log(`    ${p}`);
