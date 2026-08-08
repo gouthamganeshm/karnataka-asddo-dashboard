@@ -1,396 +1,396 @@
 {
-  "dataVersion": "msk6i5za",
-  "total": 7906774,
+  "dataVersion": "msk8drbe",
+  "total": 574375,
   "byCategory": {
-    "absent": 1221486,
-    "shifted": 4825108,
-    "death": 944231,
-    "duplicate": 339871,
-    "others": 576078
+    "absent": 99675,
+    "shifted": 307003,
+    "death": 111904,
+    "duplicate": 52360,
+    "others": 3433
   },
   "ageBands": {
-    "18-29": 974856,
-    "30-44": 3141076,
-    "45-59": 2092496,
-    "60-79": 1342997,
-    "80+": 354510,
-    "unknown": 839
+    "18-29": 85259,
+    "30-44": 206730,
+    "45-59": 147590,
+    "60-79": 104376,
+    "80+": 30415,
+    "unknown": 5
   },
   "generatedOn": [
-    "01/08/2026",
-    "02/08/2026",
     "03/08/2026",
     "04/08/2026",
     "05/08/2026",
     "06/08/2026",
-    "07/08/2026",
-    "25/07/2026",
-    "27/07/2026",
-    "28/07/2026",
-    "29/07/2026",
-    "31/07/2026"
+    "07/08/2026"
   ],
   "districts": [
     {
-      "name": "BANGALORE URBAN",
-      "total": 1843019,
+      "name": "BIJAPUR",
+      "total": 337751,
       "constituencies": 8,
-      "booths": 3315,
-      "absent": 247880,
-      "shifted": 1342033,
-      "death": 103075,
-      "duplicate": 25339,
-      "others": 124692
-    },
-    {
-      "name": "B.B.M.P(NORTH)",
-      "total": 1114421,
-      "constituencies": 7,
-      "booths": 2076,
-      "absent": 127956,
-      "shifted": 814963,
-      "death": 78715,
-      "duplicate": 14526,
-      "others": 78261
-    },
-    {
-      "name": "B.B.M.P(SOUTH)",
-      "total": 1083922,
-      "constituencies": 8,
-      "booths": 1824,
-      "absent": 275501,
-      "shifted": 608588,
-      "death": 65171,
-      "duplicate": 9836,
-      "others": 124826
-    },
-    {
-      "name": "B.B.M.P(CENTRAL)",
-      "total": 652971,
-      "constituencies": 6,
-      "booths": 1213,
-      "absent": 114372,
-      "shifted": 402426,
-      "death": 52678,
-      "duplicate": 7979,
-      "others": 75516
-    },
-    {
-      "name": "MYSORE",
-      "total": 590047,
-      "constituencies": 11,
-      "booths": 2900,
-      "absent": 149821,
-      "shifted": 249356,
-      "death": 112065,
-      "duplicate": 41549,
-      "others": 37256
-    },
-    {
-      "name": "GULBARGA",
-      "total": 387254,
-      "constituencies": 6,
-      "booths": 1531,
-      "absent": 39608,
-      "shifted": 254228,
-      "death": 50089,
-      "duplicate": 21102,
-      "others": 22227
-    },
-    {
-      "name": "RAICHUR",
-      "total": 364233,
-      "constituencies": 7,
-      "booths": 1779,
-      "absent": 29511,
-      "shifted": 176414,
-      "death": 58281,
-      "duplicate": 38628,
-      "others": 61399
-    },
-    {
-      "name": "DHARWAD",
-      "total": 286675,
-      "constituencies": 7,
-      "booths": 1662,
-      "absent": 70539,
-      "shifted": 136226,
-      "death": 52099,
-      "duplicate": 25683,
-      "others": 2128
-    },
-    {
-      "name": "BAGALKOT",
-      "total": 238480,
-      "constituencies": 7,
-      "booths": 1783,
-      "absent": 22382,
-      "shifted": 144803,
-      "death": 44033,
-      "duplicate": 25550,
-      "others": 1712
+      "booths": 2095,
+      "absent": 65971,
+      "shifted": 172635,
+      "death": 63554,
+      "duplicate": 34309,
+      "others": 1282
     },
     {
       "name": "TUMKUR",
-      "total": 236750,
+      "total": 236624,
       "constituencies": 11,
       "booths": 2610,
-      "absent": 33705,
-      "shifted": 134431,
-      "death": 48382,
-      "duplicate": 18081,
+      "absent": 33704,
+      "shifted": 134368,
+      "death": 48350,
+      "duplicate": 18051,
       "others": 2151
+    }
+  ],
+  "constituencies": [
+    {
+      "no": 30,
+      "name": "Bijapur city",
+      "district": "BIJAPUR",
+      "total": 82125,
+      "booths": 285,
+      "absent": 40838,
+      "shifted": 25016,
+      "death": 8022,
+      "duplicate": 8114,
+      "others": 135
     },
     {
-      "name": "SHIMOGA",
-      "total": 176347,
-      "constituencies": 6,
-      "booths": 1533,
-      "absent": 24284,
-      "shifted": 94190,
-      "death": 40286,
-      "duplicate": 17516,
+      "no": 132,
+      "name": "Tumakuru City",
+      "district": "TUMKUR",
+      "total": 79258,
+      "booths": 247,
+      "absent": 19646,
+      "shifted": 49342,
+      "death": 6620,
+      "duplicate": 2250,
+      "others": 1400
+    },
+    {
+      "no": 31,
+      "name": "07-2026",
+      "district": "BIJAPUR",
+      "total": 77451,
+      "booths": 300,
+      "absent": 12178,
+      "shifted": 42388,
+      "death": 15372,
+      "duplicate": 7377,
+      "others": 136
+    },
+    {
+      "no": 26,
+      "name": "Muddebihal",
+      "district": "BIJAPUR",
+      "total": 36120,
+      "booths": 246,
+      "absent": 3040,
+      "shifted": 19561,
+      "death": 8879,
+      "duplicate": 4619,
+      "others": 21
+    },
+    {
+      "no": 33,
+      "name": "Sindagi",
+      "district": "BIJAPUR",
+      "total": 32261,
+      "booths": 267,
+      "absent": 2721,
+      "shifted": 21053,
+      "death": 6002,
+      "duplicate": 2403,
+      "others": 82
+    },
+    {
+      "no": 27,
+      "name": "Devar Hipparagi",
+      "district": "BIJAPUR",
+      "total": 30374,
+      "booths": 253,
+      "absent": 881,
+      "shifted": 18446,
+      "death": 7989,
+      "duplicate": 2987,
       "others": 71
     },
     {
-      "name": "HASSAN",
-      "total": 165525,
-      "constituencies": 5,
-      "booths": 1102,
-      "absent": 25477,
-      "shifted": 71582,
-      "death": 51810,
-      "duplicate": 13209,
-      "others": 3447
+      "no": 32,
+      "name": "Indi",
+      "district": "BIJAPUR",
+      "total": 28924,
+      "booths": 268,
+      "absent": 3027,
+      "shifted": 17733,
+      "death": 5963,
+      "duplicate": 2121,
+      "others": 80
     },
     {
-      "name": "DAKSHINA KANNADA",
-      "total": 160030,
-      "constituencies": 8,
-      "booths": 1665,
-      "absent": 12455,
-      "shifted": 84068,
-      "death": 45149,
-      "duplicate": 15123,
-      "others": 3235
+      "no": 28,
+      "name": "BGD FINAL",
+      "district": "BIJAPUR",
+      "total": 25839,
+      "booths": 231,
+      "absent": 1611,
+      "shifted": 13102,
+      "death": 6049,
+      "duplicate": 4358,
+      "others": 719
     },
     {
-      "name": "BIDAR",
-      "total": 154475,
-      "constituencies": 6,
-      "booths": 1525,
-      "absent": 10171,
-      "shifted": 93207,
-      "death": 27944,
-      "duplicate": 13371,
-      "others": 9782
+      "no": 29,
+      "name": "Babaleshwar",
+      "district": "BIJAPUR",
+      "total": 24657,
+      "booths": 245,
+      "absent": 1675,
+      "shifted": 15336,
+      "death": 5278,
+      "duplicate": 2330,
+      "others": 38
     },
     {
-      "name": "HAVERI",
-      "total": 138765,
-      "constituencies": 6,
-      "booths": 1474,
-      "absent": 5850,
-      "shifted": 59542,
-      "death": 32155,
-      "duplicate": 16582,
-      "others": 24636
+      "no": 136,
+      "name": "Sira",
+      "district": "TUMKUR",
+      "total": 19160,
+      "booths": 266,
+      "absent": 2395,
+      "shifted": 9910,
+      "death": 4668,
+      "duplicate": 2029,
+      "others": 158
     },
     {
-      "name": "GADAG",
-      "total": 125356,
-      "constituencies": 4,
-      "booths": 703,
-      "absent": 6246,
-      "shifted": 71650,
-      "death": 30353,
-      "duplicate": 13237,
-      "others": 3870
+      "no": 133,
+      "name": "Tumakuru Rural",
+      "district": "TUMKUR",
+      "total": 18599,
+      "booths": 223,
+      "absent": 1549,
+      "shifted": 10057,
+      "death": 4445,
+      "duplicate": 2403,
+      "others": 145
     },
     {
-      "name": "RAMANAGARAM",
-      "total": 105187,
-      "constituencies": 4,
-      "booths": 1147,
-      "absent": 11760,
-      "shifted": 44408,
-      "death": 33087,
-      "duplicate": 15238,
-      "others": 694
+      "no": 131,
+      "name": "Kunigal",
+      "district": "TUMKUR",
+      "total": 17209,
+      "booths": 249,
+      "absent": 1333,
+      "shifted": 9900,
+      "death": 3870,
+      "duplicate": 1984,
+      "others": 122
     },
     {
-      "name": "KODAGU",
-      "total": 64437,
-      "constituencies": 2,
-      "booths": 550,
-      "absent": 10791,
-      "shifted": 34092,
-      "death": 13658,
-      "duplicate": 5771,
-      "others": 125
+      "no": 129,
+      "name": "Tiptur",
+      "district": "TUMKUR",
+      "total": 15868,
+      "booths": 224,
+      "absent": 4646,
+      "shifted": 6579,
+      "death": 3538,
+      "duplicate": 1082,
+      "others": 23
     },
     {
-      "name": "UDUPI",
-      "total": 18880,
-      "constituencies": 1,
-      "booths": 226,
-      "absent": 3177,
-      "shifted": 8901,
-      "death": 5201,
-      "duplicate": 1551,
-      "others": 50
+      "no": 134,
+      "name": "Koratagere",
+      "district": "TUMKUR",
+      "total": 15664,
+      "booths": 239,
+      "absent": 343,
+      "shifted": 7239,
+      "death": 5943,
+      "duplicate": 2087,
+      "others": 52
+    },
+    {
+      "no": 137,
+      "name": "Pavagada",
+      "district": "TUMKUR",
+      "total": 15658,
+      "booths": 240,
+      "absent": 1623,
+      "shifted": 9051,
+      "death": 3688,
+      "duplicate": 1288,
+      "others": 8
+    },
+    {
+      "no": 128,
+      "name": "Chikkanayakahalli",
+      "district": "TUMKUR",
+      "total": 15397,
+      "booths": 260,
+      "absent": 920,
+      "shifted": 8613,
+      "death": 4455,
+      "duplicate": 1277,
+      "others": 132
+    },
+    {
+      "no": 138,
+      "name": "Madhugiri",
+      "district": "TUMKUR",
+      "total": 14891,
+      "booths": 241,
+      "absent": 497,
+      "shifted": 9574,
+      "death": 3716,
+      "duplicate": 1074,
+      "others": 30
+    },
+    {
+      "no": 130,
+      "name": "Turuvekere",
+      "district": "TUMKUR",
+      "total": 12710,
+      "booths": 222,
+      "absent": 312,
+      "shifted": 7196,
+      "death": 3865,
+      "duplicate": 1297,
+      "others": 40
+    },
+    {
+      "no": 135,
+      "name": "Gubbi",
+      "district": "TUMKUR",
+      "total": 12210,
+      "booths": 199,
+      "absent": 440,
+      "shifted": 6907,
+      "death": 3542,
+      "duplicate": 1280,
+      "others": 41
     }
   ],
   "topConstituencies": [
     {
-      "no": 176,
-      "name": "AC 176 Bangalore South ASDDO",
-      "district": "BANGALORE URBAN",
-      "total": 389333
+      "no": 30,
+      "name": "Bijapur city",
+      "district": "BIJAPUR",
+      "total": 82125
     },
     {
-      "no": 174,
-      "name": "AC 174 Mahadevapura ASDDO",
-      "district": "BANGALORE URBAN",
-      "total": 316853
+      "no": 132,
+      "name": "Tumakuru City",
+      "district": "TUMKUR",
+      "total": 79258
     },
     {
-      "no": 175,
-      "name": "AC 175 Bommanahalli",
-      "district": "B.B.M.P(SOUTH)",
-      "total": 281566
+      "no": 31,
+      "name": "07-2026",
+      "district": "BIJAPUR",
+      "total": 77451
     },
     {
-      "no": 151,
-      "name": "K R Puram",
-      "district": "B.B.M.P(NORTH)",
-      "total": 279209
+      "no": 26,
+      "name": "Muddebihal",
+      "district": "BIJAPUR",
+      "total": 36120
     },
     {
-      "no": 153,
-      "name": "AC 153 Yeshwanthpura ASDDO",
-      "district": "BANGALORE URBAN",
-      "total": 265457
+      "no": 33,
+      "name": "Sindagi",
+      "district": "BIJAPUR",
+      "total": 32261
     },
     {
-      "no": 155,
-      "name": "AC 155 Dasarahalli ASDDO",
-      "district": "BANGALORE URBAN",
-      "total": 254887
+      "no": 27,
+      "name": "Devar Hipparagi",
+      "district": "BIJAPUR",
+      "total": 30374
     },
     {
-      "no": 152,
-      "name": "AC 152 Byatarayanapura ASDDO",
-      "district": "BANGALORE URBAN",
-      "total": 247996
+      "no": 32,
+      "name": "Indi",
+      "district": "BIJAPUR",
+      "total": 28924
     },
     {
-      "no": 160,
-      "name": "Sarvagna Nagara",
-      "district": "B.B.M.P(NORTH)",
-      "total": 189714
+      "no": 28,
+      "name": "BGD FINAL",
+      "district": "BIJAPUR",
+      "total": 25839
     },
     {
-      "no": 150,
-      "name": "AC 150 Yelahanka ASDDO",
-      "district": "BANGALORE URBAN",
-      "total": 184166
+      "no": 29,
+      "name": "Babaleshwar",
+      "district": "BIJAPUR",
+      "total": 24657
     },
     {
-      "no": 177,
-      "name": "AC 177 Anekal ASDDO",
-      "district": "BANGALORE URBAN",
-      "total": 183954
+      "no": 136,
+      "name": "Sira",
+      "district": "TUMKUR",
+      "total": 19160
     },
     {
-      "no": 167,
-      "name": "AC 167 Vijayanagar",
-      "district": "B.B.M.P(SOUTH)",
-      "total": 167852
+      "no": 133,
+      "name": "Tumakuru Rural",
+      "district": "TUMKUR",
+      "total": 18599
     },
     {
-      "no": 172,
-      "name": "AC-172 B.T.M Layout",
-      "district": "B.B.M.P(SOUTH)",
-      "total": 153417
+      "no": 131,
+      "name": "Kunigal",
+      "district": "TUMKUR",
+      "total": 17209
     },
     {
-      "no": 161,
-      "name": "C V Raman Nagara",
-      "district": "B.B.M.P(NORTH)",
-      "total": 143959
+      "no": 129,
+      "name": "Tiptur",
+      "district": "TUMKUR",
+      "total": 15868
     },
     {
-      "no": 158,
-      "name": "Hebbal",
-      "district": "B.B.M.P(NORTH)",
-      "total": 139450
+      "no": 134,
+      "name": "Koratagere",
+      "district": "TUMKUR",
+      "total": 15664
     },
     {
-      "no": 171,
-      "name": "AC 171 Padmanabanagar",
-      "district": "B.B.M.P(SOUTH)",
-      "total": 135653
+      "no": 137,
+      "name": "Pavagada",
+      "district": "TUMKUR",
+      "total": 15658
     },
     {
-      "no": 156,
-      "name": "Mahalaxmi Layout",
-      "district": "B.B.M.P(NORTH)",
-      "total": 132886
+      "no": 128,
+      "name": "Chikkanayakahalli",
+      "district": "TUMKUR",
+      "total": 15397
     },
     {
-      "no": 54,
-      "name": "Raichur Urban ASDD List",
-      "district": "RAICHUR",
-      "total": 131242
+      "no": 138,
+      "name": "Madhugiri",
+      "district": "TUMKUR",
+      "total": 14891
     },
     {
-      "no": 170,
-      "name": "AC 170 Basavanagudi",
-      "district": "B.B.M.P(SOUTH)",
-      "total": 121763
+      "no": 130,
+      "name": "Turuvekere",
+      "district": "TUMKUR",
+      "total": 12710
     },
     {
-      "no": 164,
-      "name": "Gandhinagar",
-      "district": "B.B.M.P(CENTRAL)",
-      "total": 120596
-    },
-    {
-      "no": 166,
-      "name": "AC 166 Govindarajanagar",
-      "district": "B.B.M.P(SOUTH)",
-      "total": 119205
-    },
-    {
-      "no": 159,
-      "name": "Pulakeshi Nagara",
-      "district": "B.B.M.P(NORTH)",
-      "total": 118986
-    },
-    {
-      "no": 169,
-      "name": "Chickpet",
-      "district": "B.B.M.P(CENTRAL)",
-      "total": 117104
-    },
-    {
-      "no": 168,
-      "name": "Chamrajapet",
-      "district": "B.B.M.P(CENTRAL)",
-      "total": 115301
-    },
-    {
-      "no": 218,
-      "name": "AC 218-Narasimharaja",
-      "district": "MYSORE",
-      "total": 111602
-    },
-    {
-      "no": 45,
-      "name": "_Gulbarga North_ASDDO",
-      "district": "GULBARGA",
-      "total": 110958
+      "no": 135,
+      "name": "Gubbi",
+      "district": "TUMKUR",
+      "total": 12210
     }
   ]
 }
