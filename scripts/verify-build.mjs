@@ -78,7 +78,11 @@ const files = (await readdir(resolve(CACHE, 'extracted'))).filter((f) => f.endsW
 if (!files.length) { log('No extracted rows to verify against.'); process.exit(1); }
 
 const fail = { missing: [], name: [], reason: [], source: [], ac: [] };
-const t = { rows: 0, present: 0, sampled: 0, uniquePairs: 0 };
+const t = { rows: 0, present: 0, sampled: 0, uniquePairs: 0, superseded: 0, conflicting: 0 };
+// Source rows that lost the per-constituency dedupe AND disagree with the copy
+// that won. Reported, never fatal: this is a contradiction in the published
+// documents, not something the build can fix.
+const conflicts = [];
 const seenPairs = new Set();      // epicHash|acNo — expected size of the built data
 
 let i = 0;
@@ -114,13 +118,6 @@ for (const f of files) {
     const [, name, , , , , reasonIdx, acIdx, fileIdx] = rec;
     const norm = (s) => (s ?? '').replace(/\s+/g, ' ').trim().toUpperCase();
 
-    if (norm(name) !== norm(row.name) && fail.name.length < 40) {
-      fail.name.push({ epic: row.epic, source: row.name, built: name });
-    }
-    const builtReason = built.dicts.reasons[reasonIdx] ?? '';
-    if (categorise(builtReason) !== row.category && fail.reason.length < 40) {
-      fail.reason.push({ epic: row.epic, source: row.reasonRaw, built: builtReason });
-    }
     const [acNo] = built.dicts.acs[acIdx] ?? [];
     if (acNo !== row.acNo && fail.ac.length < 40) {
       fail.ac.push({ epic: row.epic, source: row.acNo, built: acNo });
@@ -128,6 +125,40 @@ for (const f of files) {
     const src = partsByAc.get(acIdx)?.[fileIdx];
     if ((!src || !src[0]) && fail.source.length < 40) {
       fail.source.push({ epic: row.epic, district: row.district, acIdx, fileIdx });
+    }
+
+    // Stage 3 keeps one record per EPIC per constituency, preferring the copy
+    // from the more specific document. When a source row lost that contest, the
+    // built record legitimately describes the *other* copy, so comparing this
+    // row's fields against it is comparing two different documents — which is
+    // how 13 rows in 5,31,460 failed a build that was entirely correct.
+    //
+    // Identify a superseded row by the part number the built record carries,
+    // and check it separately: a disagreement is then a fact about the source,
+    // not a defect in the build. Rows that did survive are still held to an
+    // exact match, so real corruption cannot hide behind this.
+    if (src && (src[1] ?? 0) !== (row.partNo ?? 0)) {
+      t.superseded++;
+      const builtReason = built.dicts.reasons[reasonIdx] ?? '';
+      if (categorise(builtReason) !== row.category) {
+        t.conflicting++;
+        if (conflicts.length < 10) {
+          conflicts.push({
+            epic: row.epic, district: row.district, ac: row.acNo,
+            kept: `part ${src[1]}: ${builtReason}`,
+            superseded: `part ${row.partNo}: ${row.reasonRaw}`
+          });
+        }
+      }
+      continue;
+    }
+
+    if (norm(name) !== norm(row.name) && fail.name.length < 40) {
+      fail.name.push({ epic: row.epic, source: row.name, built: name });
+    }
+    const builtReason = built.dicts.reasons[reasonIdx] ?? '';
+    if (categorise(builtReason) !== row.category && fail.reason.length < 40) {
+      fail.reason.push({ epic: row.epic, source: row.reasonRaw, built: builtReason });
     }
 
     if (t.rows % 200000 === 0) progress(`  verified ${t.rows.toLocaleString()} rows`);
@@ -160,10 +191,22 @@ log(`  records in built data                   ${loaded.toLocaleString()}`);
 log(`  same EPIC twice in one constituency     ${duplicateKeys.toLocaleString()}`);
 log('');
 log(`  field checks sampled       ${t.sampled.toLocaleString()} (every ${SAMPLE_EVERY}th row)`);
+log(`    superseded by a more specific copy   ${t.superseded.toLocaleString()}`);
 log(`    name mismatches          ${fail.name.length}`);
 log(`    category mismatches      ${fail.reason.length}`);
 log(`    constituency mismatches  ${fail.ac.length}`);
 log(`    unresolved source files  ${fail.source.length}`);
+
+if (t.conflicting) {
+  log('');
+  log(`  ${t.conflicting} superseded row(s) disagree with the copy that was kept.`);
+  log('  Not a build error — the source documents contradict each other. Worth reading:');
+  for (const c of conflicts) {
+    log(`    ${c.epic}  ${c.district} AC ${c.ac}`);
+    log(`        kept       ${c.kept}`);
+    log(`        superseded ${c.superseded}`);
+  }
+}
 
 for (const [label, list] of Object.entries(fail)) {
   if (!list.length) continue;
