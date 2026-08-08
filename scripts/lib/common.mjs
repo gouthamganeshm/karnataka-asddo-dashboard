@@ -18,7 +18,17 @@ const UA =
   '(KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36';
 
 /** Fetch with retry + backoff. Returns a Buffer. */
-export async function get(url, { tries = 4, timeoutMs = 60000 } = {}) {
+export const get = async (url, opts) => (await getNamed(url, opts)).buf;
+
+/**
+ * As `get`, but also returns the name the server gave the file.
+ *
+ * A Drive link of the form /file/d/<id>/view carries no name at all, and the
+ * booth's identity (state, AC, part, timestamp) lives entirely in the file name
+ * — so for those the Content-Disposition header is the only way to know what
+ * was just downloaded.
+ */
+export async function getNamed(url, { tries = 4, timeoutMs = 60000 } = {}) {
   let lastErr;
   for (let attempt = 1; attempt <= tries; attempt++) {
     const ac = new AbortController();
@@ -38,7 +48,12 @@ export async function get(url, { tries = 4, timeoutMs = 60000 } = {}) {
           .slice(0, 200);
         throw new Error(`HTTP ${res.status} ${res.statusText}${snippet ? ` — ${snippet}` : ''}`);
       }
-      return Buffer.from(await res.arrayBuffer());
+      const cd = res.headers.get('content-disposition') ?? '';
+      const named = /filename\*=UTF-8''([^;]+)/i.exec(cd) ?? /filename="?([^";]+)"?/i.exec(cd);
+      return {
+        buf: Buffer.from(await res.arrayBuffer()),
+        filename: named ? decodeURIComponent(named[1].trim()) : ''
+      };
     } catch (err) {
       lastErr = err;
       // Google throttles hard when you go too fast. Back off, don't hammer.

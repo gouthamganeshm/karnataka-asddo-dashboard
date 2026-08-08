@@ -22,6 +22,7 @@ import { resolve } from 'node:path';
 import { CACHE, ROOT, driveDownloadUrl, get, log, pool, progress, readJson, writeJson } from './lib/common.mjs';
 import { parseBoothPdf } from './lib/pdf.mjs';
 import { parseBoothName } from './lib/naming.mjs';
+import { listZipEntries } from './lib/zip.mjs';
 
 const OUT = resolve(ROOT, 'seed', 'ac-names.json');
 const all = process.argv.includes('--all');
@@ -67,9 +68,18 @@ let ok = 0;
 let failed = 0;
 
 await pool(jobs, 6, async (job) => {
+  const f = job.file;
   let buf;
   try {
-    buf = await get(job.file.url ?? driveDownloadUrl(job.file.id), { tries: 2, timeoutMs: 45000 });
+    if (f.zipId || f.zipUrl) {
+      // A booth that lives in an archive. One AC is one fetch either way, so
+      // there is no point caching the archive here.
+      const zip = await get(f.zipUrl ?? driveDownloadUrl(f.zipId), { tries: 2, timeoutMs: 60000 });
+      buf = listZipEntries(zip).find((e) => e.name === f.entry)?.read();
+      if (!buf) throw new Error(`no entry ${f.entry}`);
+    } else {
+      buf = await get(f.url ?? driveDownloadUrl(f.id), { tries: 2, timeoutMs: 45000 });
+    }
   } catch {
     failed++;
     return;

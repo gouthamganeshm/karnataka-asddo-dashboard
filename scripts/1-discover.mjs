@@ -29,8 +29,8 @@
 
 import { resolve } from 'node:path';
 import {
-  CACHE, decodeEntities, driveDownloadUrl, get, getText, listDriveFolder, log, pool,
-  progress, readJson, writeJson
+  CACHE, decodeEntities, driveDownloadUrl, get, getNamed, getText, listDriveFolder, log,
+  pool, progress, readJson, writeJson
 } from './lib/common.mjs';
 import { NOT_A_BOOTH_LIST, parseBoothName } from './lib/naming.mjs';
 import { listZipEntries, looksZip } from './lib/zip.mjs';
@@ -85,25 +85,43 @@ async function resolveDistrictPage(url) {
     return { folderIds: [], pdfs: [], error: err.message };
   }
   const base = new URL(url);
+
+  // Bangalore Rural's links were pasted out of webmail, so every one of them is
+  // wrapped in mail.mgovcloud.in/zm/reUrlCheck.do?url=<percent-encoded>. The
+  // literal string "drive.google.com/drive/folders/" never appears in the HTML,
+  // so matching the raw markup found nothing and the district looked empty.
+  const hrefs = [...html.matchAll(/href="([^"]+)"/gi)].map((m) => {
+    const raw = decodeEntities(m[1]);
+    const wrapped = /[?&]url=([^&"]+)/.exec(raw);
+    if (!wrapped) return raw;
+    try { return decodeURIComponent(wrapped[1]); } catch { return raw; }
+  });
+
   const folderIds = [
     ...new Set(
-      [...html.matchAll(/drive\.google\.com\/drive\/(?:u\/\d+\/)?folders\/([\w-]+)/gi)]
-        .map((m) => m[1])
+      hrefs.flatMap((h) =>
+        [...h.matchAll(/drive\.google\.com\/drive\/(?:u\/\d+\/)?folders\/([\w-]+)/gi)].map((m) => m[1])
+      )
     )
   ];
-  const pdfs = [
+
+  // A Drive file link carries no extension, so it matches neither the .pdf nor
+  // the .zip patterns below. What it points at is decided by sniffing the bytes.
+  const driveFileIds = [
     ...new Set(
-      [...html.matchAll(/href="([^"]+\.pdf)"/gi)].map((m) => new URL(decodeEntities(m[1]), base).href)
+      hrefs.flatMap((h) => [...h.matchAll(/drive\.google\.com\/file\/d\/([\w-]+)/gi)].map((m) => m[1]))
     )
   ];
+  const abs = (h) => { try { return new URL(h, base).href; } catch { return null; } };
+  const bySuffix = (re) =>
+    [...new Set(hrefs.filter((h) => re.test(h) && !/drive\.google\.com/i.test(h)).map(abs).filter(Boolean))];
+
+  const pdfs = bySuffix(/\.pdf$/i);
   // Same reason as on the Drive side: a district may hand out an archive rather
   // than loose PDFs, and matching only .pdf loses it entirely.
-  const zips = [
-    ...new Set(
-      [...html.matchAll(/href="([^"]+\.zip)"/gi)].map((m) => new URL(decodeEntities(m[1]), base).href)
-    )
-  ];
-  return { folderIds, pdfs, zips, error: null };
+  const zips = bySuffix(/\.zip$/i);
+
+  return { folderIds, driveFileIds, pdfs, zips, error: null };
 }
 
 // ------------------------------------------------------------------- drive
@@ -123,10 +141,10 @@ const archiveNotes = [];
  * comes from its file name inside the archive, which follows the same
  * S10_<ac>_<part>_<name>_<timestamp> convention as the loose files.
  */
-async function expandArchive(file, trail) {
-  let buf;
+async function expandArchive(file, trail, prefetched = null) {
+  let buf = prefetched;
   try {
-    buf = await get(file.url ?? driveDownloadUrl(file.id));
+    buf ??= await get(file.url ?? driveDownloadUrl(file.id));
   } catch (err) {
     archiveNotes.push(`${file.name}: could not fetch (${err.message})`);
     return [];
@@ -167,6 +185,32 @@ async function expandArchive(file, trail) {
     );
   }
   return out;
+}
+
+/**
+ * A district page can link a Drive *file* directly, with no extension in the
+ * URL and no name anywhere in the markup. Fetch it, take the name from the
+ * response, and decide from the bytes whether it is a booth PDF or an archive
+ * of them.
+ */
+async function resolveDriveFile(id, trail) {
+  let buf, filename;
+  try {
+    ({ buf, filename } = await getNamed(driveDownloadUrl(id)));
+  } catch (err) {
+    archiveNotes.push(`drive file ${id}: could not fetch (${err.message})`);
+    return [];
+  }
+
+  const name = filename || id;
+  if (NOT_A_BOOTH_LIST.test(name)) return [];
+
+  if (looksZip(buf)) return expandArchive({ id, name }, trail, buf);
+  if (buf.subarray(0, 4).toString('latin1') === '%PDF') {
+    return [{ id, name, trail }];
+  }
+  archiveNotes.push(`drive file ${id} (${name}): neither a PDF nor a zip`);
+  return [];
 }
 
 /** Walk a Drive folder to any depth, collecting every PDF with its folder trail. */
@@ -333,6 +377,7 @@ for (const district of districts) {
   let directPdfs = [];
 
   let directZips = [];
+  let driveFileIds = [];
 
   if (district.folderId) {
     roots = [district.folderId];
@@ -341,6 +386,7 @@ for (const district of districts) {
     roots = resolved.folderIds;
     directPdfs = resolved.pdfs;
     directZips = resolved.zips ?? [];
+    driveFileIds = resolved.driveFileIds ?? [];
     if (resolved.error) problems.push(`${district.name}: ${resolved.error}`);
   }
 
@@ -355,6 +401,13 @@ for (const district of districts) {
   }
   for (const url of directZips) {
     found.push(...await expandArchive({ url, name: decodeURIComponent(url.split('/').pop()) }, []));
+  }
+  // Skip any file already reached by walking a folder above — several districts
+  // link the same document both ways.
+  const alreadyFound = new Set(found.flatMap((f) => [f.id, f.zipId].filter(Boolean)));
+  for (const id of driveFileIds) {
+    if (alreadyFound.has(id)) continue;
+    found.push(...await resolveDriveFile(id, []));
   }
 
   const acs = groupIntoAcs(found);
