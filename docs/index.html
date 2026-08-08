@@ -90,10 +90,6 @@
           <p class="chart-sub" data-i18n="chartCategorySub">Every removed name, grouped into the five ASDDO buckets.</p>
         </figcaption>
         <div id="chart-category" class="chart"></div>
-        <details class="table-view">
-          <summary data-i18n="tableView">View as table</summary>
-          <div id="table-category"></div>
-        </details>
       </figure>
 
       <figure class="card chart-card">
@@ -102,10 +98,6 @@
           <p class="chart-sub" data-i18n="chartAgeSub">Age as printed in the source list, at the time it was generated.</p>
         </figcaption>
         <div id="chart-age" class="chart"></div>
-        <details class="table-view">
-          <summary data-i18n="tableView">View as table</summary>
-          <div id="table-age"></div>
-        </details>
       </figure>
     </div>
 
@@ -115,16 +107,24 @@
         <p class="chart-sub" data-i18n="chartAcSub">Absolute counts. A large constituency will naturally sit higher — read this alongside the district table.</p>
       </figcaption>
       <div id="chart-ac" class="chart"></div>
-      <details class="table-view">
-        <summary data-i18n="tableView">View as table</summary>
-        <div id="table-ac"></div>
-      </details>
     </figure>
 
     <div class="card">
       <div class="section-head compact">
         <h3 data-i18n="districtTitle">District breakdown</h3>
-        <p class="chart-sub" data-i18n="districtSub">Click a column heading to sort.</p>
+        <p class="chart-sub" id="district-sub" data-i18n="districtSub">Click a column heading to sort.</p>
+      </div>
+
+      <div class="filters">
+        <label class="filter">
+          <span class="filter-label" data-i18n="filterDistrict">District</span>
+          <select id="filter-district"></select>
+        </label>
+        <label class="filter">
+          <span class="filter-label" data-i18n="filterConstituency">Constituency</span>
+          <select id="filter-constituency"></select>
+        </label>
+        <button type="button" class="ghost-btn" id="filter-reset" data-i18n="filterReset">Reset</button>
       </div>
       <div class="legend" id="district-legend"></div>
       <div class="table-scroll">

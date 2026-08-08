@@ -15,10 +15,10 @@ const STRINGS = {
   en: {
     skip: 'Skip to the EPIC check',
     title: 'Karnataka ASDDO Dashboard',
-    tagline: 'Names removed from the voter roll — check your own, and see the scale',
+    tagline: 'The ASDDO list published under the ECI\u2019s Special Intensive Revision — check your voter ID',
     lookupHeading: 'Check a voter ID',
-    intro: 'The ASDDO list records names removed from the electoral roll under five categories: Absent, Shifted, Death, Duplicate and Others. Enter an EPIC number to check whether it appears there.',
-    catAbsent: 'Absent', catShifted: 'Shifted', catDeath: 'Death',
+    intro: 'As part of the Election Commission\u2019s Special Intensive Revision (SIR) in Karnataka, an ASDDO list has been published \u2014 electors marked Absent, Shifted, Dead, Duplicate or Others. Being on this list does not by itself mean your name has been deleted: it means your entry has been flagged for verification. Enter an EPIC number to check.',
+    catAbsent: 'Absent', catShifted: 'Shifted', catDeath: 'Dead',
     catDuplicate: 'Duplicate', catOthers: 'Others',
     privacyNote: 'The number you type never leaves this device. The check runs in your browser against data files served by GitHub.',
     epicLabel: 'EPIC number',
@@ -27,7 +27,7 @@ const STRINGS = {
     checking: 'Checking',
 
     deletedHeading: 'This EPIC is on the ASDDO list',
-    deletedLede: 'This voter ID appears among the names removed from the roll. Act on this now.',
+    deletedLede: 'This voter ID has been flagged for verification under SIR. That does not by itself mean your name has been deleted \u2014 but it does need acting on now.',
     multipleNote: 'More than one record matched this EPIC number. All matches are shown below.',
     fieldName: 'Elector name', fieldRelative: 'Relative', fieldAge: 'Age',
     fieldDistrict: 'District', fieldAc: 'Constituency', fieldPart: 'Polling booth',
@@ -40,16 +40,16 @@ const STRINGS = {
 
     actionHeading: 'What to do now',
     actionSteps: [
-      'Contact the Booth Level Officer (BLO) for your constituency and ask to see the deletion record.',
-      'If the deletion is wrong, file Form 6 for re-inclusion with proof of identity and address.',
-      'Call the voter helpline on 1950, or use voters.eci.gov.in to find your BLO and check your roll status.',
-      'Do this before the claims and objections window closes — after the final roll is published it is much harder to correct.'
+      'Contact your Booth Level Officer (BLO) and give them documents proving your identity and address, so the entry can be verified.',
+      'Check your entry on the CEO Karnataka portal at ceo.karnataka.gov.in, or at voters.eci.gov.in.',
+      'The revised draft electoral roll is due on 17 August. Act before then \u2014 corrections are much harder once the final roll is published.',
+      'If your name is wrongly dropped, file Form 6 for re-inclusion, or call the voter helpline on 1950.'
     ],
     copyBtn: 'Copy these details', copiedBtn: 'Copied', printBtn: 'Print / save as PDF',
 
     clearHeading: 'Not on the deleted list',
-    clearLede: 'EPIC {epic} is in the electoral roll and is not marked for deletion.',
-    clearNote: 'This covers ASDDO deletions only. If anything still looks wrong, confirm at voters.eci.gov.in or with your BLO.',
+    clearLede: 'EPIC {epic} is on the electoral roll and is not on the ASDDO list.',
+    clearNote: 'This covers the ASDDO list only. If anything still looks wrong, confirm at ceo.karnataka.gov.in, voters.eci.gov.in, or with your BLO.',
 
     notListedHeading: 'Not on the deleted list',
     notListedLede: 'EPIC {epic} does not appear in the ASDDO deletion data loaded here.',
@@ -70,30 +70,33 @@ const STRINGS = {
     errCrypto: 'This browser cannot run the lookup (Web Crypto is unavailable). Open the site over https.',
 
     dashHeading: 'What is in this dataset',
-    tileRecords: 'Names removed', tileDistricts: 'Districts', tileAcs: 'Constituencies', tileBooths: 'Polling booths',
-    chartCategoryTitle: 'Deletions by reason',
-    chartCategorySub: 'Every removed name, grouped into the five ASDDO buckets.',
-    chartAgeTitle: 'Age of removed electors',
+    tileRecords: 'Names on the list', tileDistricts: 'Districts', tileAcs: 'Constituencies', tileBooths: 'Polling booths',
+    chartCategoryTitle: 'Listings by reason',
+    chartCategorySub: 'Every listed name, grouped into the five ASDDO categories.',
+    chartAgeTitle: 'Age of listed electors',
     chartAgeSub: 'Age as printed in the source list, at the time it was generated.',
-    chartAcTitle: 'Constituencies with the most deletions',
+    chartAcTitle: 'Constituencies with the most listings',
     chartAcSub: 'Absolute counts. A large constituency will naturally sit higher — read this alongside the district table.',
     districtTitle: 'District breakdown', districtSub: 'Click a column heading to sort.',
     tableView: 'View as table',
     colDistrict: 'District', colTotal: 'Total', colShare: 'Share', colCategory: 'Category',
+    filterDistrict: 'District', filterConstituency: 'Constituency',
+    filterAll: 'All', filterReset: 'Reset', filterNoRows: 'Nothing matches this filter.',
+    districtSubFiltered: 'Showing constituencies in {district}. Click a column heading to sort.',
     colCount: 'Count', colBand: 'Age band', colConstituency: 'Constituency', colBooths: 'Booths',
     ageUnknown: 'Not stated',
     scopeNote: 'Covering {districts} · {booths} polling booths · generated {dates}',
     footerImported: 'Data imported {date} from documents generated {dates}.',
-    footerSource: 'Source: the ASDDO lists published by the Chief Electoral Officer, Karnataka. This site is an independent, unofficial reformatting of those documents. Always confirm with your BLO or voters.eci.gov.in before acting.',
+    footerSource: 'Source: the ASDDO lists published by the Chief Electoral Officer, Karnataka, under the Special Intensive Revision. This site is an independent, unofficial reformatting of those documents. Always confirm with your BLO, ceo.karnataka.gov.in or voters.eci.gov.in before acting.',
     footerLink: 'Original documents on ceo.karnataka.gov.in'
   },
 
   kn: {
     skip: 'EPIC ಪರಿಶೀಲನೆಗೆ ಹೋಗಿ',
     title: 'ಕರ್ನಾಟಕ ASDDO ಡ್ಯಾಶ್‌ಬೋರ್ಡ್',
-    tagline: 'ಮತದಾರರ ಪಟ್ಟಿಯಿಂದ ತೆಗೆದುಹಾಕಿದ ಹೆಸರುಗಳು — ನಿಮ್ಮದನ್ನು ಪರಿಶೀಲಿಸಿ',
+    tagline: 'SIR ಪ್ರಕ್ರಿಯೆಯಲ್ಲಿ ಬಿಡುಗಡೆಯಾದ ASDDO ಪಟ್ಟಿ — ನಿಮ್ಮ ಮತದಾರರ ಗುರುತಿನ ಚೀಟಿ ಪರಿಶೀಲಿಸಿ',
     lookupHeading: 'ಮತದಾರರ ಗುರುತಿನ ಚೀಟಿ ಪರಿಶೀಲಿಸಿ',
-    intro: 'ಮತದಾರರ ಪಟ್ಟಿಯಿಂದ ತೆಗೆದುಹಾಕಿದ ಹೆಸರುಗಳನ್ನು ASDDO ಪಟ್ಟಿ ಐದು ವರ್ಗಗಳಲ್ಲಿ ದಾಖಲಿಸುತ್ತದೆ: ಗೈರುಹಾಜರು, ಸ್ಥಳಾಂತರ, ಮರಣ, ನಕಲು ಮತ್ತು ಇತರೆ. ಅದರಲ್ಲಿ ಇದೆಯೇ ಎಂದು ಪರಿಶೀಲಿಸಲು EPIC ಸಂಖ್ಯೆಯನ್ನು ನಮೂದಿಸಿ.',
+    intro: 'ಕರ್ನಾಟಕದಲ್ಲಿ ಚುನಾವಣಾ ಆಯೋಗವು ನಡೆಸುತ್ತಿರುವ SIR (ವಿಶೇಷ ತೀವ್ರ ಮತದಾರರ ಪಟ್ಟಿ ಪರಿಷ್ಕರಣೆ) ಪ್ರಕ್ರಿಯೆಯಲ್ಲಿ ASDDO (ಗೈರುಹಾಜರಾದ, ಸ್ಥಳಾಂತರಗೊಂಡ, ಮೃತ, ನಕಲಿ ಮತ್ತು ಇತರೆ) ಪಟ್ಟಿಯನ್ನು ಬಿಡುಗಡೆ ಮಾಡಲಾಗಿದೆ. ಈ ಪಟ್ಟಿಯಲ್ಲಿ ಹೆಸರಿದ್ದರೆ ನಿಮ್ಮ ಹೆಸರು ಡಿಲೀಟ್ ಆಗುತ್ತದೆ ಎಂದಲ್ಲ — ಪರಿಶೀಲನೆಗೆ ಗುರಿಯಾಗಿದೆ ಎಂದರ್ಥ. ಪರಿಶೀಲಿಸಲು EPIC ಸಂಖ್ಯೆಯನ್ನು ನಮೂದಿಸಿ.',
     catAbsent: 'ಗೈರುಹಾಜರು', catShifted: 'ಸ್ಥಳಾಂತರ', catDeath: 'ಮರಣ',
     catDuplicate: 'ನಕಲು', catOthers: 'ಇತರೆ',
     privacyNote: 'ನೀವು ನಮೂದಿಸುವ ಸಂಖ್ಯೆ ಈ ಸಾಧನದಿಂದ ಹೊರಗೆ ಹೋಗುವುದಿಲ್ಲ. ಪರಿಶೀಲನೆ ನಿಮ್ಮ ಬ್ರೌಸರ್‌ನಲ್ಲಿಯೇ ನಡೆಯುತ್ತದೆ.',
@@ -103,7 +106,7 @@ const STRINGS = {
     checking: 'ಪರಿಶೀಲಿಸಲಾಗುತ್ತಿದೆ',
 
     deletedHeading: 'ಈ EPIC ASDDO ಪಟ್ಟಿಯಲ್ಲಿ ಇದೆ',
-    deletedLede: 'ಈ ಮತದಾರರ ಗುರುತಿನ ಚೀಟಿ ತೆಗೆದುಹಾಕಿದ ಹೆಸರುಗಳಲ್ಲಿ ಕಂಡುಬಂದಿದೆ. ಈಗಲೇ ಕ್ರಮ ತೆಗೆದುಕೊಳ್ಳಿ.',
+    deletedLede: 'ಈ ಗುರುತಿನ ಚೀಟಿ SIR ಅಡಿಯಲ್ಲಿ ಪರಿಶೀಲನೆಗೆ ಗುರುತಿಸಲ್ಪಟ್ಟಿದೆ. ಇದರರ್ಥ ನಿಮ್ಮ ಹೆಸರು ಡಿಲೀಟ್ ಆಗಿದೆ ಎಂದಲ್ಲ — ಆದರೆ ಈಗಲೇ ಕ್ರಮ ತೆಗೆದುಕೊಳ್ಳುವುದು ಅಗತ್ಯ.',
     multipleNote: 'ಈ EPIC ಸಂಖ್ಯೆಗೆ ಒಂದಕ್ಕಿಂತ ಹೆಚ್ಚು ದಾಖಲೆಗಳು ಹೊಂದಿಕೆಯಾಗಿವೆ. ಎಲ್ಲವನ್ನೂ ಕೆಳಗೆ ತೋರಿಸಲಾಗಿದೆ.',
     fieldName: 'ಮತದಾರರ ಹೆಸರು', fieldRelative: 'ಸಂಬಂಧಿ', fieldAge: 'ವಯಸ್ಸು',
     fieldDistrict: 'ಜಿಲ್ಲೆ', fieldAc: 'ಕ್ಷೇತ್ರ', fieldPart: 'ಮತಗಟ್ಟೆ',
@@ -116,16 +119,16 @@ const STRINGS = {
 
     actionHeading: 'ಈಗ ಏನು ಮಾಡಬೇಕು',
     actionSteps: [
-      'ನಿಮ್ಮ ಕ್ಷೇತ್ರದ ಬೂತ್ ಮಟ್ಟದ ಅಧಿಕಾರಿಯನ್ನು (BLO) ಸಂಪರ್ಕಿಸಿ ಮತ್ತು ಅಳಿಸುವಿಕೆ ದಾಖಲೆಯನ್ನು ತೋರಿಸಲು ಕೇಳಿ.',
-      'ಅಳಿಸುವಿಕೆ ತಪ್ಪಾಗಿದ್ದರೆ, ಗುರುತು ಮತ್ತು ವಿಳಾಸದ ದಾಖಲೆಗಳೊಂದಿಗೆ ಮರುಸೇರ್ಪಡೆಗಾಗಿ ನಮೂನೆ 6 ಸಲ್ಲಿಸಿ.',
-      'ಮತದಾರರ ಸಹಾಯವಾಣಿ 1950 ಗೆ ಕರೆ ಮಾಡಿ, ಅಥವಾ voters.eci.gov.in ನಲ್ಲಿ ನಿಮ್ಮ BLO ವಿವರ ಪರಿಶೀಲಿಸಿ.',
-      'ಆಕ್ಷೇಪಣೆ ಸಲ್ಲಿಸುವ ಅವಧಿ ಮುಗಿಯುವ ಮೊದಲು ಇದನ್ನು ಮಾಡಿ — ಅಂತಿಮ ಪಟ್ಟಿ ಪ್ರಕಟವಾದ ನಂತರ ಸರಿಪಡಿಸುವುದು ಕಷ್ಟ.'
+      'ನಿಮ್ಮ BLO (ಮತಗಟ್ಟೆ ಮಟ್ಟದ ಅಧಿಕಾರಿ) ಅವರನ್ನು ಸಂಪರ್ಕಿಸಿ, ಗುರುತು ಮತ್ತು ವಿಳಾಸದ ದಾಖಲೆಗಳನ್ನು ಒದಗಿಸಿ ಪರಿಶೀಲನೆ ಪೂರ್ಣಗೊಳಿಸಿ.',
+      'CEO ಕರ್ನಾಟಕ ಅಧಿಕೃತ ಪೋರ್ಟಲ್ ceo.karnataka.gov.in ಅಥವಾ voters.eci.gov.in ನಲ್ಲಿ ನಿಮ್ಮ ವಿವರಗಳನ್ನು ಪರಿಶೀಲಿಸಿ.',
+      'ಪರಿಷ್ಕೃತ ಕರಡು ಮತದಾರರ ಪಟ್ಟಿ ಆಗಸ್ಟ್ 17 ರಂದು ಪ್ರಕಟವಾಗಲಿದೆ. ಅದಕ್ಕೂ ಮೊದಲು ಕ್ರಮ ತೆಗೆದುಕೊಳ್ಳಿ — ಅಂತಿಮ ಪಟ್ಟಿ ಪ್ರಕಟವಾದ ನಂತರ ಸರಿಪಡಿಸುವುದು ಕಷ್ಟ.',
+      'ಹೆಸರು ತಪ್ಪಾಗಿ ತೆಗೆದುಹಾಕಿದ್ದರೆ ಮರುಸೇರ್ಪಡೆಗಾಗಿ ನಮೂನೆ 6 ಸಲ್ಲಿಸಿ, ಅಥವಾ ಮತದಾರರ ಸಹಾಯವಾಣಿ 1950 ಗೆ ಕರೆ ಮಾಡಿ.'
     ],
     copyBtn: 'ವಿವರಗಳನ್ನು ನಕಲಿಸಿ', copiedBtn: 'ನಕಲಾಗಿದೆ', printBtn: 'ಮುದ್ರಿಸಿ / PDF ಆಗಿ ಉಳಿಸಿ',
 
     clearHeading: 'ತೆಗೆದುಹಾಕಿದ ಪಟ್ಟಿಯಲ್ಲಿ ಇಲ್ಲ',
-    clearLede: 'EPIC {epic} ಮತದಾರರ ಪಟ್ಟಿಯಲ್ಲಿ ಇದೆ ಮತ್ತು ತೆಗೆದುಹಾಕಲು ಗುರುತಿಸಿಲ್ಲ.',
-    clearNote: 'ಇದು ASDDO ತೆಗೆದುಹಾಕುವಿಕೆಗಳನ್ನು ಮಾತ್ರ ಒಳಗೊಂಡಿದೆ. ಏನಾದರೂ ತಪ್ಪಾಗಿ ಕಂಡರೆ voters.eci.gov.in ನೋಡಿ ಅಥವಾ BLO ಸಂಪರ್ಕಿಸಿ.',
+    clearLede: 'EPIC {epic} ಮತದಾರರ ಪಟ್ಟಿಯಲ್ಲಿ ಇದೆ ಮತ್ತು ASDDO ಪಟ್ಟಿಯಲ್ಲಿ ಇಲ್ಲ.',
+    clearNote: 'ಇದು ASDDO ಪಟ್ಟಿಯನ್ನು ಮಾತ್ರ ಒಳಗೊಂಡಿದೆ. ಏನಾದರೂ ತಪ್ಪಾಗಿ ಕಂಡರೆ ceo.karnataka.gov.in ಅಥವಾ voters.eci.gov.in ನೋಡಿ, ಅಥವಾ ನಿಮ್ಮ BLO ಅವರನ್ನು ಸಂಪರ್ಕಿಸಿ.',
 
     notListedHeading: 'ತೆಗೆದುಹಾಕಿದ ಪಟ್ಟಿಯಲ್ಲಿ ಇಲ್ಲ',
     notListedLede: 'ಇಲ್ಲಿ ಲೋಡ್ ಆಗಿರುವ ASDDO ದತ್ತಾಂಶದಲ್ಲಿ EPIC {epic} ಕಂಡುಬಂದಿಲ್ಲ.',
@@ -146,16 +149,19 @@ const STRINGS = {
     errCrypto: 'ಈ ಬ್ರೌಸರ್‌ನಲ್ಲಿ ಪರಿಶೀಲನೆ ಸಾಧ್ಯವಿಲ್ಲ (Web Crypto ಲಭ್ಯವಿಲ್ಲ). https ಮೂಲಕ ತೆರೆಯಿರಿ.',
 
     dashHeading: 'ಈ ದತ್ತಾಂಶದಲ್ಲಿ ಏನಿದೆ',
-    tileRecords: 'ತೆಗೆದುಹಾಕಿದ ಹೆಸರುಗಳು', tileDistricts: 'ಜಿಲ್ಲೆಗಳು', tileAcs: 'ಕ್ಷೇತ್ರಗಳು', tileBooths: 'ಮತಗಟ್ಟೆಗಳು',
-    chartCategoryTitle: 'ಕಾರಣವಾರು ತೆಗೆದುಹಾಕುವಿಕೆ',
-    chartCategorySub: 'ತೆಗೆದುಹಾಕಿದ ಪ್ರತಿ ಹೆಸರನ್ನು ಐದು ASDDO ವರ್ಗಗಳಲ್ಲಿ ಜೋಡಿಸಲಾಗಿದೆ.',
-    chartAgeTitle: 'ತೆಗೆದುಹಾಕಿದ ಮತದಾರರ ವಯಸ್ಸು',
+    tileRecords: 'ಪಟ್ಟಿಯಲ್ಲಿರುವ ಹೆಸರುಗಳು', tileDistricts: 'ಜಿಲ್ಲೆಗಳು', tileAcs: 'ಕ್ಷೇತ್ರಗಳು', tileBooths: 'ಮತಗಟ್ಟೆಗಳು',
+    chartCategoryTitle: 'ಕಾರಣವಾರು ಪಟ್ಟಿ',
+    chartCategorySub: 'ಪಟ್ಟಿಯಲ್ಲಿರುವ ಪ್ರತಿ ಹೆಸರನ್ನು ಐದು ASDDO ವರ್ಗಗಳಲ್ಲಿ ಜೋಡಿಸಲಾಗಿದೆ.',
+    chartAgeTitle: 'ಪಟ್ಟಿಯಲ್ಲಿರುವ ಮತದಾರರ ವಯಸ್ಸು',
     chartAgeSub: 'ಮೂಲ ಪಟ್ಟಿಯಲ್ಲಿ ಮುದ್ರಿತವಾದ ವಯಸ್ಸು.',
-    chartAcTitle: 'ಅತಿ ಹೆಚ್ಚು ತೆಗೆದುಹಾಕುವಿಕೆ ಇರುವ ಕ್ಷೇತ್ರಗಳು',
+    chartAcTitle: 'ಅತಿ ಹೆಚ್ಚು ಪಟ್ಟಿ ನಮೂದುಗಳಿರುವ ಕ್ಷೇತ್ರಗಳು',
     chartAcSub: 'ಒಟ್ಟು ಸಂಖ್ಯೆ. ದೊಡ್ಡ ಕ್ಷೇತ್ರ ಸಹಜವಾಗಿ ಮೇಲಿರುತ್ತದೆ — ಜಿಲ್ಲಾ ಕೋಷ್ಟಕದೊಂದಿಗೆ ಓದಿ.',
     districtTitle: 'ಜಿಲ್ಲಾವಾರು ವಿವರ', districtSub: 'ವಿಂಗಡಿಸಲು ಶೀರ್ಷಿಕೆ ಕ್ಲಿಕ್ ಮಾಡಿ.',
     tableView: 'ಕೋಷ್ಟಕವಾಗಿ ನೋಡಿ',
     colDistrict: 'ಜಿಲ್ಲೆ', colTotal: 'ಒಟ್ಟು', colShare: 'ಪಾಲು', colCategory: 'ವರ್ಗ',
+    filterDistrict: 'ಜಿಲ್ಲೆ', filterConstituency: 'ಕ್ಷೇತ್ರ',
+    filterAll: 'ಎಲ್ಲಾ', filterReset: 'ಮರುಹೊಂದಿಸಿ', filterNoRows: 'ಈ ಶೋಧನೆಗೆ ಏನೂ ಹೊಂದಿಕೆಯಾಗಿಲ್ಲ.',
+    districtSubFiltered: '{district} ಜಿಲ್ಲೆಯ ಕ್ಷೇತ್ರಗಳು. ವಿಂಗಡಿಸಲು ಶೀರ್ಷಿಕೆ ಕ್ಲಿಕ್ ಮಾಡಿ.',
     colCount: 'ಸಂಖ್ಯೆ', colBand: 'ವಯಸ್ಸಿನ ಗುಂಪು', colConstituency: 'ಕ್ಷೇತ್ರ', colBooths: 'ಮತಗಟ್ಟೆಗಳು',
     ageUnknown: 'ನಮೂದಿಸಿಲ್ಲ',
     scopeNote: '{districts} · {booths} ಮತಗಟ್ಟೆಗಳು · ದಾಖಲೆ ದಿನಾಂಕ {dates}',
@@ -583,8 +589,6 @@ function renderDashboard() {
     color: `var(--cat-${c})`
   })).sort((a, b) => b.value - a.value);
   barChart($('#chart-category'), catData, total);
-  simpleTable($('#table-category'), [t('colCategory'), t('colCount'), t('colShare')],
-    catData.map((d) => [d.label, nf().format(d.value), pct(d.value, total)]));
 
   // --- by age band
   const bandLabel = (k) => (k === 'unknown' ? t('ageUnknown') : k);
@@ -592,8 +596,6 @@ function renderDashboard() {
     .filter(([, v]) => v > 0)
     .map(([k, v]) => ({ key: k, label: bandLabel(k), value: v, color: 'var(--series-seq)' }));
   barChart($('#chart-age'), ageData, total);
-  simpleTable($('#table-age'), [t('colBand'), t('colCount'), t('colShare')],
-    ageData.map((d) => [d.label, nf().format(d.value), pct(d.value, total)]));
 
   // --- top constituencies
   const acData = stats.topConstituencies.slice(0, 12).map((a) => ({
@@ -604,9 +606,8 @@ function renderDashboard() {
     color: 'var(--series-seq)'
   }));
   barChart($('#chart-ac'), acData, total, Math.max(...acData.map((a) => a.value)));
-  simpleTable($('#table-ac'), [t('colConstituency'), t('colDistrict'), t('colCount')],
-    stats.topConstituencies.map((a) => [`${a.no} ${a.name}`, titleCase(a.district), nf().format(a.total)]));
 
+  populateFilters();
   renderDistrictLegend();
   renderDistrictTable();
 }
@@ -659,22 +660,6 @@ function barChart(host, data, shareOf, barMax = null) {
   host.appendChild(chart);
 }
 
-function simpleTable(host, headers, rows) {
-  host.innerHTML = '';
-  const table = el('table', 'data-table');
-  const thead = document.createElement('thead');
-  const hr = document.createElement('tr');
-  for (const h of headers) hr.appendChild(el('th', null, h));
-  thead.appendChild(hr);
-  const tbody = document.createElement('tbody');
-  for (const row of rows) {
-    const tr = document.createElement('tr');
-    row.forEach((cell, i) => tr.appendChild(el('td', i ? 'num' : null, cell)));
-    tbody.appendChild(tr);
-  }
-  table.append(thead, tbody);
-  host.appendChild(table);
-}
 
 function renderDistrictLegend() {
   const host = $('#district-legend');
@@ -688,7 +673,67 @@ function renderDistrictLegend() {
   }
 }
 
+/* The breakdown table is one table at two levels. With no district chosen it
+   lists districts; choosing one swaps the rows for that district's
+   constituencies, and choosing a constituency narrows to a single row. Both
+   levels carry the same columns, so the comparison stays legible. */
+const dFilter = { district: '', constituency: '' };
 let districtSort = { key: 'total', dir: -1 };
+
+const haveConstituencies = () =>
+  Array.isArray(stats.constituencies) && stats.constituencies.length > 0;
+
+function filteredRows() {
+  const districts = stats.districts.map((d) => ({ ...d, label: titleCase(d.name) }));
+  if (!dFilter.district) return districts;
+
+  // Data built before constituency stats existed: fall back to the one district.
+  if (!haveConstituencies()) return districts.filter((d) => d.name === dFilter.district);
+
+  let rows = stats.constituencies
+    .filter((c) => c.district === dFilter.district)
+    .map((c) => ({ ...c, name: c.name, label: `${c.no ?? '-'} ${titleCase(c.name)}` }));
+  if (dFilter.constituency) rows = rows.filter((c) => String(c.no) === dFilter.constituency);
+  return rows;
+}
+
+function populateFilters() {
+  const districtSel = $('#filter-district');
+  const acSel = $('#filter-constituency');
+  if (!districtSel || !acSel) return;
+
+  const option = (label, value) => {
+    const o = el('option', null, label);
+    o.value = value;
+    return o;
+  };
+
+  districtSel.innerHTML = '';
+  districtSel.appendChild(option(t('filterAll'), ''));
+  for (const d of [...stats.districts].sort((a, b) => a.name.localeCompare(b.name))) {
+    districtSel.appendChild(option(titleCase(d.name), d.name));
+  }
+  districtSel.value = dFilter.district;
+
+  const acs = haveConstituencies()
+    ? stats.constituencies
+        .filter((c) => c.district === dFilter.district)
+        .sort((a, b) => (a.no ?? 0) - (b.no ?? 0))
+    : [];
+  acSel.innerHTML = '';
+  acSel.appendChild(option(t('filterAll'), ''));
+  for (const c of acs) acSel.appendChild(option(`${c.no ?? '-'} ${titleCase(c.name)}`, String(c.no)));
+  // Picking a constituency is meaningless until a district narrows the list.
+  acSel.disabled = !dFilter.district || !acs.length;
+  acSel.value = dFilter.constituency;
+
+  const sub = $('#district-sub');
+  if (sub) {
+    sub.textContent = dFilter.district
+      ? fill(t('districtSubFiltered'), { district: titleCase(dFilter.district) })
+      : t('districtSub');
+  }
+}
 
 function renderDistrictTable() {
   const table = $('#district-table');
@@ -697,8 +742,9 @@ function renderDistrictTable() {
   thead.innerHTML = '';
   tbody.innerHTML = '';
 
+  const drilled = !!dFilter.district && haveConstituencies();
   const columns = [
-    { key: 'name', label: t('colDistrict') },
+    { key: 'label', label: drilled ? t('colConstituency') : t('colDistrict') },
     { key: 'total', label: t('colTotal'), num: true },
     ...CATEGORIES.map((c) => ({ key: c, label: t(`cat${c[0].toUpperCase()}${c.slice(1)}`), num: true })),
     { key: 'mix', label: t('colShare') }
@@ -725,16 +771,26 @@ function renderDistrictTable() {
   }
   thead.appendChild(hr);
 
-  const rows = [...stats.districts].sort((a, b) => {
+  const rows = filteredRows().sort((a, b) => {
     const [x, y] = [a[districtSort.key], b[districtSort.key]];
+    if (x == null || y == null) return 0;
     return (typeof x === 'string' ? x.localeCompare(y) : x - y) * districtSort.dir;
   });
 
+  if (!rows.length) {
+    const tr = document.createElement('tr');
+    const td = el('td', 'empty-row', t('filterNoRows'));
+    td.colSpan = columns.length;
+    tr.appendChild(td);
+    tbody.appendChild(tr);
+    return;
+  }
+
   for (const d of rows) {
     const tr = document.createElement('tr');
-    tr.appendChild(el('td', null, titleCase(d.name)));
+    tr.appendChild(el('td', null, d.label));
     tr.appendChild(el('td', 'num strong', nf().format(d.total)));
-    for (const c of CATEGORIES) tr.appendChild(el('td', 'num', nf().format(d[c])));
+    for (const c of CATEGORIES) tr.appendChild(el('td', 'num', nf().format(d[c] ?? 0)));
 
     // A 100% stacked strip: proportions at a glance without a second chart.
     const mix = el('td', 'mix-cell');
@@ -744,7 +800,7 @@ function renderDistrictTable() {
       const seg = el('div', 'mix-seg');
       seg.style.width = `${(d[c] / d.total) * 100}%`;
       seg.style.background = `var(--cat-${c})`;
-      attachTip(seg, `${titleCase(d.name)} · ${t(`cat${c[0].toUpperCase()}${c.slice(1)}`)}\n${nf().format(d[c])} · ${pct(d[c], d.total)}`);
+      attachTip(seg, `${d.label} \u00b7 ${t(`cat${c[0].toUpperCase()}${c.slice(1)}`)}\n${nf().format(d[c])} \u00b7 ${pct(d[c], d.total)}`);
       strip.appendChild(seg);
     }
     mix.appendChild(strip);
@@ -879,6 +935,25 @@ for (const btn of document.querySelectorAll('.switch-btn')) {
     applyLanguage();
   });
 }
+
+$('#filter-district').addEventListener('change', (e) => {
+  dFilter.district = e.target.value;
+  dFilter.constituency = '';   // stale AC from another district would show nothing
+  populateFilters();
+  renderDistrictTable();
+});
+
+$('#filter-constituency').addEventListener('change', (e) => {
+  dFilter.constituency = e.target.value;
+  renderDistrictTable();
+});
+
+$('#filter-reset').addEventListener('click', () => {
+  dFilter.district = '';
+  dFilter.constituency = '';
+  populateFilters();
+  renderDistrictTable();
+});
 
 $('#theme-btn').addEventListener('click', () => {
   const order = ['system', 'light', 'dark'];
