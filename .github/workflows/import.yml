@@ -40,6 +40,8 @@ jobs:
       matrix: ${{ steps.plan.outputs.matrix }}
       total: ${{ steps.plan.outputs.total }}
       districts: ${{ steps.plan.outputs.districts }}
+      source_districts: ${{ steps.plan.outputs.source_districts }}
+      empty: ${{ steps.plan.outputs.empty }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -102,29 +104,17 @@ jobs:
           SEEDED=$(node -e 'console.log(require("./cache/manifest.json").discoveredAt)')
           echo "::warning::Crawl failed; using the seed manifest discovered at ${SEEDED}. Booths added or removed at the source since then are not in this run. Refresh it with: node scripts/1-discover.mjs && gzip -9c cache/manifest.json > seed/manifest.json.gz"
 
+      # This step is where two districts were lost without a trace. It filters
+      # out districts that yielded no booth PDFs, and every later check compared
+      # against *this* number -- so an import that had already dropped
+      # Vijayanagara and Bangalore Rural still reported "all districts imported".
+      # The filter is still needed to build a matrix; what changes is that
+      # dropping anything is now a failure rather than a silent narrowing.
       - name: Plan the district matrix
         id: plan
-        run: |
-          node -e '
-            const fs = require("fs");
-            const m = JSON.parse(fs.readFileSync("cache/manifest.json", "utf8"));
-            const slug = (s) => s.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
-            const districts = m.districts
-              .filter((d) => d.acs.some((ac) => ac.files.length))
-              .map((d) => ({
-                name: d.name,
-                slug: slug(d.name),
-                booths: d.acs.reduce((n, ac) => n + ac.files.length, 0)
-              }))
-              // Longest first: the slowest district starts earliest, which
-              // shortens the whole matrix.
-              .sort((a, b) => b.booths - a.booths);
-            const total = districts.reduce((n, d) => n + d.booths, 0);
-            fs.appendFileSync(process.env.GITHUB_OUTPUT, `matrix=${JSON.stringify({ include: districts })}\n`);
-            fs.appendFileSync(process.env.GITHUB_OUTPUT, `total=${total}\n`);
-            fs.appendFileSync(process.env.GITHUB_OUTPUT, `districts=${districts.length}\n`);
-            console.log(`${districts.length} districts, ${total} booth PDFs`);
-          '
+        env:
+          ALLOW_PARTIAL: ${{ inputs.allow_partial }}
+        run: node scripts/plan-matrix.mjs
 
       - uses: actions/upload-artifact@v4
         with:
@@ -198,7 +188,14 @@ jobs:
         run: |
           GOT=$(ls cache/extracted/*.ndjson 2>/dev/null | wc -l)
           WANT=${{ needs.discover.outputs.districts }}
-          echo "districts with rows: ${GOT} of ${WANT} expected"
+          SOURCE=${{ needs.discover.outputs.source_districts }}
+          echo "districts with rows: ${GOT} of ${WANT} planned, out of ${SOURCE} on the source page"
+          # The planned count can be short of the source count only when someone
+          # asked for that with allow_partial. Say so here as well as at plan
+          # time, so it is visible on the job that actually publishes.
+          if [ -n "$SOURCE" ] && [ "$WANT" -lt "$SOURCE" ]; then
+            echo "::warning::Publishing ${WANT} of ${SOURCE} districts. Not imported: ${{ needs.discover.outputs.empty }}"
+          fi
           if [ "$GOT" -eq 0 ]; then
             echo "::error::No district rows were produced. docs/data is unchanged."
             exit 1
@@ -222,6 +219,9 @@ jobs:
       # than the pipeline. Non-zero exit here means nothing gets published.
       - name: Verify the build against every source row
         run: node --max-old-space-size=6144 scripts/verify-build.mjs
+
+      - name: Test the coverage guard
+        run: node scripts/test-coverage-guard.mjs
 
       - name: Sanity-check the lookup before publishing
         run: node scripts/smoke-test.mjs

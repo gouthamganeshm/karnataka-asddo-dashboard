@@ -57,6 +57,8 @@ const STRINGS = {
     notListedLede: 'EPIC {epic} does not appear in the ASDDO deletion data loaded here.',
     notListedNote: 'This build has no electoral-roll index, so it cannot confirm that the number exists at all — a typo would look exactly like this result. Check the number on your card, and confirm your roll status at voters.eci.gov.in.',
     notListedPartialNote: 'The roll index loaded here covers only about {coverage}% of electors — most entries in the published roll carry no standard EPIC number — so not finding this number says nothing about whether you are registered. It also cannot rule out a typo. Confirm your roll status at voters.eci.gov.in or with your BLO.',
+    coverageGapNote: 'Scope: {loaded} of {total} districts are loaded here. Not loaded: {missing}. If yours is on that list, this result tells you nothing — check the source page at ceo.karnataka.gov.in/asddo.html directly.',
+    listSeparator: ', ',
 
     unknownHeading: 'This EPIC number was not found',
     unknownLede: 'EPIC {epic} matches no record in the electoral roll or the ASDDO list.',
@@ -138,6 +140,8 @@ const STRINGS = {
     notListedLede: 'ಇಲ್ಲಿ ಲೋಡ್ ಆಗಿರುವ ASDDO ದತ್ತಾಂಶದಲ್ಲಿ EPIC {epic} ಕಂಡುಬಂದಿಲ್ಲ.',
     notListedNote: 'ಈ ಆವೃತ್ತಿಯಲ್ಲಿ ಮತದಾರರ ಪಟ್ಟಿಯ ಸೂಚಿಕೆ ಇಲ್ಲ, ಆದ್ದರಿಂದ ಸಂಖ್ಯೆ ಅಸ್ತಿತ್ವದಲ್ಲಿದೆಯೇ ಎಂದು ಖಚಿತಪಡಿಸಲಾಗದು — ಟೈಪಿಂಗ್ ತಪ್ಪೂ ಹೀಗೆಯೇ ಕಾಣುತ್ತದೆ. ನಿಮ್ಮ ಚೀಟಿಯ ಸಂಖ್ಯೆ ಪರಿಶೀಲಿಸಿ ಮತ್ತು voters.eci.gov.in ನೋಡಿ.',
     notListedPartialNote: 'ಇಲ್ಲಿ ಲೋಡ್ ಆದ ಪಟ್ಟಿಯ ಸೂಚಿಕೆ ಸುಮಾರು {coverage}% ಮತದಾರರನ್ನು ಮಾತ್ರ ಒಳಗೊಂಡಿದೆ — ಪ್ರಕಟಿತ ಪಟ್ಟಿಯ ಹೆಚ್ಚಿನ ದಾಖಲೆಗಳಲ್ಲಿ ಪ್ರಮಾಣಿತ EPIC ಸಂಖ್ಯೆ ಇಲ್ಲ — ಆದ್ದರಿಂದ ಈ ಸಂಖ್ಯೆ ಸಿಗದಿರುವುದು ನೀವು ನೋಂದಾಯಿತರಲ್ಲ ಎಂದು ಅರ್ಥವಲ್ಲ. voters.eci.gov.in ನಲ್ಲಿ ಅಥವಾ BLO ಬಳಿ ಖಚಿತಪಡಿಸಿಕೊಳ್ಳಿ.',
+    coverageGapNote: 'ವ್ಯಾಪ್ತಿ: {total} ಜಿಲ್ಲೆಗಳಲ್ಲಿ {loaded} ಜಿಲ್ಲೆಗಳ ದತ್ತಾಂಶ ಮಾತ್ರ ಇಲ್ಲಿ ಲೋಡ್ ಆಗಿದೆ. ಲೋಡ್ ಆಗಿಲ್ಲದವು: {missing}. ನಿಮ್ಮ ಜಿಲ್ಲೆ ಈ ಪಟ್ಟಿಯಲ್ಲಿದ್ದರೆ ಈ ಫಲಿತಾಂಶಕ್ಕೆ ಯಾವ ಅರ್ಥವೂ ಇಲ್ಲ — ceo.karnataka.gov.in/asddo.html ಮೂಲ ಪುಟವನ್ನೇ ನೇರವಾಗಿ ಪರಿಶೀಲಿಸಿ.',
+    listSeparator: ', ',
 
     unknownHeading: 'ಈ EPIC ಸಂಖ್ಯೆ ಕಂಡುಬಂದಿಲ್ಲ',
     unknownLede: 'EPIC {epic} ಮತದಾರರ ಪಟ್ಟಿಯಲ್ಲಾಗಲಿ ASDDO ಪಟ್ಟಿಯಲ್ಲಾಗಲಿ ಕಂಡುಬಂದಿಲ್ಲ.',
@@ -423,7 +427,29 @@ function renderVerdict(host, data, variant, mark, heading, lede, note) {
   card.appendChild(ledeWithEpic(t(lede), data.epic));
   card.appendChild(el('p', 'next-steps',
     fill(t(note), { coverage: manifest?.rollCoverage ?? '' })));
+  const scope = missingDistrictsNote();
+  if (scope && (data.kind === 'notListed' || data.kind === 'unknown')) {
+    card.appendChild(el('p', 'next-steps', scope));
+  }
   host.appendChild(card);
+}
+
+/**
+ * "Not found" means nothing at all to someone whose district was never
+ * imported, and until now the site had no way of saying so — the number was
+ * computed at build time and then never shown. Only rendered on the two
+ * verdicts where absence is the answer.
+ */
+function missingDistrictsNote() {
+  const missing = manifest?.districtsMissing ?? [];
+  if (!missing.length) return '';
+  const total = manifest?.counts?.districtsInSource ?? 0;
+  const loaded = manifest?.counts?.districts ?? 0;
+  return fill(t('coverageGapNote'), {
+    loaded,
+    total,
+    missing: missing.join(t('listSeparator'))
+  });
 }
 
 /**

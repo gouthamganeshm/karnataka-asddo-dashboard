@@ -420,10 +420,26 @@ for (const district of districts) {
   crawled.push({ name: district.name, folderId: district.folderId, pageUrl: district.pageUrl, acs });
 }
 
+const allDistricts = [...kept, ...crawled].sort((a, b) => a.name.localeCompare(b.name));
+const emptyDistricts = allDistricts
+  .filter((d) => !d.acs.some((ac) => ac.files.length))
+  .map((d) => d.name);
+
 const manifest = {
   source: SOURCE,
   discoveredAt: new Date().toISOString(),
-  districts: [...kept, ...crawled].sort((a, b) => a.name.localeCompare(b.name))
+  // Recorded rather than merely logged, because a district that yields nothing
+  // is exactly the failure that has twice reached the live site unnoticed:
+  // downstream steps filtered these out before counting, so "all districts
+  // imported" was true of a set that had already lost them. Every later stage
+  // now has the source's own number to check against.
+  coverage: {
+    districtsInSource: allDistricts.length,
+    districtsWithData: allDistricts.length - emptyDistricts.length,
+    empty: emptyDistricts,
+    unreadable: archiveNotes
+  },
+  districts: allDistricts
 };
 await writeJson(MANIFEST, manifest, true);
 
@@ -447,4 +463,10 @@ if (archiveNotes.length) {
 if (problems.length) {
   log(`\n  ${problems.length} district(s) need attention:`);
   for (const p of problems) log(`    ${p}`);
+}
+if (emptyDistricts.length) {
+  log(`\n  ${emptyDistricts.length} of ${allDistricts.length} districts yielded no booth PDFs:`);
+  for (const name of emptyDistricts) log(`    ${name}`);
+  log('  Importing without them narrows the site\'s coverage. Fix the crawl, or');
+  log('  run the import with allow_partial=true to accept the gap deliberately.');
 }
