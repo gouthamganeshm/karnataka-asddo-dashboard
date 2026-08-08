@@ -215,3 +215,25 @@ The source PDFs state they are regenerated daily. The footer shows both the
 import date and the generation dates stamped on the documents. During a claims
 and objections window, stale data is actively harmful — re-import often, and
 never present this as a substitute for `voters.eci.gov.in` or your BLO.
+
+## Running the import on GitHub Actions
+
+`.github/workflows/import.yml` runs the whole statewide import on GitHub's
+runners — the point being that a full pass streams ~5.7 GB of PDFs and produces
+~2.5 GB of intermediate rows, none of which needs to touch a laptop. Districts
+fan out as a matrix, so wall-clock is one district rather than ~9 hours.
+
+**`ceo.karnataka.gov.in` may refuse GitHub runners.** It is reachable from an
+ordinary Indian connection but government hosts commonly reject datacenter and
+foreign IP ranges, and a runner is both. Only the `discover` stage needs that
+host — `extract` talks solely to Google Drive. So the workflow falls back to
+`seed/manifest.json.gz`, a committed snapshot of the crawl, and warns that it
+did. Refresh the seed from a machine that *can* reach the source:
+
+```bash
+node scripts/1-discover.mjs
+gzip -9c cache/manifest.json > seed/manifest.json.gz
+```
+
+The preflight step prints the runner's egress IP and the status of all three
+sources before any real work, so a failed run says which host refused it.

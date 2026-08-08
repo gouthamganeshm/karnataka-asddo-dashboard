@@ -59,13 +59,33 @@ jobs:
             fi
           done
 
+      # ceo.karnataka.gov.in is reachable from an Indian consumer connection but
+      # not necessarily from a GitHub runner — some government hosts refuse
+      # datacenter and foreign IP ranges. Drive is what the heavy `extract` job
+      # actually needs; the CEO site is only needed here, to learn which booth
+      # PDFs exist. So if the crawl is refused, fall back to the manifest
+      # committed in seed/ rather than losing the whole import.
       - name: Crawl source page and Drive folders
+        id: crawl
+        continue-on-error: true
         run: |
           if [ "${{ inputs.districts }}" = "all" ] || [ -z "${{ inputs.districts }}" ]; then
             node scripts/1-discover.mjs
           else
             node scripts/1-discover.mjs --district "${{ inputs.districts }}"
           fi
+
+      - name: Fall back to the committed manifest
+        if: steps.crawl.outcome == 'failure'
+        run: |
+          if [ ! -f seed/manifest.json.gz ]; then
+            echo "::error::Crawl failed and no seed/manifest.json.gz to fall back to."
+            exit 1
+          fi
+          mkdir -p cache
+          gunzip -c seed/manifest.json.gz > cache/manifest.json
+          SEEDED=$(node -e 'console.log(require("./cache/manifest.json").discoveredAt)')
+          echo "::warning::Crawl failed; using the seed manifest discovered at ${SEEDED}. Booths added or removed at the source since then are not in this run. Refresh it with: node scripts/1-discover.mjs && gzip -9c cache/manifest.json > seed/manifest.json.gz"
 
       - name: Plan the district matrix
         id: plan
