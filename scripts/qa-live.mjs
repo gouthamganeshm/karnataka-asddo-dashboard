@@ -19,6 +19,31 @@ import { createHash } from 'node:crypto';
 import { resolve } from 'node:path';
 import { CACHE, ROOT, driveDownloadUrl, get, log, pool, progress, readJson, writeJson } from './lib/common.mjs';
 import { parseBoothPdf } from './lib/pdf.mjs';
+import { openArchiveBuffer } from './lib/archive.mjs';
+
+// Two districts publish booths inside archives, so a booth is not always its own
+// download. Without this, --every-booth reported 2,373 of 2,462 booths as
+// "fetch failed" and passed on the 18 EPICs it could still reach — a sweep that
+// looked green while silently skipping the two districts it was run for.
+const archives = new Map();
+function openArchiveOnce(file) {
+  const id = file.zipId ?? file.zipUrl;
+  if (!archives.has(id)) {
+    archives.set(id, (async () =>
+      new Map(openArchiveBuffer(await get(file.zipUrl ?? driveDownloadUrl(file.zipId),
+        { tries: 3, timeoutMs: 180000 })).map((e) => [e.name, e])))());
+  }
+  return archives.get(id);
+}
+
+async function fetchBooth(file) {
+  if (file.zipId || file.zipUrl) {
+    const entry = (await openArchiveOnce(file)).get(file.entry);
+    if (!entry) throw new Error(`no entry ${file.entry}`);
+    return entry.read();
+  }
+  return get(file.url ?? driveDownloadUrl(file.id), { tries: 2, timeoutMs: 45000 });
+}
 
 const args = process.argv.slice(2);
 const argValue = (f) => { const i = args.indexOf(f); return i === -1 ? null : args[i + 1]; };
@@ -126,7 +151,7 @@ await pool(samples, 6, async (s) => {
   const rec = { district: s.district, acNo: s.ac.no, booth: s.file.name, checks: [] };
   let buf;
   try {
-    buf = await get(s.file.url ?? driveDownloadUrl(s.file.id), { tries: 2, timeoutMs: 45000 });
+    buf = await fetchBooth(s.file);
   } catch (e) {
     rec.error = `fetch failed: ${e.message}`;
     results.push(rec);
