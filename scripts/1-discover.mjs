@@ -197,10 +197,18 @@ try {
   log(`Could not fetch ${SOURCE}`);
   log(`  ${err.message}`);
   log('');
-  log('  If this is a 403/503 or a timeout, the host is refusing this machine');
-  log('  rather than being down — some government sites reject datacenter and');
-  log('  non-Indian IP ranges, which is what a GitHub runner looks like.');
-  log('  Check the preflight step output in the workflow log.');
+  log('  ON A GITHUB RUNNER THIS IS EXPECTED, AND NOT A BROKEN BUILD.');
+  log('  ceo.karnataka.gov.in does not answer GitHub IP ranges — "fetch failed"');
+  log('  with no status code means the connection never completed, rather than');
+  log('  the site being down. It responds normally from an ordinary connection.');
+  log('');
+  log('  The workflow reads the non-zero exit below as its cue to run the');
+  log('  "Fall back to the committed manifest" step, which loads');
+  log('  seed/manifest.json.gz and carries on. Check that the next step ran.');
+  log('');
+  log('  Running this locally instead? Then the host really is unreachable from');
+  log('  here: check connectivity, or refresh the seed from a machine that can');
+  log('  reach it.');
   process.exit(1);
 }
 
