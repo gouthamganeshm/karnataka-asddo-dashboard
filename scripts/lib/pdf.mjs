@@ -143,12 +143,34 @@ export function parseBoothPdf(buf) {
   const meta = {};
   let unreadablePages = 0;
 
+  // The AC/Part header prints when a booth's section begins and not again on
+  // its continuation pages, so it has to carry forward. Scoped to the file:
+  // a row belongs to the last section header seen above it.
+  let pageAc = null;
+  let pagePart = null;
+
   for (const items of pages) {
     const rows = toRows(items);
 
+    // Every page carries the ECI's own identification of what is on it:
+    //
+    //   AC: 94-Bellary City; Part: 131-Sharada Vidya Peeta English Medium…
+    //
+    // Read per page, not once per file. A consolidated AC-wide list covers
+    // hundreds of booths and changes Part as it goes, so taking only the first
+    // line would stamp every row in the document with the first booth's number.
+    // This is the only source of identity for districts whose file names carry
+    // none — Bellary publishes four PDFs named 17858435222676.pdf and nothing
+    // else, and 1,80,421 records sat under "AC ?" because of it.
     for (const row of rows) {
       const line = row.cells.map((c) => c.text).join(' ');
-      if (!meta.acLine && /^AC:\s*/.test(line)) meta.acLine = line;
+      if (/^AC:\s*/.test(line)) {
+        if (!meta.acLine) meta.acLine = line;
+        const m = /^AC:\s*(\d{1,3})\s*-\s*([^;]+?)\s*(?:;|$)/i.exec(line);
+        if (m) pageAc = { no: +m[1], name: m[2].trim() };
+        const p = /Part:\s*(\d{1,4})\s*-\s*(.+?)\s*$/i.exec(line);
+        if (p) pagePart = { no: +p[1], name: p[2].trim() };
+      }
       if (!meta.generatedOn) {
         const g = /Date of Generation:\s*([\d/]+)/.exec(line);
         if (g) meta.generatedOn = g[1];
@@ -166,7 +188,12 @@ export function parseBoothPdf(buf) {
 
     let current = null;
     const flush = () => {
-      if (current && EPIC_RE.test(current.epic ?? '')) out.push(finaliseRow(current));
+      if (current && EPIC_RE.test(current.epic ?? '')) {
+        // Carried on the row, so a consolidated list can be split back into the
+        // booths it was assembled from. Consumers use it only where the file
+        // name gave them nothing.
+        out.push({ ...finaliseRow(current), pageAc, pagePart });
+      }
       current = null;
     };
 

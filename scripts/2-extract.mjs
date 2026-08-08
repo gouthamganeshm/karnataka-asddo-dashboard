@@ -129,7 +129,7 @@ for (const district of manifest.districts) {
       return;
     }
 
-    const { rows } = parseBoothPdf(buf);
+    const { rows, meta } = parseBoothPdf(buf);
     if (!rows.length) report.empty++;
 
     let payload = '';
@@ -137,18 +137,27 @@ for (const district of manifest.districts) {
       if (row.category === 'others' && row.reasonRaw) {
         report.unmappedReasons[row.reasonRaw] = (report.unmappedReasons[row.reasonRaw] ?? 0) + 1;
       }
+      // The file name is the first authority on which booth this is, because it
+      // is what the folder structure and the newest-copy rule are keyed on. When
+      // it carries nothing — Bellary's files are named 17858435222676.pdf — fall
+      // back to the section header the ECI printed inside the document. Without
+      // this, 1,80,421 Bellary records had no constituency and no booth.
+      const { pageAc, pagePart, ...record } = row;
+      const acNo = ac.no ?? file.acNo ?? pageAc?.no ?? null;
       payload += JSON.stringify({
-        ...row,
+        ...record,
         district: district.name,
-        acNo: ac.no ?? file.acNo ?? null,
-        acName: ac.name,
-        partNo: file.partNo ?? null,
-        partName: file.partName ?? '',
+        acNo,
+        acName: (ac.no ?? file.acNo) != null ? ac.name : (pageAc?.name ?? ac.name),
+        partNo: file.partNo ?? pagePart?.no ?? null,
+        partName: file.partName || pagePart?.name || '',
         // For a booth that came out of an archive, the citizen's source link is
         // the archive itself — that is what the district actually published.
         fileId: file.id ?? file.zipId ?? '',
         fileUrl: file.url ?? file.zipUrl ?? '',
-        generatedOn: file.generatedOn ?? ''
+        // Same fallback: the generation date is in the file name for most
+        // districts and only inside the document for the rest.
+        generatedOn: file.generatedOn || meta.generatedOn || ''
       }) + '\n';
       districtRows++;
       report.rows++;
