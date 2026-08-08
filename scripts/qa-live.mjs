@@ -12,6 +12,7 @@
  * malformed input that should be refused before any lookup happens.
  *
  *   node scripts/qa-live.mjs [--limit 40] [--site <url>]
+ *   node scripts/qa-live.mjs --every-booth --district BELLARY
  */
 
 import { createHash } from 'node:crypto';
@@ -88,9 +89,25 @@ async function lookup(epic) {
 
 // ------------------------------------------------------- sample one booth per AC
 
+// --every-booth walks all 56,747 of them rather than one per constituency. That
+// is the honest reading of "one voter from every booth", but it re-fetches every
+// booth PDF from Drive — hours, not minutes — so it is opt-in. --district
+// narrows it to somewhere worth that time, such as a district whose booth
+// attribution has just changed.
+const EVERY_BOOTH = args.includes('--every-booth');
+const ONLY = argValue('--district')?.split(',').map((d) => d.trim().toUpperCase());
+
 const perAc = new Map();
 for (const district of manifest.districts) {
+  if (ONLY && !ONLY.some((o) => district.name.includes(o))) continue;
   for (const ac of district.acs) {
+    if (EVERY_BOOTH) {
+      for (const file of ac.files) {
+        perAc.set(`${district.name}/${ac.no ?? ac.name}/${file.partNo ?? file.name}`,
+          { district: district.name, ac, file });
+      }
+      continue;
+    }
     const key = `${district.name}/${ac.no ?? ac.name}`;
     if (perAc.has(key)) continue;
     // Middle of the list: less likely to be an odd first/last file.
@@ -100,7 +117,7 @@ for (const district of manifest.districts) {
 }
 let samples = [...perAc.values()];
 if (LIMIT) samples = samples.slice(0, LIMIT);
-log(`Sampling ${samples.length} booths (one per constituency)…`);
+log(`Sampling ${samples.length} booths (${EVERY_BOOTH ? 'every booth' : 'one per constituency'})…`);
 
 const results = [];
 let fetched = 0;

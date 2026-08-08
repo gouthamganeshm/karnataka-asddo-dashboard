@@ -150,7 +150,12 @@ for (const district of manifest.districts) {
         acNo,
         acName: (ac.no ?? file.acNo) != null ? ac.name : (pageAc?.name ?? ac.name),
         partNo: file.partNo ?? pagePart?.no ?? null,
-        partName: file.partName || pagePart?.name || '',
+        // The file name is only a trustworthy source of the booth *name* when it
+        // also yielded a part number. Where it did not, parseBoothName falls back
+        // to the bare file name, and for Bellary that is "17858435222676" — which
+        // reached the live site as the polling station a voter was told to go to.
+        // Prefer the ECI's own name from the page header in that case.
+        partName: (file.partNo != null && file.partName) || pagePart?.name || file.partName || '',
         // For a booth that came out of an archive, the citizen's source link is
         // the archive itself — that is what the district actually published.
         fileId: file.id ?? file.zipId ?? '',
