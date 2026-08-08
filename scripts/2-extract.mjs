@@ -30,9 +30,6 @@ const argValue = (flag) => {
 const only = argValue('--district')?.split(',').map((s) => s.trim().toUpperCase());
 // Drive starts throttling past ~8 parallel fetches.
 const concurrency = Number(argValue('--concurrency') ?? 6);
-// A polling booth holds at most ~1,500 electors, so a PDF with more rows than
-// this is an AC-wide consolidated list, not a booth list.
-const CONSOLIDATED_ROW_LIMIT = Number(argValue('--consolidated-limit') ?? 2000);
 
 const manifest = await readJson(resolve(CACHE, 'manifest.json'));
 if (!manifest) {
@@ -45,7 +42,6 @@ const slug = (s) => s.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g
 
 const report = {
   files: 0, skipped: 0, failed: 0, scanned: 0, empty: 0, rows: 0, bytes: 0,
-  consolidated: 0, consolidatedFiles: [],
   unmappedReasons: {}, byDistrict: {}
 };
 
@@ -101,18 +97,6 @@ for (const district of manifest.districts) {
     const { rows } = parseBoothPdf(buf);
     if (!rows.length) report.empty++;
 
-    // Some districts publish an AC-wide consolidated list alongside the
-    // per-booth files, labelled as part 1. Belgaum's AC 4 list holds 10,910
-    // rows. Parsing both double-counts every elector in that constituency, and
-    // a polling booth has at most ~1,500 electors, so anything this large is
-    // not a booth. Skipped loudly rather than silently.
-    if (rows.length > CONSOLIDATED_ROW_LIMIT) {
-      report.consolidated++;
-      report.consolidatedFiles.push({ district: district.name, file: file.name, rows: rows.length });
-      await appendFile(donePath, key + '\n');
-      return;
-    }
-
     let payload = '';
     for (const row of rows) {
       if (row.category === 'others' && row.reasonRaw) {
@@ -151,10 +135,6 @@ await writeJson(resolve(CACHE, 'extract-report.json'), { ...report, unmappedReas
 
 log(`\n${report.rows} rows from ${report.files} booth PDFs (${fmtBytes(report.bytes)} streamed, none stored)`);
 log(`  failed: ${report.failed}   scanned (unreadable): ${report.scanned}   no rows: ${report.empty}`);
-if (report.consolidated) {
-  log(`  skipped ${report.consolidated} AC-wide consolidated list(s) — parsing these alongside the booth files double-counts electors:`);
-  for (const c of report.consolidatedFiles.slice(0, 10)) log(`    ${c.district}: ${c.rows} rows  ${c.file.slice(0, 60)}`);
-}
 if (report.failed) log('  Re-run to retry failures — completed booths are skipped.');
 if (unmapped.length) {
   log(`\n  Reason strings that fell through to "others" (top 10):`);

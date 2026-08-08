@@ -12,3 +12,6 @@ Thumbs.db
 roll-csv-urls.txt
 roll-csv-index.txt
 roll-csv/
+
+# QA output contains real elector names — keep it local.
+qa-results.json
