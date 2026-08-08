@@ -237,3 +237,31 @@ gzip -9c cache/manifest.json > seed/manifest.json.gz
 
 The preflight step prints the runner's egress IP and the status of all three
 sources before any real work, so a failed run says which host refused it.
+
+### District sources are not uniform
+
+The source page lists **34 districts** and publishes them three different ways.
+`1-discover.mjs` assumes nothing about shape, because every assumption made
+here has already been wrong once:
+
+- 24 districts link straight to a Google Drive folder; 10 link to their own
+  `*.nic.in` site, which links on to Drive folders (and sometimes to PDFs
+  hosted on the NIC S3 CDN). An earlier version required a Drive link and
+  silently dropped those 10.
+- The Drive trees are different shapes: `district → AC → PDFs`,
+  `district → AC → date → PDFs`, and district folders wrapped in a redundant
+  folder of the same name. Assuming a fixed depth returned **zero files, with
+  no error**, for five districts.
+- Several districts keep a folder per day, so the same booth appears many
+  times. Bijapur holds 20,126 files for 2,096 booths. Booth identity and the
+  generation timestamp both come from the file name
+  (`S10_<ac>_<part>_<booth>_<dd_mm_yyyy>_<hh_mm_ss>.pdf`), and the newest copy
+  of each `(ac, part)` wins. Without that dedupe the import is a ~10× overcount.
+
+**Known gaps** (`discover` lists them at the end of every run):
+
+| District | Why |
+|---|---|
+| VIJAYANAGARA | Publishes `.zip` archives per AC, not loose PDFs. Needs a zip reader. |
+| BANGALORE RURAL | `bangalorerural.nic.in` returns 504. Retry later. |
+| CHIKKABALLAPUR | Only 14 consolidated PDFs on the S3 CDN, not per-booth files, so AC/part cannot be read from the file name. |

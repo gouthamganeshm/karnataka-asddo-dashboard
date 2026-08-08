@@ -57,7 +57,9 @@ for (const district of manifest.districts) {
   const jobs = [];
   for (const ac of district.acs) {
     for (const file of ac.files) {
-      if (!done.has(file.id)) jobs.push({ ac, file });
+      // Drive files are keyed by id; PDFs hosted on a district site by URL.
+      const key = file.id ?? file.url;
+      if (key && !done.has(key)) jobs.push({ ac, file, key });
     }
   }
   if (!jobs.length) {
@@ -69,12 +71,12 @@ for (const district of manifest.districts) {
   const out = createWriteStream(`${base}.ndjson`, { encoding: 'utf8', flags: 'a' });
   let districtRows = 0;
 
-  await pool(jobs, concurrency, async ({ ac, file }) => {
+  await pool(jobs, concurrency, async ({ ac, file, key }) => {
     report.files++;
 
     let buf;
     try {
-      buf = await get(driveDownloadUrl(file.id));
+      buf = await get(file.url ?? driveDownloadUrl(file.id));
     } catch {
       report.failed++;
       return;
@@ -88,7 +90,7 @@ for (const district of manifest.districts) {
 
     if (looksScanned(buf)) {
       report.scanned++;
-      await appendFile(donePath, file.id + '\n');
+      await appendFile(donePath, key + '\n');
       return;
     }
 
@@ -107,7 +109,8 @@ for (const district of manifest.districts) {
         acName: ac.name,
         partNo: file.partNo ?? null,
         partName: file.partName ?? '',
-        fileId: file.id,
+        fileId: file.id ?? '',
+        fileUrl: file.url ?? '',
         generatedOn: file.generatedOn ?? ''
       }) + '\n';
       districtRows++;
@@ -115,7 +118,7 @@ for (const district of manifest.districts) {
     }
     // One write per file keeps whole lines intact under concurrency.
     if (payload) out.write(payload);
-    await appendFile(donePath, file.id + '\n');
+    await appendFile(donePath, key + '\n');
     // `buf` goes out of scope here; nothing about this PDF is kept.
   }, (n, total) =>
     progress(`  ${district.name}: ${n}/${total} booths · ${districtRows} rows · ${fmtBytes(report.bytes)} streamed · ${report.failed} failed`)
