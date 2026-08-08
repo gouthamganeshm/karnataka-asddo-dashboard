@@ -9,11 +9,10 @@
   },
   "scripts": {
     "discover": "node scripts/1-discover.mjs",
-    "download": "node scripts/2-download.mjs",
-    "extract": "node scripts/3-extract.mjs",
-    "build": "node scripts/4-build-site-data.mjs",
-    "roll": "node scripts/5-build-roll.mjs",
-    "all": "npm run discover && npm run download && npm run extract && npm run build",
+    "extract": "node scripts/2-extract.mjs",
+    "build": "node scripts/3-build-site-data.mjs",
+    "roll": "node scripts/4-build-roll.mjs",
+    "all": "npm run discover && npm run extract && npm run build",
     "serve": "node scripts/serve.mjs",
     "test": "node scripts/smoke-test.mjs"
   }

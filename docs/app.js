@@ -33,7 +33,10 @@ const STRINGS = {
     fieldDistrict: 'District', fieldAc: 'Constituency', fieldPart: 'Polling booth',
     fieldSerial: 'Serial number in the roll', fieldReason: 'Reason listed',
     fieldDup: 'Retained voter ID',
+    fieldGender: 'Gender',
     sourcePdf: 'Open the official PDF this record came from',
+    rollEntryHeading: 'Your entry on the electoral roll',
+    clearNoDetails: 'This build indexes only whether the number exists, not the roll entry itself.',
 
     actionHeading: 'What to do now',
     actionSteps: [
@@ -51,6 +54,7 @@ const STRINGS = {
     notListedHeading: 'Not on the deleted list',
     notListedLede: 'EPIC {epic} does not appear in the ASDDO deletion data loaded here.',
     notListedNote: 'This build has no electoral-roll index, so it cannot confirm that the number exists at all — a typo would look exactly like this result. Check the number on your card, and confirm your roll status at voters.eci.gov.in.',
+    notListedPartialNote: 'The roll index loaded here covers only about {coverage}% of electors — most entries in the published roll carry no standard EPIC number — so not finding this number says nothing about whether you are registered. It also cannot rule out a typo. Confirm your roll status at voters.eci.gov.in or with your BLO.',
 
     unknownHeading: 'This EPIC number was not found',
     unknownLede: 'EPIC {epic} matches no record in the electoral roll or the ASDDO list.',
@@ -105,7 +109,10 @@ const STRINGS = {
     fieldDistrict: 'ಜಿಲ್ಲೆ', fieldAc: 'ಕ್ಷೇತ್ರ', fieldPart: 'ಮತಗಟ್ಟೆ',
     fieldSerial: 'ಪಟ್ಟಿಯಲ್ಲಿ ಕ್ರಮ ಸಂಖ್ಯೆ', fieldReason: 'ನಮೂದಿಸಿದ ಕಾರಣ',
     fieldDup: 'ಉಳಿಸಿಕೊಂಡ ಗುರುತಿನ ಚೀಟಿ',
+    fieldGender: 'ಲಿಂಗ',
     sourcePdf: 'ಈ ದಾಖಲೆ ಬಂದ ಅಧಿಕೃತ PDF ತೆರೆಯಿರಿ',
+    rollEntryHeading: 'ಮತದಾರರ ಪಟ್ಟಿಯಲ್ಲಿ ನಿಮ್ಮ ದಾಖಲೆ',
+    clearNoDetails: 'ಈ ಆವೃತ್ತಿಯಲ್ಲಿ ಸಂಖ್ಯೆ ಇದೆಯೇ ಎಂಬುದನ್ನು ಮಾತ್ರ ಸೂಚಿಸಲಾಗಿದೆ, ಪಟ್ಟಿಯ ದಾಖಲೆಯ ವಿವರಗಳಲ್ಲ.',
 
     actionHeading: 'ಈಗ ಏನು ಮಾಡಬೇಕು',
     actionSteps: [
@@ -123,6 +130,7 @@ const STRINGS = {
     notListedHeading: 'ತೆಗೆದುಹಾಕಿದ ಪಟ್ಟಿಯಲ್ಲಿ ಇಲ್ಲ',
     notListedLede: 'ಇಲ್ಲಿ ಲೋಡ್ ಆಗಿರುವ ASDDO ದತ್ತಾಂಶದಲ್ಲಿ EPIC {epic} ಕಂಡುಬಂದಿಲ್ಲ.',
     notListedNote: 'ಈ ಆವೃತ್ತಿಯಲ್ಲಿ ಮತದಾರರ ಪಟ್ಟಿಯ ಸೂಚಿಕೆ ಇಲ್ಲ, ಆದ್ದರಿಂದ ಸಂಖ್ಯೆ ಅಸ್ತಿತ್ವದಲ್ಲಿದೆಯೇ ಎಂದು ಖಚಿತಪಡಿಸಲಾಗದು — ಟೈಪಿಂಗ್ ತಪ್ಪೂ ಹೀಗೆಯೇ ಕಾಣುತ್ತದೆ. ನಿಮ್ಮ ಚೀಟಿಯ ಸಂಖ್ಯೆ ಪರಿಶೀಲಿಸಿ ಮತ್ತು voters.eci.gov.in ನೋಡಿ.',
+    notListedPartialNote: 'ಇಲ್ಲಿ ಲೋಡ್ ಆದ ಪಟ್ಟಿಯ ಸೂಚಿಕೆ ಸುಮಾರು {coverage}% ಮತದಾರರನ್ನು ಮಾತ್ರ ಒಳಗೊಂಡಿದೆ — ಪ್ರಕಟಿತ ಪಟ್ಟಿಯ ಹೆಚ್ಚಿನ ದಾಖಲೆಗಳಲ್ಲಿ ಪ್ರಮಾಣಿತ EPIC ಸಂಖ್ಯೆ ಇಲ್ಲ — ಆದ್ದರಿಂದ ಈ ಸಂಖ್ಯೆ ಸಿಗದಿರುವುದು ನೀವು ನೋಂದಾಯಿತರಲ್ಲ ಎಂದು ಅರ್ಥವಲ್ಲ. voters.eci.gov.in ನಲ್ಲಿ ಅಥವಾ BLO ಬಳಿ ಖಚಿತಪಡಿಸಿಕೊಳ್ಳಿ.',
 
     unknownHeading: 'ಈ EPIC ಸಂಖ್ಯೆ ಕಂಡುಬಂದಿಲ್ಲ',
     unknownLede: 'EPIC {epic} ಮತದಾರರ ಪಟ್ಟಿಯಲ್ಲಾಗಲಿ ASDDO ಪಟ್ಟಿಯಲ್ಲಾಗಲಿ ಕಂಡುಬಂದಿಲ್ಲ.',
@@ -189,7 +197,7 @@ async function sha256hex(value) {
   return [...new Uint8Array(digest)].map((b) => b.toString(16).padStart(2, '0')).join('');
 }
 
-/** `abcd` -> `ab/cd.json`, matching scripts/4-build-site-data.mjs. */
+/** `abcd` -> `ab/cd.json`, matching scripts/3-build-site-data.mjs. */
 const bucketPath = (prefix, ext) =>
   prefix.length > 2
     ? `${prefix.slice(0, 2)}/${prefix.slice(2)}.${ext}`
@@ -217,15 +225,50 @@ async function lookup(epic) {
   }
 
   if (!manifest.hasRoll) return { kind: 'notListed', epic };
-  return (await inRoll(hash)) ? { kind: 'clear', epic } : { kind: 'unknown', epic };
+
+  const entry = await rollLookup(hash);
+  if (!entry) {
+    // Only a near-complete roll index earns the alarming "not found anywhere"
+    // verdict. Most rows in the published roll CSVs carry no standard-format
+    // EPIC at all, so on a partial index a miss says nothing about the voter —
+    // and telling a validly registered person they are missing from the roll
+    // is a worse failure than saying nothing.
+    const coverage = manifest.rollCoverage ?? 100;
+    return coverage < 95
+      ? { kind: 'notListed', epic, partialRoll: true }
+      : { kind: 'unknown', epic };
+  }
+  // `entry.details` is null when the roll was published existence-only.
+  return { kind: 'clear', epic, record: entry.details };
 }
 
-/** Binary search of the sorted 4-byte hash suffixes in one roll bucket. */
-async function inRoll(hash) {
+/**
+ * Look the EPIC up in the roll index. Returns null when absent, otherwise
+ * `{ details }` — the elector's own roll entry when the index carries details,
+ * or null details when it was built with --existence-only.
+ */
+async function rollLookup(hash) {
   const depth = manifest.rollShardDepth;
   const prefix = hash.slice(0, depth);
-  const needle = parseInt(hash.slice(depth, depth + 8), 16) >>> 0;
 
+  if (!manifest.rollHasDetails) {
+    return (await inRollBinary(hash, depth, prefix)) ? { details: null } : null;
+  }
+
+  const suffix = hash.slice(depth, depth + (manifest.rollSuffixLength ?? 8));
+  let bucket;
+  try {
+    bucket = await loadJson(`data/roll/${bucketPath(prefix, 'json')}?v=${manifest.dataVersion}`);
+  } catch (err) {
+    if (err.status === 404) return null;
+    throw err;
+  }
+  const row = bucket.find((r) => r[0] === suffix);
+  return row ? { details: await decodeRollRecord(row) } : null;
+}
+
+/** Binary search of the sorted 4-byte hash suffixes in one existence-only bucket. */
+async function inRollBinary(hash, depth, prefix) {
   let view;
   try {
     const res = await fetch(`data/roll/${bucketPath(prefix, 'bin')}?v=${manifest.dataVersion}`, { cache: 'no-cache' });
@@ -236,6 +279,7 @@ async function inRoll(hash) {
     return false;
   }
 
+  const needle = parseInt(hash.slice(depth, depth + 8), 16) >>> 0;
   let lo = 0;
   let hi = view.byteLength / 4 - 1;
   while (lo <= hi) {
@@ -246,6 +290,43 @@ async function inRoll(hash) {
     else hi = mid - 1;
   }
   return false;
+}
+
+let rollMeta = null;
+const rollPartsCache = new Map();
+
+async function decodeRollRecord(row) {
+  const [, name, relative, relIdx, age, genderIdx, acNo, partNo, serial] = row;
+
+  if (!rollMeta) {
+    rollMeta = loadJson(`data/roll-meta.json?v=${manifest.dataVersion}`).catch(() => ({
+      relations: [], genders: [], acs: {}
+    }));
+  }
+  const meta = await rollMeta;
+
+  if (!rollPartsCache.has(acNo)) {
+    rollPartsCache.set(
+      acNo,
+      loadJson(`data/roll-parts/${acNo}.json?v=${manifest.dataVersion}`).catch(() => ({}))
+    );
+  }
+  const parts = await rollPartsCache.get(acNo);
+  const [acName, district] = meta.acs?.[acNo] ?? ['', ''];
+
+  return {
+    name,
+    relative,
+    relation: relIdx >= 0 ? meta.relations[relIdx] : '',
+    age: age || null,
+    gender: genderIdx >= 0 ? meta.genders[genderIdx] : '',
+    district,
+    acNo,
+    acName,
+    partNo,
+    partName: parts?.[partNo] ?? '',
+    serial
+  };
 }
 
 async function decodeRecord(row) {
@@ -291,8 +372,11 @@ function renderResult(data) {
   host.hidden = false;
 
   if (data.kind === 'deleted') renderDeleted(host, data);
-  else if (data.kind === 'clear') renderVerdict(host, data, 'is-clear', '✓', 'clearHeading', 'clearLede', 'clearNote');
-  else if (data.kind === 'notListed') renderVerdict(host, data, 'is-caution', '–', 'notListedHeading', 'notListedLede', 'notListedNote');
+  else if (data.kind === 'clear') renderClear(host, data);
+  else if (data.kind === 'notListed') {
+    renderVerdict(host, data, 'is-caution', '–', 'notListedHeading', 'notListedLede',
+      data.partialRoll ? 'notListedPartialNote' : 'notListedNote');
+  }
   else if (data.kind === 'unknown') renderVerdict(host, data, 'is-problem', '?', 'unknownHeading', 'unknownLede', 'unknownNote');
   else {
     const card = el('div', 'result-card is-problem');
@@ -317,7 +401,52 @@ function renderVerdict(host, data, variant, mark, heading, lede, note) {
   const card = el('div', `result-card ${variant}`);
   card.appendChild(el('h2', null, `${mark}  ${t(heading)}`));
   card.appendChild(ledeWithEpic(t(lede), data.epic));
-  card.appendChild(el('p', 'next-steps', t(note)));
+  card.appendChild(el('p', 'next-steps',
+    fill(t(note), { coverage: manifest?.rollCoverage ?? '' })));
+  host.appendChild(card);
+}
+
+/**
+ * Not deleted. When the roll index carries details, show the elector their own
+ * entry — an all-clear is far more convincing when the person can see that the
+ * name, booth and serial number are actually theirs.
+ */
+function renderClear(host, data) {
+  const card = el('div', 'result-card is-clear');
+  card.appendChild(el('h2', null, `✓  ${t('clearHeading')}`));
+  card.appendChild(ledeWithEpic(t('clearLede'), data.epic));
+
+  const r = data.record;
+  if (r) {
+    const box = el('div', 'record');
+    box.appendChild(el('h3', 'record-heading', t('rollEntryHeading')));
+    const dl = document.createElement('dl');
+    const rows = [
+      [t('fieldName'), r.name],
+      ['EPIC', data.epic],
+      [t('fieldRelative'), r.relative ? `${r.relative}${r.relation ? ` (${r.relation})` : ''}` : ''],
+      [t('fieldAge'), r.age ? nf().format(r.age) : ''],
+      [t('fieldGender'), r.gender],
+      [t('fieldDistrict'), r.district ? titleCase(r.district) : ''],
+      // Deliberately no number: the roll CSVs are keyed by the CEO's internal
+      // file index (A209 is Athani, not AC 209), which would read as an
+      // official constituency number and be wrong.
+      [t('fieldAc'), titleCase(r.acName)],
+      [t('fieldPart'), r.partNo ? `${r.partNo}${r.partName ? ` — ${r.partName}` : ''}` : ''],
+      [t('fieldSerial'), r.serial ? nf().format(r.serial) : '']
+    ];
+    for (const [term, value] of rows) {
+      if (!value) continue;
+      dl.appendChild(el('dt', null, term));
+      dl.appendChild(el('dd', term === 'EPIC' ? 'epic-value' : null, value));
+    }
+    box.appendChild(dl);
+    card.appendChild(box);
+  } else if (manifest.hasRoll) {
+    card.appendChild(el('p', 'next-steps', t('clearNoDetails')));
+  }
+
+  card.appendChild(el('p', 'next-steps', t('clearNote')));
   host.appendChild(card);
 }
 

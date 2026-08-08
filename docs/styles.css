@@ -355,3 +355,8 @@ main { padding-bottom: 56px; }
   .result-card { box-shadow: none; border: 1px solid #999; }
   .source-link::after { content: ' (' attr(href) ')'; font-weight: 400; word-break: break-all; }
 }
+
+.record-heading {
+  font-size: 0.82rem; text-transform: uppercase; letter-spacing: 0.05em;
+  color: var(--ink-2); margin-bottom: 10px;
+}

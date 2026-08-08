@@ -44,15 +44,35 @@ async function lookup(epic) {
   }
 
   if (!manifest.hasRoll) return { kind: 'notListed' };
-  return (await inRoll(hash)) ? { kind: 'clear' } : { kind: 'unknown' };
+  if (await inRoll(hash)) return { kind: 'clear' };
+  // Must mirror docs/app.js: a partial roll index never produces the alarming
+  // "not found anywhere" verdict.
+  return (manifest.rollCoverage ?? 100) < 95
+    ? { kind: 'notListed', partialRoll: true }
+    : { kind: 'unknown' };
 }
 
 async function inRoll(hash) {
   const depth = manifest.rollShardDepth;
+  const prefix = hash.slice(0, depth);
+
+  // Details mode stores JSON records; --existence-only stores sorted uint32s.
+  if (manifest.rollHasDetails) {
+    const suffix = hash.slice(depth, depth + (manifest.rollSuffixLength ?? 8));
+    try {
+      const bucket = JSON.parse(
+        await readFile(resolve(DATA, 'roll', ...bucketPath(prefix, 'json')), 'utf8')
+      );
+      return bucket.some((r) => r[0] === suffix);
+    } catch {
+      return false;
+    }
+  }
+
   const needle = parseInt(hash.slice(depth, depth + 8), 16) >>> 0;
   let buf;
   try {
-    buf = await readFile(resolve(DATA, 'roll', ...bucketPath(hash.slice(0, depth), 'bin')));
+    buf = await readFile(resolve(DATA, 'roll', ...bucketPath(prefix, 'bin')));
   } catch {
     return false;
   }
@@ -71,7 +91,7 @@ async function inRoll(hash) {
 const deletedEpic = process.argv[2];
 const cases = [
   ['HELLO', 'invalid'],
-  ['ZZZ0000000', manifest.hasRoll ? 'unknown' : 'notListed'],
+  ['ZZZ0000000', manifest.hasRoll && (manifest.rollCoverage ?? 100) >= 95 ? 'unknown' : 'notListed'],
   ...(deletedEpic ? [[deletedEpic, 'deleted']] : [])
 ];
 

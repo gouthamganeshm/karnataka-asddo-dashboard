@@ -152,12 +152,19 @@
       "\u0000F\u0000a\u0000t\u0000h\u0000e\u0000r\u0000"
     ]
   },
-  "hasRoll": false,
+  "hasRoll": true,
   "counts": {
     "records": 64437,
     "districts": 1,
     "constituencies": 2,
     "booths": 550,
     "buckets": 4096
-  }
+  },
+  "rollHasDetails": true,
+  "rollShardDepth": 2,
+  "rollSuffixLength": 8,
+  "rollCount": 29647,
+  "rollConstituencies": 2,
+  "rollCoverage": 9.3,
+  "rollImportedAt": "2026-08-08T08:20:06.077Z"
 }
