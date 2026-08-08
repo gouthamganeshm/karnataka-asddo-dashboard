@@ -27,7 +27,15 @@ export async function get(url, { tries = 4, timeoutMs = 60000 } = {}) {
         redirect: 'follow',
         signal: ac.signal
       });
-      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      if (!res.ok) {
+        // Carry a snippet of the body: a geo-block, a WAF challenge and a
+        // genuine 404 all arrive as a bare status code otherwise, and the
+        // difference decides whether re-running could ever help.
+        const snippet = (await res.text().catch(() => ''))
+          .replace(/\s+/g, ' ')
+          .slice(0, 200);
+        throw new Error(`HTTP ${res.status} ${res.statusText}${snippet ? ` — ${snippet}` : ''}`);
+      }
       return Buffer.from(await res.arrayBuffer());
     } catch (err) {
       lastErr = err;

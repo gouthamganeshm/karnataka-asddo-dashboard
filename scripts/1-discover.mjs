@@ -40,7 +40,19 @@ function parseDistricts(html) {
   return districts;
 }
 
-const html = await getText(SOURCE);
+let html;
+try {
+  html = await getText(SOURCE);
+} catch (err) {
+  log(`Could not fetch ${SOURCE}`);
+  log(`  ${err.message}`);
+  log('');
+  log('  If this is a 403/503 or a timeout, the host is refusing this machine');
+  log('  rather than being down — some government sites reject datacenter and');
+  log('  non-Indian IP ranges, which is what a GitHub runner looks like.');
+  log('  Check the preflight step output in the workflow log.');
+  process.exit(1);
+}
 let districts = parseDistricts(html);
 log(`Found ${districts.length} districts on ${SOURCE}`);
 

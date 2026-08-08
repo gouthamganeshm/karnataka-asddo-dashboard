@@ -40,6 +40,25 @@ jobs:
       - uses: actions/setup-node@v4
         with: { node-version: '20' }
 
+      # Both sources are third-party and neither is under our control. When a
+      # run fails, the first question is always "could the runner even reach
+      # them", and answering it in the log costs three seconds.
+      - name: Preflight — can this runner reach the sources?
+        run: |
+          echo "runner egress IP: $(curl -s --max-time 15 https://api.ipify.org || echo unknown)"
+          for url in \
+            "https://ceo.karnataka.gov.in/asddo.html" \
+            "https://drive.google.com/embeddedfolderview?id=1ozZpVkJQvBItLlh5BbT9Z0EuOgPszBmA#list" \
+            "https://ceo.karnataka.gov.in/csv_upload/english/A001.csv"; do
+            code=$(curl -s -o /tmp/pf.out -w '%{http_code}' --max-time 45 \
+                   -A "Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/126.0.0.0 Safari/537.36" "$url" || echo "000")
+            echo "  $code  $url  ($(wc -c < /tmp/pf.out) bytes)"
+            if [ "$code" != "200" ]; then
+              echo "  --- first 300 bytes of the response ---"
+              head -c 300 /tmp/pf.out; echo
+            fi
+          done
+
       - name: Crawl source page and Drive folders
         run: |
           if [ "${{ inputs.districts }}" = "all" ] || [ -z "${{ inputs.districts }}" ]; then
