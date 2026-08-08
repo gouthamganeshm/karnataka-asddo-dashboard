@@ -392,3 +392,9 @@ main { padding-bottom: 56px; }
   .filters select { min-width: 0; width: 100%; }
   .filter { flex: 1 1 100%; }
 }
+
+.source-block {
+  margin-top: 14px; padding-top: 12px; border-top: 1px dashed var(--rule);
+}
+.source-link { display: inline-block; font-size: 0.95rem; color: var(--series-seq); font-weight: 700; }
+.source-detail { margin: 5px 0 0; font-size: 0.82rem; color: var(--ink-2); }

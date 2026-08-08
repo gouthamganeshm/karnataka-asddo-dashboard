@@ -35,6 +35,8 @@ const STRINGS = {
     fieldDup: 'Retained voter ID',
     fieldGender: 'Gender',
     sourcePdf: 'Open the official PDF this record came from',
+    sourceGenerated: 'generated',
+    sourceMissing: 'The source document for this record could not be identified. Ask your BLO for the ASDDO list for your booth.',
     rollEntryHeading: 'Your entry on the electoral roll',
     clearNoDetails: 'This build indexes only whether the number exists, not the roll entry itself.',
 
@@ -114,6 +116,8 @@ const STRINGS = {
     fieldDup: 'ಉಳಿಸಿಕೊಂಡ ಗುರುತಿನ ಚೀಟಿ',
     fieldGender: 'ಲಿಂಗ',
     sourcePdf: 'ಈ ದಾಖಲೆ ಬಂದ ಅಧಿಕೃತ PDF ತೆರೆಯಿರಿ',
+    sourceGenerated: 'ದಾಖಲೆ ದಿನಾಂಕ',
+    sourceMissing: 'ಈ ದಾಖಲೆಯ ಮೂಲ ಕಡತವನ್ನು ಗುರುತಿಸಲಾಗಲಿಲ್ಲ. ನಿಮ್ಮ ಮತಗಟ್ಟೆಯ ASDDO ಪಟ್ಟಿಯನ್ನು BLO ಅವರಿಂದ ಕೇಳಿ.',
     rollEntryHeading: 'ಮತದಾರರ ಪಟ್ಟಿಯಲ್ಲಿ ನಿಮ್ಮ ದಾಖಲೆ',
     clearNoDetails: 'ಈ ಆವೃತ್ತಿಯಲ್ಲಿ ಸಂಖ್ಯೆ ಇದೆಯೇ ಎಂಬುದನ್ನು ಮಾತ್ರ ಸೂಚಿಸಲಾಗಿದೆ, ಪಟ್ಟಿಯ ದಾಖಲೆಯ ವಿವರಗಳಲ್ಲ.',
 
@@ -335,19 +339,28 @@ async function decodeRollRecord(row) {
   };
 }
 
+/**
+ * `source` is either a Drive file id or, for districts that host PDFs on their
+ * own site, an absolute URL.
+ */
+const sourceUrl = (source) =>
+  !source ? '' : /^https?:\/\//i.test(source) ? source : `https://drive.google.com/file/d/${source}/view`;
+
 async function decodeRecord(row) {
-  const [, name, relative, relIdx, age, serial, reasonIdx, acIdx, partNo, dup] = row;
+  const [, name, relative, relIdx, age, serial, reasonIdx, acIdx, fileIdx, dup] = row;
   const [acNo, acName, districtIdx] = manifest.dicts.acs[acIdx];
 
-  let part = null;
   if (!partsCache.has(acIdx)) {
     partsCache.set(
       acIdx,
-      loadJson(`data/parts/${acIdx}.json?v=${manifest.dataVersion}`).catch(() => ({}))
+      loadJson(`data/parts/${acIdx}.json?v=${manifest.dataVersion}`).catch(() => [])
     );
   }
-  const parts = await partsCache.get(acIdx);
-  if (parts && parts[partNo]) part = parts[partNo];
+  const sources = await partsCache.get(acIdx);
+  // Older builds keyed this file by part number; current builds ship an array
+  // indexed by the record's own file reference.
+  const part = Array.isArray(sources) ? sources[fileIdx] : sources?.[fileIdx];
+  const partNo = part ? part[1] : 0;
 
   return {
     name,
@@ -360,9 +373,10 @@ async function decodeRecord(row) {
     acNo,
     acName,
     partNo,
-    partName: part ? part[0] : '',
-    fileId: part ? part[1] : '',
-    generatedOn: part ? part[2] : '',
+    partName: part ? part[2] : '',
+    sourceUrl: part ? sourceUrl(part[0]) : '',
+    sourceName: part ? part[0] : '',
+    generatedOn: part ? part[3] : '',
     dup
   };
 }
@@ -490,13 +504,25 @@ function renderDeleted(host, data) {
     box.appendChild(dl);
 
     // Linking the source document is the difference between "a website says
-    // so" and evidence you can take to a BLO.
-    if (record.fileId) {
+    // so" and evidence you can take to a BLO, so it is shown prominently and
+    // names the booth it came from rather than being a bare "source" link.
+    if (record.sourceUrl) {
+      const source = el('div', 'source-block');
       const link = el('a', 'source-link', `${t('sourcePdf')} ↗`);
-      link.href = `https://drive.google.com/file/d/${record.fileId}/view`;
+      link.href = record.sourceUrl;
       link.target = '_blank';
       link.rel = 'noopener noreferrer';
-      box.appendChild(link);
+      source.appendChild(link);
+
+      const detail = [
+        record.partNo ? `${t('fieldPart')} ${record.partNo}` : '',
+        record.partName,
+        record.generatedOn ? `${t('sourceGenerated')} ${record.generatedOn}` : ''
+      ].filter(Boolean).join(' · ');
+      if (detail) source.appendChild(el('p', 'source-detail', detail));
+      box.appendChild(source);
+    } else {
+      box.appendChild(el('p', 'source-detail', t('sourceMissing')));
     }
     card.appendChild(box);
   }
@@ -537,7 +563,7 @@ function asPlainText(data) {
       `${t('fieldPart')}: ${r.partNo} — ${r.partName}`,
       `${t('fieldSerial')}: ${r.serial}`,
       `${t('fieldReason')}: ${r.reason}`,
-      r.fileId ? `Source: https://drive.google.com/file/d/${r.fileId}/view` : '',
+      r.sourceUrl ? `Source PDF: ${r.sourceUrl}` : '',
       ''
     );
   }

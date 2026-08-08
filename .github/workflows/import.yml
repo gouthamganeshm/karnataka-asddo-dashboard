@@ -20,6 +20,10 @@ on:
         description: 'Parallel Drive fetches per runner'
         default: '6'
         type: string
+      allow_partial:
+        description: 'Publish even if some districts failed (normally refused)'
+        default: false
+        type: boolean
   # Source PDFs are regenerated daily; weekly keeps the site honest without
   # hammering Drive. Delete this block to make imports manual only.
   schedule:
@@ -35,6 +39,7 @@ jobs:
     outputs:
       matrix: ${{ steps.plan.outputs.matrix }}
       total: ${{ steps.plan.outputs.total }}
+      districts: ${{ steps.plan.outputs.districts }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -117,6 +122,7 @@ jobs:
             const total = districts.reduce((n, d) => n + d.booths, 0);
             fs.appendFileSync(process.env.GITHUB_OUTPUT, `matrix=${JSON.stringify({ include: districts })}\n`);
             fs.appendFileSync(process.env.GITHUB_OUTPUT, `total=${total}\n`);
+            fs.appendFileSync(process.env.GITHUB_OUTPUT, `districts=${districts.length}\n`);
             console.log(`${districts.length} districts, ${total} booth PDFs`);
           '
 
@@ -161,9 +167,12 @@ jobs:
 
   build:
     needs: [discover, extract]
-    # Build from whatever succeeded rather than losing a 40-minute matrix to
-    # one district that 403'd; the commit message records the shortfall.
-    if: always()
+    # Runs even when some districts failed, so one 403 does not throw away a
+    # two-hour matrix -- but NOT when the run was cancelled. A cancelled matrix
+    # has arbitrarily few artifacts, and publishing those silently replaced 19
+    # districts of live data with 2. Partial output is refused below unless
+    # asked for explicitly.
+    if: always() && needs.discover.result == 'success' && needs.extract.result != 'cancelled'
     runs-on: ubuntu-latest
     timeout-minutes: 60
     steps:
@@ -185,13 +194,22 @@ jobs:
       # `if: always()` keeps this job alive so a partial matrix still publishes.
       # The cost is that it also runs when extract never started, and an empty
       # download there must read as "upstream failed", not as a build error.
-      - name: Check there is anything to build
+      - name: Refuse to publish a partial import
         run: |
-          if [ -z "$(ls -A cache/extracted 2>/dev/null | grep -c ndjson)" ] || [ "$(ls cache/extracted/*.ndjson 2>/dev/null | wc -l)" -eq 0 ]; then
-            echo "::error::No district rows were produced — the extract stage did not run or failed everywhere. Nothing to publish; docs/data is unchanged."
+          GOT=$(ls cache/extracted/*.ndjson 2>/dev/null | wc -l)
+          WANT=${{ needs.discover.outputs.districts }}
+          echo "districts with rows: ${GOT} of ${WANT} expected"
+          if [ "$GOT" -eq 0 ]; then
+            echo "::error::No district rows were produced. docs/data is unchanged."
             exit 1
           fi
-          echo "districts with rows: $(ls cache/extracted/*.ndjson | wc -l)"
+          # Publishing fewer districts than we set out to import silently narrows
+          # the site's coverage, and a visitor from a missing district reads
+          # "not on the list" as an all-clear. That must be a deliberate choice.
+          if [ "$GOT" -lt "$WANT" ] && [ "${{ inputs.allow_partial }}" != "true" ]; then
+            echo "::error::Only ${GOT}/${WANT} districts produced rows. Re-run the failed districts, or re-run with allow_partial=true to publish anyway. docs/data is unchanged."
+            exit 1
+          fi
           wc -l cache/extracted/*.ndjson | tail -1
 
       - name: Build site data
