@@ -26,6 +26,7 @@ import {
   CACHE, decodeEntities, getText, listDriveFolder, log, pool, progress,
   readJson, writeJson
 } from './lib/common.mjs';
+import { NOT_A_BOOTH_LIST, parseBoothName } from './lib/naming.mjs';
 
 const SOURCE = 'https://ceo.karnataka.gov.in/asddo.html';
 const MANIFEST = resolve(CACHE, 'manifest.json');
@@ -108,7 +109,9 @@ async function collectPdfs(folderId, trail = [], depth = 0, seen = new Set()) {
   const out = [];
   const folders = entries.filter((e) => e.isFolder);
   for (const file of entries) {
-    if (!file.isFolder && /\.pdf$/i.test(file.name)) out.push({ id: file.id, name: file.name, trail });
+    if (!file.isFolder && /\.pdf$/i.test(file.name) && !NOT_A_BOOTH_LIST.test(file.name)) {
+      out.push({ id: file.id, name: file.name, trail });
+    }
   }
   for (const folder of folders) {
     out.push(...await collectPdfs(folder.id, [...trail, folder.name], depth + 1, seen));
@@ -116,22 +119,6 @@ async function collectPdfs(folderId, trail = [], depth = 0, seen = new Set()) {
   return out;
 }
 
-/** `S10_209_100_Govt Higher primary School, Halugunda_01_08_2026_16_23_25.pdf` */
-function parseBoothName(fileName) {
-  const m = /^([A-Z]\d+)_(\d+)_(\d+)_(.*?)_(\d{2}_\d{2}_\d{4})_(\d{2}_\d{2}_\d{2})\.pdf$/i.exec(fileName);
-  if (!m) return { partNo: null, partName: fileName.replace(/\.pdf$/i, ''), stamp: 0 };
-  const [dd, mm, yyyy] = m[5].split('_');
-  const [hh, mi, ss] = m[6].split('_');
-  return {
-    stateCode: m[1],
-    acNo: +m[2],
-    partNo: +m[3],
-    partName: m[4].replace(/\s+/g, ' ').trim(),
-    generatedOn: m[5].replace(/_/g, '/'),
-    // Sortable instant, so the freshest copy of a booth wins.
-    stamp: Date.parse(`${yyyy}-${mm}-${dd}T${hh}:${mi}:${ss}Z`) || 0
-  };
-}
 
 /** Nearest ancestor folder that looks like "26 Muddebihal" / "221-AC Hanuru". */
 function acFromTrail(trail, acNo) {
