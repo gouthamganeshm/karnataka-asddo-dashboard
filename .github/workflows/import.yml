@@ -46,6 +46,11 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with: { node-version: '20' }
+      # One district ships its booth lists as a .rar inside a .zip, which zlib
+      # cannot read. unar handles RAR5 and is a single apt package; without it
+      # those 250 booths are reported unreadable rather than silently lost.
+      - name: Install a RAR extractor
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq unar
 
       # Both sources are third-party and neither is under our control. When a
       # run fails, the first question is always "could the runner even reach
@@ -137,6 +142,11 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with: { node-version: '20' }
+      # One district ships its booth lists as a .rar inside a .zip, which zlib
+      # cannot read. unar handles RAR5 and is a single apt package; without it
+      # those 250 booths are reported unreadable rather than silently lost.
+      - name: Install a RAR extractor
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq unar
 
       - uses: actions/download-artifact@v4
         with: { name: manifest, path: cache }

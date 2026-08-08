@@ -33,7 +33,8 @@ import {
   pool, progress, readJson, writeJson
 } from './lib/common.mjs';
 import { NOT_A_BOOTH_LIST, parseBoothName } from './lib/naming.mjs';
-import { listZipEntries, looksZip } from './lib/zip.mjs';
+import { looksZip } from './lib/zip.mjs';
+import { openArchiveBuffer } from './lib/archive.mjs';
 
 const SOURCE = 'https://ceo.karnataka.gov.in/asddo.html';
 const MANIFEST = resolve(CACHE, 'manifest.json');
@@ -155,14 +156,9 @@ async function expandArchive(file, trail, prefetched = null) {
     archiveNotes.push(`${file.name}: could not fetch (${err.message})`);
     return [];
   }
-  if (!looksZip(buf)) {
-    archiveNotes.push(`${file.name}: not a zip (${buf.subarray(0, 4).toString('latin1')})`);
-    return [];
-  }
-
   let entries;
   try {
-    entries = listZipEntries(buf);
+    entries = openArchiveBuffer(buf);
   } catch (err) {
     archiveNotes.push(`${file.name}: ${err.message}`);
     return [];
@@ -183,8 +179,8 @@ async function expandArchive(file, trail, prefetched = null) {
       trail: [...trail, file.name]
     });
   }
-  // A .rar nested inside a .zip is the one case here that stays unreadable
-  // without a third-party decoder; say so rather than reporting zero booths.
+  // Anything left that holds no booth PDFs at all: name what is inside it,
+  // rather than reporting an empty district and letting it disappear.
   if (!out.length && other) {
     archiveNotes.push(
       `${file.name}: holds no PDFs, only ${entries.map((e) => e.name.split('/').pop()).join(', ')}`

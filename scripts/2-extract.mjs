@@ -23,7 +23,7 @@ import {
   CACHE, driveDownloadUrl, fmtBytes, get, log, pool, progress, readJson, writeJson
 } from './lib/common.mjs';
 import { looksScanned, parseBoothPdf } from './lib/pdf.mjs';
-import { listZipEntries } from './lib/zip.mjs';
+import { openArchiveBuffer } from './lib/archive.mjs';
 
 const OUT_DIR = resolve(CACHE, 'extracted');
 const args = process.argv.slice(2);
@@ -63,7 +63,7 @@ function openArchive(file) {
     archives.set(id, (async () => {
       const buf = await get(file.zipUrl ?? driveDownloadUrl(file.zipId));
       report.bytes += buf.length;
-      return new Map(listZipEntries(buf).map((e) => [e.name, e]));
+      return new Map(openArchiveBuffer(buf).map((e) => [e.name, e]));
     })());
   }
   return archives.get(id);
