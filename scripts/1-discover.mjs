@@ -120,14 +120,34 @@ async function collectPdfs(folderId, trail = [], depth = 0, seen = new Set()) {
 }
 
 
-/** Nearest ancestor folder that looks like "26 Muddebihal" / "221-AC Hanuru". */
+/**
+ * Nearest ancestor folder that looks like "26 Muddebihal" / "221-AC Hanuru".
+ *
+ * Districts also nest by date, and "31-07-2026" matches that shape perfectly —
+ * which invented a constituency 31 named "07-2026" and mis-filed Muddebihal's
+ * booths under it. So date-shaped folders are rejected outright, and the
+ * remaining label must contain real letters to count as a name.
+ */
 function acFromTrail(trail, acNo) {
   for (let i = trail.length - 1; i >= 0; i--) {
-    const m = /^(\d{1,3})\s*[-.]?\s*(?:AC[\s-]*)?(.+)$/i.exec(trail[i].trim());
+    const entry = trail[i].trim();
+
+    // dd-mm-yyyy, dd_mm_yyyy, mm-yyyy, and the same with a "Final" suffix.
+    if (/^\d{1,2}[-_./]\d{1,2}[-_./]\d{2,4}\b/.test(entry)) continue;
+    if (/^\d{1,2}[-_./]\d{4}\b/.test(entry)) continue;
+
+    const m = /^(\d{1,3})\s*[-.]?\s*(?:AC[\s-]*)?(.+)$/i.exec(entry);
     if (!m) continue;
-    if (acNo != null && +m[1] !== acNo) continue;
+
+    const no = +m[1];
+    // Karnataka has 224 assembly constituencies; anything outside that is not one.
+    if (no < 1 || no > 224) continue;
+    if (acNo != null && no !== acNo) continue;
+
     const label = m[2].replace(/\bASDD?O?\b.*$/i, '').replace(/[\s._-]+$/, '').trim();
-    if (label) return { no: +m[1], name: label };
+    // "07-2026" leaves no letters behind; a constituency name has some.
+    if (!/[A-Za-z]{3}/.test(label)) continue;
+    return { no, name: label };
   }
   return null;
 }

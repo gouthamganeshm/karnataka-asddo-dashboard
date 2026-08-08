@@ -582,6 +582,25 @@ function categoryOf(reason) {
 
 // ---------------------------------------------------------------- dashboard
 
+/**
+ * Constituency names, from the ECI's own line inside each booth PDF
+ * ("AC: 209-Virajpet"). Drive folder names are the only thing discover can read
+ * a name from, and for a third of constituencies they are not AC-shaped, which
+ * left cards and filters saying "AC 167". These are authoritative, so they win
+ * outright rather than only filling blanks — folder-derived names are also
+ * inconsistently punctuated.
+ *
+ * Applied at load time so a name fix never requires re-importing 50,000 PDFs.
+ */
+function applyAcNames(overrides) {
+  if (!overrides || !Object.keys(overrides).length) return;
+  const named = (no, current) => (no != null && overrides[no]) || current;
+  for (const ac of manifest.dicts?.acs ?? []) ac[1] = named(ac[0], ac[1]);
+  for (const list of [stats.constituencies, stats.topConstituencies]) {
+    for (const ac of list ?? []) ac.name = named(ac.no, ac.name);
+  }
+}
+
 function renderDashboard() {
   const total = stats.total;
   const counts = manifest.counts;
@@ -1000,6 +1019,7 @@ try {
     loadJson('data/manifest.json'),
     loadJson('data/stats.json')
   ]);
+  applyAcNames(await loadJson('data/ac-names.json').catch(() => ({})));
   renderDashboard();
   renderFooterMeta();
 } catch {
