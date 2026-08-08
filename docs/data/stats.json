@@ -1,0 +1,50 @@
+{
+  "dataVersion": "msk2zsam",
+  "total": 64437,
+  "byCategory": {
+    "absent": 10791,
+    "shifted": 34092,
+    "death": 13658,
+    "duplicate": 5771,
+    "others": 125
+  },
+  "ageBands": {
+    "18-29": 8923,
+    "30-44": 21730,
+    "45-59": 16857,
+    "60-79": 13177,
+    "80+": 3750,
+    "unknown": 0
+  },
+  "generatedOn": [
+    "01/08/2026",
+    "03/08/2026"
+  ],
+  "districts": [
+    {
+      "name": "KODAGU",
+      "total": 64437,
+      "constituencies": 2,
+      "booths": 550,
+      "absent": 10791,
+      "shifted": 34092,
+      "death": 13658,
+      "duplicate": 5771,
+      "others": 125
+    }
+  ],
+  "topConstituencies": [
+    {
+      "no": 209,
+      "name": "Virajpet",
+      "district": "KODAGU",
+      "total": 34756
+    },
+    {
+      "no": 208,
+      "name": "Madikeri",
+      "district": "KODAGU",
+      "total": 29681
+    }
+  ]
+}

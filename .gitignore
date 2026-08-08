@@ -1,0 +1,9 @@
+# Raw scrape cache. Tens of thousands of PDFs — never commit these.
+cache/
+node_modules/
+
+# Generated site data is committed on purpose (GitHub Pages serves it),
+# so docs/data/ is NOT ignored. See README "What gets committed".
+*.log
+.DS_Store
+Thumbs.db

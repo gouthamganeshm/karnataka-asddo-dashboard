@@ -1,0 +1,20 @@
+{
+  "name": "karnataka-asddo-dashboard",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Static dashboard + EPIC lookup over the Karnataka ASDDO (Absent/Shifted/Death/Duplicate/Others) deletion lists published by CEO Karnataka.",
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "discover": "node scripts/1-discover.mjs",
+    "download": "node scripts/2-download.mjs",
+    "extract": "node scripts/3-extract.mjs",
+    "build": "node scripts/4-build-site-data.mjs",
+    "roll": "node scripts/5-build-roll.mjs",
+    "all": "npm run discover && npm run download && npm run extract && npm run build",
+    "serve": "node scripts/serve.mjs",
+    "test": "node scripts/smoke-test.mjs"
+  }
+}

@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Karnataka ASDDO Dashboard — check whether a voter ID was deleted</title>
+<meta name="description" content="Dashboard of Karnataka ASDDO voter-roll deletions, with an EPIC lookup that runs entirely in your browser.">
+<meta name="robots" content="noindex, nofollow">
+<meta name="referrer" content="no-referrer">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#1b3a5c">
+<link rel="stylesheet" href="styles.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🗳️</text></svg>">
+</head>
+<body>
+
+<a class="skip-link" href="#lookup-form" data-i18n="skip">Skip to the EPIC check</a>
+
+<header class="site-header">
+  <div class="wrap header-inner">
+    <div class="brand">
+      <h1 data-i18n="title">Karnataka ASDDO Dashboard</h1>
+      <p class="tagline" data-i18n="tagline">Names removed from the voter roll — check your own, and see the scale</p>
+    </div>
+    <div class="header-controls">
+      <div class="switch" role="group" aria-label="Language">
+        <button type="button" class="switch-btn is-active" data-lang="en">English</button>
+        <button type="button" class="switch-btn" data-lang="kn">ಕನ್ನಡ</button>
+      </div>
+      <button type="button" class="icon-btn" id="theme-btn" aria-label="Switch theme" title="Switch theme">
+        <span aria-hidden="true" id="theme-icon">◐</span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <!-- ============================================================ lookup -->
+  <section class="panel panel-lookup" aria-labelledby="lookup-heading">
+    <div class="lookup-copy">
+      <h2 id="lookup-heading" data-i18n="lookupHeading">Check a voter ID</h2>
+      <p data-i18n="intro">
+        The ASDDO list records names removed from the electoral roll under five
+        categories: Absent, Shifted, Death, Duplicate and Others. Enter an EPIC
+        number to check whether it appears there.
+      </p>
+      <ul class="acronym" aria-label="What ASDDO stands for">
+        <li><span class="dot" data-cat="absent"></span><span data-i18n="catAbsent">Absent</span></li>
+        <li><span class="dot" data-cat="shifted"></span><span data-i18n="catShifted">Shifted</span></li>
+        <li><span class="dot" data-cat="death"></span><span data-i18n="catDeath">Death</span></li>
+        <li><span class="dot" data-cat="duplicate"></span><span data-i18n="catDuplicate">Duplicate</span></li>
+        <li><span class="dot" data-cat="others"></span><span data-i18n="catOthers">Others</span></li>
+      </ul>
+      <p class="privacy-note">
+        <span aria-hidden="true">🔒</span>
+        <span data-i18n="privacyNote">The number you type never leaves this device. The check runs in your browser against data files served by GitHub.</span>
+      </p>
+    </div>
+
+    <form id="lookup-form" class="lookup-form" novalidate>
+      <label for="epic" data-i18n="epicLabel">EPIC number</label>
+      <input id="epic" name="epic" type="text" inputmode="text" autocomplete="off"
+             autocapitalize="characters" spellcheck="false" maxlength="10"
+             placeholder="ABC1234567" aria-describedby="epic-help">
+      <p class="help" id="epic-help" data-i18n="epicHelp">
+        Printed on the front of your voter ID card. Exactly 3 letters followed by 7 digits.
+      </p>
+      <button type="submit" class="submit" id="submit-btn">
+        <span data-i18n="checkBtn">Check this EPIC</span>
+      </button>
+    </form>
+  </section>
+
+  <section id="result" class="result" aria-live="polite" tabindex="-1" hidden></section>
+
+  <!-- ========================================================= dashboard -->
+  <section class="dash" aria-labelledby="dash-heading">
+    <div class="section-head">
+      <h2 id="dash-heading" data-i18n="dashHeading">What is in this dataset</h2>
+      <p class="section-sub" id="dash-scope"></p>
+    </div>
+
+    <div class="tiles" id="tiles"></div>
+
+    <div class="grid-2">
+      <figure class="card chart-card">
+        <figcaption>
+          <h3 data-i18n="chartCategoryTitle">Deletions by reason</h3>
+          <p class="chart-sub" data-i18n="chartCategorySub">Every removed name, grouped into the five ASDDO buckets.</p>
+        </figcaption>
+        <div id="chart-category" class="chart"></div>
+        <details class="table-view">
+          <summary data-i18n="tableView">View as table</summary>
+          <div id="table-category"></div>
+        </details>
+      </figure>
+
+      <figure class="card chart-card">
+        <figcaption>
+          <h3 data-i18n="chartAgeTitle">Age of removed electors</h3>
+          <p class="chart-sub" data-i18n="chartAgeSub">Age as printed in the source list, at the time it was generated.</p>
+        </figcaption>
+        <div id="chart-age" class="chart"></div>
+        <details class="table-view">
+          <summary data-i18n="tableView">View as table</summary>
+          <div id="table-age"></div>
+        </details>
+      </figure>
+    </div>
+
+    <figure class="card chart-card">
+      <figcaption>
+        <h3 data-i18n="chartAcTitle">Constituencies with the most deletions</h3>
+        <p class="chart-sub" data-i18n="chartAcSub">Absolute counts. A large constituency will naturally sit higher — read this alongside the district table.</p>
+      </figcaption>
+      <div id="chart-ac" class="chart"></div>
+      <details class="table-view">
+        <summary data-i18n="tableView">View as table</summary>
+        <div id="table-ac"></div>
+      </details>
+    </figure>
+
+    <div class="card">
+      <div class="section-head compact">
+        <h3 data-i18n="districtTitle">District breakdown</h3>
+        <p class="chart-sub" data-i18n="districtSub">Click a column heading to sort.</p>
+      </div>
+      <div class="legend" id="district-legend"></div>
+      <div class="table-scroll">
+        <table class="data-table" id="district-table">
+          <thead></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <p class="meta" id="footer-meta"></p>
+    <p class="meta" data-i18n="footerSource">
+      Source: the ASDDO lists published by the Chief Electoral Officer, Karnataka.
+      This site is an independent, unofficial reformatting of those documents.
+      Always confirm with your BLO or voters.eci.gov.in before acting.
+    </p>
+    <p class="meta"><a href="https://ceo.karnataka.gov.in/asddo.html" rel="noopener noreferrer" target="_blank" data-i18n="footerLink">Original documents on ceo.karnataka.gov.in</a></p>
+  </div>
+</footer>
+
+<script src="app.js" type="module"></script>
+</body>
+</html>
