@@ -42,7 +42,10 @@ function parseDistricts(html) {
 
 let html;
 try {
-  html = await getText(SOURCE);
+  // Short and few: when this host drops packets from a datacenter it hangs
+  // rather than refusing, and the caller has a committed manifest to fall back
+  // on. Four 60s attempts would just delay that by four minutes.
+  html = await getText(SOURCE, { tries: 2, timeoutMs: 20000 });
 } catch (err) {
   log(`Could not fetch ${SOURCE}`);
   log(`  ${err.message}`);

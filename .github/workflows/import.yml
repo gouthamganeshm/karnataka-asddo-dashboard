@@ -44,20 +44,30 @@ jobs:
       # run fails, the first question is always "could the runner even reach
       # them", and answering it in the log costs three seconds.
       - name: Preflight — can this runner reach the sources?
+        # A diagnostic must never be the thing that fails the job. Both guards
+        # are deliberate: `set +e` so a dead host does not trip bash -e, and
+        # continue-on-error so this step reports and gets out of the way.
+        continue-on-error: true
         run: |
-          echo "runner egress IP: $(curl -s --max-time 15 https://api.ipify.org || echo unknown)"
+          set +e
+          echo "runner egress IP: $(curl -s --max-time 10 https://api.ipify.org || echo unknown)"
           for url in \
             "https://ceo.karnataka.gov.in/asddo.html" \
             "https://drive.google.com/embeddedfolderview?id=1ozZpVkJQvBItLlh5BbT9Z0EuOgPszBmA#list" \
             "https://ceo.karnataka.gov.in/csv_upload/english/A001.csv"; do
-            code=$(curl -s -o /tmp/pf.out -w '%{http_code}' --max-time 45 \
-                   -A "Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/126.0.0.0 Safari/537.36" "$url" || echo "000")
-            echo "  $code  $url  ($(wc -c < /tmp/pf.out) bytes)"
-            if [ "$code" != "200" ]; then
-              echo "  --- first 300 bytes of the response ---"
-              head -c 300 /tmp/pf.out; echo
+            rm -f /tmp/pf.out
+            code=$(curl -s -o /tmp/pf.out -w '%{http_code}' --max-time 20 \
+                   -A "Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/126.0.0.0 Safari/537.36" "$url")
+            [ -z "$code" ] && code="000(no response)"
+            size=0; [ -f /tmp/pf.out ] && size=$(wc -c < /tmp/pf.out)
+            echo "  ${code}  ${url}  (${size} bytes)"
+            if [ "$code" != "200" ] && [ -s /tmp/pf.out ]; then
+              echo "  --- first 300 bytes ---"
+              head -c 300 /tmp/pf.out
+              echo
             fi
           done
+          exit 0
 
       # ceo.karnataka.gov.in is reachable from an Indian consumer connection but
       # not necessarily from a GitHub runner — some government hosts refuse
@@ -162,18 +172,30 @@ jobs:
         with: { node-version: '20' }
 
       - uses: actions/download-artifact@v4
+        continue-on-error: true
         with:
           pattern: rows-*
           merge-multiple: true
           path: cache/extracted
 
       - uses: actions/download-artifact@v4
+        continue-on-error: true
         with: { name: manifest, path: cache }
 
-      - name: Build site data
+      # `if: always()` keeps this job alive so a partial matrix still publishes.
+      # The cost is that it also runs when extract never started, and an empty
+      # download there must read as "upstream failed", not as a build error.
+      - name: Check there is anything to build
         run: |
-          ls -la cache/extracted
-          node scripts/3-build-site-data.mjs
+          if [ -z "$(ls -A cache/extracted 2>/dev/null | grep -c ndjson)" ] || [ "$(ls cache/extracted/*.ndjson 2>/dev/null | wc -l)" -eq 0 ]; then
+            echo "::error::No district rows were produced — the extract stage did not run or failed everywhere. Nothing to publish; docs/data is unchanged."
+            exit 1
+          fi
+          echo "districts with rows: $(ls cache/extracted/*.ndjson | wc -l)"
+          wc -l cache/extracted/*.ndjson | tail -1
+
+      - name: Build site data
+        run: node scripts/3-build-site-data.mjs
 
       - name: Sanity-check the lookup before publishing
         run: node scripts/smoke-test.mjs
