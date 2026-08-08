@@ -1,0 +1,78 @@
+# Electoral-roll index, run on GitHub's runners.
+#
+# Kept separate from the ASDDO import and manual-only on purpose. This job
+# re-hosts the electoral roll itself, which is a much larger and more sensitive
+# dataset than the deletion lists, and the `mode` choice below decides whether
+# names are published at all. That should be a decision someone makes, not a
+# thing that happens on a schedule.
+
+name: Build electoral-roll index
+
+on:
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: 'What to publish'
+        default: 'existence-only'
+        type: choice
+        options:
+          - existence-only   # 4 bytes of hash per EPIC. No names. ~80 MB.
+          - details          # name, relative, age, gender per EPIC. Large; see README.
+      acs:
+        description: 'Comma-separated A-codes (e.g. 1,2,208), or "all"'
+        default: 'all'
+        type: string
+
+permissions:
+  contents: write
+
+jobs:
+  roll:
+    runs-on: ubuntu-latest
+    timeout-minutes: 300
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: '20' }
+
+      - name: Build the index
+        run: |
+          FLAGS=""
+          if [ "${{ inputs.mode }}" = "existence-only" ]; then FLAGS="--existence-only"; fi
+          if [ "${{ inputs.acs }}" != "all" ] && [ -n "${{ inputs.acs }}" ]; then
+            FLAGS="$FLAGS --ac ${{ inputs.acs }}"
+          fi
+          node scripts/4-build-roll.mjs $FLAGS
+
+      - name: Coverage and size
+        run: |
+          node -e '
+            const m = require("./docs/data/manifest.json");
+            console.log(`EPICs indexed: ${m.rollCount}`);
+            console.log(`Constituencies: ${m.rollConstituencies}`);
+            console.log(`Coverage: ${m.rollCoverage}% of roll rows carry a standard EPIC`);
+            if (m.rollCoverage < 95) {
+              console.log("::warning::Coverage below 95%. The site will suppress the \"not found anywhere\" verdict and say the index is partial. This is intended.");
+            }
+          '
+          echo "docs/data/roll: $(du -sh docs/data/roll | cut -f1)"
+          BYTES=$(du -sb docs/data | cut -f1)
+          if [ "$BYTES" -gt 900000000 ]; then
+            echo "::error::docs/data is over 900 MB; GitHub Pages caps a published site at 1 GB. Re-run with mode=existence-only, or host the roll separately."
+            exit 1
+          fi
+
+      - name: Verify the lookup still behaves
+        run: node scripts/smoke-test.mjs
+
+      - name: Commit
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs/data
+          if git diff --cached --quiet; then
+            echo "No change."
+            exit 0
+          fi
+          git commit -m "Build electoral-roll index (${{ inputs.mode }})"
+          git push

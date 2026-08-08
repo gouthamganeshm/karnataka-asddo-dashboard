@@ -1,0 +1,165 @@
+# Statewide import, run entirely on GitHub's runners.
+#
+# The point of doing it here rather than on a laptop: a full run streams ~5.7 GB
+# of booth PDFs and produces ~2.5 GB of intermediate rows. On a runner that is
+# disposable scratch space; the only thing that comes back is docs/data.
+#
+# Districts run as a matrix, so wall-clock is one district (~20-50 min) rather
+# than the ~9 hours a single sequential pass takes.
+
+name: Import ASDDO data
+
+on:
+  workflow_dispatch:
+    inputs:
+      districts:
+        description: 'Comma-separated district names, or "all"'
+        default: 'all'
+        type: string
+      concurrency_per_job:
+        description: 'Parallel Drive fetches per runner'
+        default: '6'
+        type: string
+  # Source PDFs are regenerated daily; weekly keeps the site honest without
+  # hammering Drive. Delete this block to make imports manual only.
+  schedule:
+    - cron: '20 2 * * 0'
+
+permissions:
+  contents: write
+
+jobs:
+  discover:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    outputs:
+      matrix: ${{ steps.plan.outputs.matrix }}
+      total: ${{ steps.plan.outputs.total }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: '20' }
+
+      - name: Crawl source page and Drive folders
+        run: |
+          if [ "${{ inputs.districts }}" = "all" ] || [ -z "${{ inputs.districts }}" ]; then
+            node scripts/1-discover.mjs
+          else
+            node scripts/1-discover.mjs --district "${{ inputs.districts }}"
+          fi
+
+      - name: Plan the district matrix
+        id: plan
+        run: |
+          node -e '
+            const fs = require("fs");
+            const m = JSON.parse(fs.readFileSync("cache/manifest.json", "utf8"));
+            const slug = (s) => s.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+            const districts = m.districts
+              .filter((d) => d.acs.some((ac) => ac.files.length))
+              .map((d) => ({
+                name: d.name,
+                slug: slug(d.name),
+                booths: d.acs.reduce((n, ac) => n + ac.files.length, 0)
+              }))
+              // Longest first: the slowest district starts earliest, which
+              // shortens the whole matrix.
+              .sort((a, b) => b.booths - a.booths);
+            const total = districts.reduce((n, d) => n + d.booths, 0);
+            fs.appendFileSync(process.env.GITHUB_OUTPUT, `matrix=${JSON.stringify({ include: districts })}\n`);
+            fs.appendFileSync(process.env.GITHUB_OUTPUT, `total=${total}\n`);
+            console.log(`${districts.length} districts, ${total} booth PDFs`);
+          '
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: manifest
+          path: cache/manifest.json
+          retention-days: 1
+
+  extract:
+    needs: discover
+    runs-on: ubuntu-latest
+    timeout-minutes: 300
+    strategy:
+      fail-fast: false
+      # Every runner fetches from the same Drive endpoints. 6 runners x 6
+      # sockets is already 36 parallel requests at the source; raising this
+      # trades throughput for throttling and 403s.
+      max-parallel: 6
+      matrix: ${{ fromJson(needs.discover.outputs.matrix) }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: '20' }
+
+      - uses: actions/download-artifact@v4
+        with: { name: manifest, path: cache }
+
+      - name: Stream and parse ${{ matrix.name }} (${{ matrix.booths }} booths)
+        run: node scripts/2-extract.mjs --district "${{ matrix.name }}" --concurrency ${{ inputs.concurrency_per_job || '6' }}
+
+      - name: Rows extracted
+        run: wc -l cache/extracted/${{ matrix.slug }}.ndjson || true
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: rows-${{ matrix.slug }}
+          path: |
+            cache/extracted/${{ matrix.slug }}.ndjson
+            cache/extracted/${{ matrix.slug }}.done
+          retention-days: 3
+
+  build:
+    needs: [discover, extract]
+    # Build from whatever succeeded rather than losing a 40-minute matrix to
+    # one district that 403'd; the commit message records the shortfall.
+    if: always()
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: '20' }
+
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: rows-*
+          merge-multiple: true
+          path: cache/extracted
+
+      - uses: actions/download-artifact@v4
+        with: { name: manifest, path: cache }
+
+      - name: Build site data
+        run: |
+          ls -la cache/extracted
+          node scripts/3-build-site-data.mjs
+
+      - name: Sanity-check the lookup before publishing
+        run: node scripts/smoke-test.mjs
+
+      - name: Report size
+        run: |
+          echo "docs/data: $(du -sh docs/data | cut -f1) across $(find docs/data -type f | wc -l) files"
+          BYTES=$(du -sb docs/data | cut -f1)
+          if [ "$BYTES" -gt 900000000 ]; then
+            echo "::warning::docs/data is over 900 MB; GitHub Pages caps a published site at 1 GB."
+          fi
+
+      - name: Commit the rebuilt data
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs/data
+          if git diff --cached --quiet; then
+            echo "No change in docs/data."
+            exit 0
+          fi
+          RECORDS=$(node -e 'console.log(require("./docs/data/manifest.json").counts.records)')
+          DISTRICTS=$(node -e 'console.log(require("./docs/data/manifest.json").counts.districts)')
+          git commit -m "Import ASDDO data: ${RECORDS} records across ${DISTRICTS} districts
+
+          Discovered ${{ needs.discover.outputs.total }} booth PDFs. Streamed and
+          parsed on the runner; no PDFs stored."
+          git push
