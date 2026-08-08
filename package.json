@@ -14,6 +14,6 @@
     "roll": "node scripts/4-build-roll.mjs",
     "all": "npm run discover && npm run extract && npm run build",
     "serve": "node scripts/serve.mjs",
-    "test": "node scripts/test-coverage-guard.mjs && node scripts/smoke-test.mjs"
+    "test": "node scripts/test-coverage-guard.mjs && node scripts/test-verify-build.mjs && node scripts/smoke-test.mjs"
   }
 }

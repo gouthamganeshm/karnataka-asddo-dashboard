@@ -222,6 +222,16 @@ jobs:
       - name: Build site data
         run: node scripts/3-build-site-data.mjs
 
+      # Before trusting the checks below, check the checks. Both of these have
+      # blocked a correct import: the coverage guard is what a lost district
+      # trips, and verify-build failed two entirely correct statewide runs
+      # because it compared rows against a document they did not come from.
+      - name: Test the guards
+        run: |
+          node scripts/test-coverage-guard.mjs
+          node scripts/test-verify-build.mjs
+
+
       # 100% verification, using both halves already on this runner: every
       # extracted row must be present and correct in the built buckets. Doing
       # this against the live site instead would need ~65,000 bucket requests
@@ -229,9 +239,6 @@ jobs:
       # than the pipeline. Non-zero exit here means nothing gets published.
       - name: Verify the build against every source row
         run: node --max-old-space-size=6144 scripts/verify-build.mjs
-
-      - name: Test the coverage guard
-        run: node scripts/test-coverage-guard.mjs
 
       - name: Sanity-check the lookup before publishing
         run: node scripts/smoke-test.mjs

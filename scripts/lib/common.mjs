@@ -8,7 +8,12 @@ import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 export const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..', '..');
-export const CACHE = resolve(ROOT, 'cache');
+// ASDDO_CACHE / ASDDO_DOCS redirect the pipeline's input and output, so a test
+// can run the real stages over a fixture instead of the live 800 MB tree. This
+// is not a convenience: verify-build passed twice on stale local data and then
+// failed the same import twice in CI, because nothing could exercise it against
+// a controlled case.
+export const CACHE = process.env.ASDDO_CACHE ? resolve(process.env.ASDDO_CACHE) : resolve(ROOT, 'cache');
 // ASDDO_DOCS redirects a build somewhere other than the published docs/ tree,
 // so a partial test build cannot overwrite the live data.
 export const DOCS = process.env.ASDDO_DOCS ? resolve(process.env.ASDDO_DOCS) : resolve(ROOT, 'docs');
