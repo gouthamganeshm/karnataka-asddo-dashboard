@@ -7,3 +7,8 @@ node_modules/
 *.log
 .DS_Store
 Thumbs.db
+
+# Local reference lists of the CEO roll CSVs. Useful to keep, not to publish.
+roll-csv-urls.txt
+roll-csv-index.txt
+roll-csv/
