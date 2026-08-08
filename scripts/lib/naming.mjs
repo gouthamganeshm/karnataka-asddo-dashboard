@@ -67,4 +67,4 @@ export function parseBoothName(fileName) {
 // Documents published alongside the booth lists that are not booth lists.
 // Parsing a guidance booklet as a deletion table yields nothing useful and
 // pollutes the counts.
-export const NOT_A_BOOTH_LIST = /booklet|guideline|instruction|manual|circular|notice|format|annexure/i;
+export const NOT_A_BOOTH_LIST = /booklet|guideline|instruction|manual|circular|notice|format|annexure|judge?ment|judgment|order|affidavit|press.?note/i;
