@@ -119,15 +119,26 @@ export function looksScanned(buf) {
   return /\/Subtype\s*\/Image/.test(head) && !/\)\s*Tj/.test(head);
 }
 
+// Districts print two widths of this table. The narrow one is the common case;
+// the wide one adds Part No ahead of S.No. and Mapping/Category between the
+// relative and the age. Columns the parser does not read still have to be
+// anchored, or their values drift into the neighbour that is read — which is how
+// Belgaum ended up with relatives named "LAKPMAN (Father) - KENCHAPPA".
 const COLUMNS = [
+  { key: 'partNo', header: 'Part No' },
   { key: 'sno', header: 'S.No.' },
   { key: 'serial', header: 'Serial No.' },
   { key: 'epic', header: 'EPIC Number' },
   { key: 'name', header: 'Elector Name' },
   { key: 'relative', header: 'Relative Details' },
+  { key: 'mapping', header: 'Mapping' },
+  { key: 'category', header: 'Category' },
   { key: 'dobAge', header: 'DOB/Age' },
   { key: 'reason', header: 'Uncollectable Reason' }
 ];
+
+// Without these the row is unreadable; the rest may or may not be printed.
+const REQUIRED = ['sno', 'serial', 'epic', 'name', 'reason'];
 
 /** Group items that share a baseline into one visual row, top of page first. */
 function toRows(items, tolerance = 1.5) {
@@ -240,7 +251,7 @@ export function parseBoothPdf(buf) {
  */
 function findHeader(rows) {
   const norm = (s) => s.toLowerCase().replace(/[^a-z]/g, '');
-  const wanted = COLUMNS.map((c) => norm(c.header));
+  const labels = COLUMNS.map((c) => ({ ...c, want: norm(c.header) }));
 
   for (let i = 0; i < rows.length; i++) {
     // Allow the header to occupy up to two baselines.
@@ -251,35 +262,32 @@ function findHeader(rows) {
         .sort((a, b) => a.x - b.x);
       if (!cells.length) continue;
 
+      // Match each label wherever it appears, rather than insisting the columns
+      // arrive in one fixed order. A strict sequence cannot cope with a table
+      // that has extra columns, and "Serial No." is drawn as "Serial" + "No." in
+      // some booths, so a label may span several cells.
       const anchors = [];
-      let want = 0;
-      let buffer = '';
-      let startX = null;
-      for (const cell of cells) {
-        if (want >= wanted.length) break;
-        if (startX === null) startX = cell.x;
-        buffer += norm(cell.text);
-        if (buffer === wanted[want]) {
-          anchors.push({ ...COLUMNS[want], x: startX });
-          want++;
-          buffer = '';
-          startX = null;
-        } else if (!wanted[want].startsWith(buffer)) {
-          // Not part of this label after all — restart from this cell.
-          buffer = norm(cell.text);
-          startX = cell.x;
-          if (buffer === wanted[want]) {
-            anchors.push({ ...COLUMNS[want], x: startX });
-            want++;
-            buffer = '';
-            startX = null;
+      const taken = new Set();
+      for (let c = 0; c < cells.length; c++) {
+        if (taken.has(c)) continue;
+        let buffer = '';
+        for (let n = 0; n < 4 && c + n < cells.length; n++) {
+          buffer += norm(cells[c + n].text);
+          const hit = labels.find((l) => l.want === buffer && !anchors.some((a) => a.key === l.key));
+          if (hit) {
+            anchors.push({ key: hit.key, header: hit.header, x: cells[c].x });
+            for (let k = 0; k <= n; k++) taken.add(c + k);
+            c += n;
+            break;
           }
+          // Stop extending once no label could still start with this text.
+          if (!labels.some((l) => l.want.startsWith(buffer))) break;
         }
       }
 
-      // The five columns the parser actually reads must all be present.
+      anchors.sort((a, b) => a.x - b.x);
       const keys = new Set(anchors.map((a) => a.key));
-      if (['sno', 'serial', 'epic', 'name', 'reason'].every((k) => keys.has(k))) {
+      if (REQUIRED.every((k) => keys.has(k))) {
         return { headerRow: rows[i + span - 1], anchors };
       }
     }
@@ -287,10 +295,18 @@ function findHeader(rows) {
   return null;
 }
 
-/** Nearest-anchor assignment, so a blank cell shifts nothing. */
 function assign(cells, anchors) {
   const result = {};
+  // Some districts print a wider table — "Part No" ahead of S.No., and Mapping
+  // and Category between Relative Details and DOB/Age. The header matcher skips
+  // the columns it does not model, but their *values* still arrive here, and a
+  // Part No sitting left of the S.No. anchor was being folded into it: "1 1"
+  // instead of "1", which fails the row test and yields a document with no rows.
+  // 878 of Belgaum's 3,464 files parse to nothing for exactly this reason.
+  // A cell left of the first anchor belongs to a column we do not read.
+  const leftEdge = anchors[0].x - 2;
   for (const cell of cells) {
+    if (cell.x < leftEdge) continue;
     let best = anchors[0];
     let bestDist = Infinity;
     for (const anchor of anchors) {
