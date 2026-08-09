@@ -94,7 +94,11 @@ const STRINGS = {
     scopeNote: 'Covering {districts} · {booths} polling booths · generated {dates}',
     footerImported: 'Data imported {date} from documents generated {dates}.',
     footerSource: 'Source: the ASDDO lists published by the Chief Electoral Officer, Karnataka, under the Special Intensive Revision. This site is an independent, unofficial reformatting of those documents. Always confirm with your BLO, ceo.karnataka.gov.in or voters.eci.gov.in before acting.',
-    footerLink: 'Original documents on ceo.karnataka.gov.in'
+    footerLink: 'Original documents on ceo.karnataka.gov.in',
+    footerPressRelease: 'Latest CEO Karnataka press release ({date})',
+    provenancePulled: 'Data pulled {datetime} from the CEO Karnataka ASDDO lists ({source}).',
+    officialCompare: 'CEO Karnataka reports {official} electors marked ASDDO as on {asOf}. This site has processed {captured} of them ({pct}%) — the rest are in booth lists not yet published or not machine-readable. See the {link}.',
+    pressReleaseWord: 'latest press release'
   },
 
   kn: {
@@ -179,7 +183,11 @@ const STRINGS = {
     scopeNote: '{districts} · {booths} ಮತಗಟ್ಟೆಗಳು · ದಾಖಲೆ ದಿನಾಂಕ {dates}',
     footerImported: '{date} ರಂದು ಆಮದು ಮಾಡಲಾಗಿದೆ; ಮೂಲ ದಾಖಲೆಗಳ ದಿನಾಂಕ {dates}.',
     footerSource: 'ಮೂಲ: ಕರ್ನಾಟಕ ಮುಖ್ಯ ಚುನಾವಣಾ ಅಧಿಕಾರಿ ಪ್ರಕಟಿಸಿದ ASDDO ಪಟ್ಟಿಗಳು. ಇದು ಸ್ವತಂತ್ರ, ಅನಧಿಕೃತ ಮರುರೂಪಣೆ. ಕ್ರಮ ತೆಗೆದುಕೊಳ್ಳುವ ಮೊದಲು BLO ಅಥವಾ voters.eci.gov.in ನಲ್ಲಿ ಖಚಿತಪಡಿಸಿಕೊಳ್ಳಿ.',
-    footerLink: 'ceo.karnataka.gov.in ನಲ್ಲಿ ಮೂಲ ದಾಖಲೆಗಳು'
+    footerLink: 'ceo.karnataka.gov.in ನಲ್ಲಿ ಮೂಲ ದಾಖಲೆಗಳು',
+    footerPressRelease: 'ಇತ್ತೀಚಿನ ಕರ್ನಾಟಕ ಮುಖ್ಯ ಚುನಾವಣಾ ಅಧಿಕಾರಿ ಪತ್ರಿಕಾ ಪ್ರಕಟಣೆ ({date})',
+    provenancePulled: '{datetime} ರಂದು ಕರ್ನಾಟಕ ಮುಖ್ಯ ಚುನಾವಣಾ ಅಧಿಕಾರಿಯ ASDDO ಪಟ್ಟಿಗಳಿಂದ ({source}) ಡೇಟಾ ಪಡೆಯಲಾಗಿದೆ.',
+    officialCompare: 'ಕರ್ನಾಟಕ ಮುಖ್ಯ ಚುನಾವಣಾ ಅಧಿಕಾರಿಯ ಪ್ರಕಾರ {asOf} ರಂದು {official} ಮತದಾರರನ್ನು ASDDO ಎಂದು ಗುರುತಿಸಲಾಗಿದೆ. ಈ ತಾಣವು ಅವುಗಳಲ್ಲಿ {captured} ({pct}%) ಪ್ರಕ್ರಿಯೆಗೊಳಿಸಿದೆ — ಉಳಿದವು ಇನ್ನೂ ಪ್ರಕಟವಾಗದ ಅಥವಾ ಯಂತ್ರ-ಓದಬಹುದಾದ ಅಲ್ಲದ ಪಟ್ಟಿಗಳಲ್ಲಿವೆ. {link} ನೋಡಿ.',
+    pressReleaseWord: 'ಇತ್ತೀಚಿನ ಪತ್ರಿಕಾ ಪ್ರಕಟಣೆ'
   }
 };
 
@@ -200,6 +208,7 @@ const el = (tag, className, content) => {
 
 let manifest = null;
 let stats = null;
+let official = null;
 let lastResult = null;
 const partsCache = new Map();
 const bloCache = new Map();
@@ -355,6 +364,15 @@ async function decodeRollRecord(row) {
 const sourceUrl = (source) =>
   !source ? '' : /^https?:\/\//i.test(source) ? source : `https://drive.google.com/file/d/${source}/view`;
 
+// The base ASDDO reason, without the enrollment reference the source prints
+// after it — "Already enrolled (AKB 3631645)" -> "Already enrolled". No reason
+// legitimately contains a parenthesis, so strip from the first one. Mirrors the
+// normalisation in scripts/3-build-site-data.mjs so data built before that fix
+// (which left spaced/non-standard references in the label) still reads cleanly.
+function cleanReason(reason) {
+  return (reason || '').replace(/\s*\(.*$/s, '').trim() || 'Not stated';
+}
+
 async function decodeRecord(row) {
   const [, name, relative, relIdx, age, serial, reasonIdx, acIdx, fileIdx, dup] = row;
   const [acNo, acName, districtIdx] = manifest.dicts.acs[acIdx];
@@ -385,7 +403,7 @@ async function decodeRecord(row) {
     relation: relIdx >= 0 ? manifest.dicts.relations[relIdx] : '',
     age: age || null,
     serial,
-    reason: manifest.dicts.reasons[reasonIdx],
+    reason: cleanReason(manifest.dicts.reasons[reasonIdx]),
     district: manifest.dicts.districts[districtIdx],
     acNo,
     acName,
@@ -960,12 +978,78 @@ function applyLanguage() {
   if (lastResult) renderResult(lastResult); // keep the answer on screen
 }
 
+// Fill a localised template into `host`, where a placeholder value may be a DOM
+// node (e.g. a link) rather than a string — so a sentence can carry a real
+// hyperlink without ever injecting HTML.
+function fillInto(host, tpl, values) {
+  host.textContent = '';
+  const re = /\{(\w+)\}/g;
+  let last = 0;
+  let m;
+  while ((m = re.exec(tpl))) {
+    if (m.index > last) host.appendChild(document.createTextNode(tpl.slice(last, m.index)));
+    const v = values[m[1]];
+    host.appendChild(v instanceof Node ? v : document.createTextNode(v ?? ''));
+    last = m.index + m[0].length;
+  }
+  if (last < tpl.length) host.appendChild(document.createTextNode(tpl.slice(last)));
+}
+
+const extLink = (href, text) => {
+  const a = el('a', null, text);
+  a.href = href;
+  a.target = '_blank';
+  a.rel = 'noopener noreferrer';
+  return a;
+};
+
 function renderFooterMeta() {
+  const locale = lang === 'kn' ? 'kn-IN' : 'en-IN';
   const d = new Date(manifest.importedAt);
   $('#footer-meta').textContent = fill(t('footerImported'), {
-    date: d.toLocaleDateString(lang === 'kn' ? 'kn-IN' : 'en-IN', { year: 'numeric', month: 'long', day: 'numeric' }),
+    date: d.toLocaleDateString(locale, { year: 'numeric', month: 'long', day: 'numeric' }),
     dates: stats.generatedOn.join(', ') || '—'
   });
+  renderProvenance(locale);
+}
+
+// When the data was pulled, where from, how much of the CEO's own count it
+// covers, and a link to the press release those official figures come from.
+function renderProvenance(locale) {
+  const srcHref = official?.source || manifest.source || 'https://ceo.karnataka.gov.in/asddo.html';
+  const pulled = new Date(manifest.importedAt).toLocaleString(locale, {
+    year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: '2-digit'
+  });
+  const prov = $('#data-provenance');
+  if (prov) fillInto(prov, t('provenancePulled'), { datetime: pulled, source: extLink(srcHref, 'ceo.karnataka.gov.in/asddo.html') });
+
+  const compare = $('#official-compare');
+  if (compare) {
+    if (official?.asddo) {
+      const captured = manifest.counts.records;
+      const pct = ((captured / official.asddo) * 100).toFixed(1);
+      fillInto(compare, t('officialCompare'), {
+        official: nf().format(official.asddo),
+        asOf: new Date(official.asOf).toLocaleDateString(locale, { year: 'numeric', month: 'long', day: 'numeric' }),
+        captured: nf().format(captured),
+        pct,
+        link: extLink(official.pressRelease || srcHref, t('pressReleaseWord'))
+      });
+      compare.hidden = false;
+    } else {
+      compare.hidden = true;
+    }
+  }
+
+  const prFoot = $('#press-release-link');
+  if (prFoot && official) {
+    if (official.pressRelease) prFoot.href = official.pressRelease;
+    prFoot.textContent = fill(t('footerPressRelease'), {
+      date: official.pressReleaseDate
+        ? new Date(official.pressReleaseDate).toLocaleDateString(locale, { year: 'numeric', month: 'long', day: 'numeric' })
+        : ''
+    });
+  }
 }
 
 function applyTheme(theme) {
@@ -1083,6 +1167,7 @@ try {
     loadJson('data/manifest.json'),
     loadJson('data/stats.json')
   ]);
+  official = await loadJson('data/official.json').catch(() => null);
   applyAcNames(await loadJson('data/ac-names.json').catch(() => ({})));
   renderDashboard();
   renderFooterMeta();
