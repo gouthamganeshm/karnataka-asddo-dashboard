@@ -33,6 +33,7 @@ const STRINGS = {
     fieldDistrict: 'District', fieldAc: 'Constituency', fieldPart: 'Polling booth',
     fieldSerial: 'Serial number in the roll', fieldReason: 'Reason listed',
     fieldBlo: 'Your Booth Level Officer (BLO)',
+    bloNote: 'BLO postings change during the revision — if this looks wrong or out of date, confirm at',
     fieldDup: 'Retained voter ID',
     fieldGender: 'Gender',
     sourcePdf: 'Open the official PDF this record came from',
@@ -117,6 +118,7 @@ const STRINGS = {
     fieldDistrict: 'ಜಿಲ್ಲೆ', fieldAc: 'ಕ್ಷೇತ್ರ', fieldPart: 'ಮತಗಟ್ಟೆ',
     fieldSerial: 'ಪಟ್ಟಿಯಲ್ಲಿ ಕ್ರಮ ಸಂಖ್ಯೆ', fieldReason: 'ನಮೂದಿಸಿದ ಕಾರಣ',
     fieldBlo: 'ನಿಮ್ಮ ಮತಗಟ್ಟೆ ಮಟ್ಟದ ಅಧಿಕಾರಿ (BLO)',
+    bloNote: 'ಪರಿಷ್ಕರಣೆ ಸಮಯದಲ್ಲಿ BLO ನೇಮಕಾತಿ ಬದಲಾಗಬಹುದು — ಇದು ತಪ್ಪಾಗಿ ಅಥವಾ ಹಳೆಯದಾಗಿ ಕಂಡರೆ ಇಲ್ಲಿ ಖಚಿತಪಡಿಸಿಕೊಳ್ಳಿ',
     fieldDup: 'ಉಳಿಸಿಕೊಂಡ ಗುರುತಿನ ಚೀಟಿ',
     fieldGender: 'ಲಿಂಗ',
     sourcePdf: 'ಈ ದಾಖಲೆ ಬಂದ ಅಧಿಕೃತ PDF ತೆರೆಯಿರಿ',
@@ -541,6 +543,17 @@ function renderDeleted(host, data) {
         const tel = el('a', 'blo-tel', record.blo.mobile);
         tel.href = `tel:+91${record.blo.mobile}`;
         dd.appendChild(tel);
+        // BLO assignments change during a revision, and this list is a snapshot.
+        // Say so, and point at the ECI's own current source, so a wrong or stale
+        // number is never the end of the road.
+        const note = el('span', 'blo-note');
+        note.appendChild(document.createTextNode(t('bloNote') + ' '));
+        const eci = el('a', 'blo-eci', 'electoralsearch.eci.gov.in');
+        eci.href = 'https://electoralsearch.eci.gov.in/';
+        eci.target = '_blank';
+        eci.rel = 'noopener noreferrer';
+        note.appendChild(eci);
+        dd.appendChild(note);
         dl.appendChild(dd);
         continue;
       }

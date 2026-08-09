@@ -402,3 +402,7 @@ main { padding-bottom: 56px; }
 /* BLO phone number — a real link, so it dials on a phone. */
 .record .blo-tel { color: var(--series-seq); text-decoration: none; font-weight: 600; white-space: nowrap; }
 .record .blo-tel:hover { text-decoration: underline; }
+
+/* BLO staleness caveat — muted, one line under the officer's number. */
+.record .blo-note { display: block; margin-top: 2px; font-size: 0.82rem; color: var(--muted); font-weight: 400; }
+.record .blo-note .blo-eci { color: var(--series-seq); white-space: nowrap; }
