@@ -170,6 +170,13 @@ export function parseBoothPdf(buf) {
   // a row belongs to the last section header seen above it.
   let pageAc = null;
   let pagePart = null;
+  // Column anchors carry across pages within a file. A consolidated list runs a
+  // booth's electors over several pages and repeats the column header only on
+  // the first; the continuation pages have none. findHeader returns null there,
+  // and every one of their rows was being dropped — 245 Siruguppa electors,
+  // including whole booths, vanished this way. The x-layout is constant within a
+  // file, so the last header's anchors apply.
+  let lastAnchors = null;
 
   for (const items of pages) {
     const rows = toRows(items);
@@ -200,13 +207,22 @@ export function parseBoothPdf(buf) {
     }
 
     // Column x-positions come from this page's own header, because the
-    // generator sizes columns to fit the widest value on the page.
+    // generator sizes columns to fit the widest value on the page. A page with
+    // no header is a continuation: reuse the last page's anchors and treat every
+    // row as data. Only a page that has no header and no predecessor is truly
+    // unreadable.
     const header = findHeader(rows);
-    if (!header) {
+    let headerRow, anchors;
+    if (header) {
+      ({ headerRow, anchors } = header);
+      lastAnchors = anchors;
+    } else if (lastAnchors) {
+      anchors = lastAnchors;
+      headerRow = { y: Infinity };   // nothing to skip; the whole page is data
+    } else {
       unreadablePages++;
       continue;
     }
-    const { headerRow, anchors } = header;
 
     let current = null;
     const flush = () => {
