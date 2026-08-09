@@ -162,8 +162,20 @@ await pool(samples, 6, async (s) => {
   const { rows } = parseBoothPdf(buf);
   if (!rows.length) { rec.note = 'no deletions in this booth'; results.push(rec); return; }
 
-  // Two records per booth: first and middle.
-  const picks = [rows[0], rows[Math.floor(rows.length / 2)]].filter((r, i, a) => r && a.indexOf(r) === i);
+  // A consolidated list is one file covering hundreds of booths, so two records
+  // per *file* leaves those booths untested — Bellary's 841 booths live in four
+  // documents and got 8 EPICs between them. Sample one elector per booth the
+  // document actually contains, which is what "every booth" has to mean for the
+  // districts that publish this way. Ordinary booth files have a single part and
+  // keep the first-and-middle pair.
+  const byPart = new Map();
+  for (const r of rows) {
+    const key = r.pagePart?.no ?? '-';
+    if (!byPart.has(key)) byPart.set(key, r);
+  }
+  const picks = byPart.size > 1
+    ? [...byPart.values()]
+    : [rows[0], rows[Math.floor(rows.length / 2)]].filter((r, i, a) => r && a.indexOf(r) === i);
   for (const row of picks) {
     const got = await lookup(row.epic);
     const nameOk = got.kind === 'deleted' &&
