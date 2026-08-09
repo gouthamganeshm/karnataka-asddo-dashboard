@@ -1,0 +1,12 @@
+{
+  "_note": "Additional Drive folders to crawl for a district, merged with whatever asddo.html links. Some districts publish across more than one folder and the state page links only one of them, so a district can look complete while half its booths sit somewhere else. Booths are deduplicated by (constituency, part) with the newest generation timestamp winning, so listing an overlapping folder is safe — it can only add.",
+  "_howToFind": "District NIC site, or a folder shared directly by the district office. Check it against scripts/reconcile.mjs before and after adding.",
+  "districts": {
+    "BELGAUM": [
+      {
+        "folderId": "10K0yxneCdkH1BqXg2Drit2q9OF9QNFlg",
+        "why": "Second Belagavi folder, one directory per constituency (01-Nippani … 18-Ramdurg). Crawled and merged: it contributed 0 new booths — all 1,323 of its files duplicate booths already found, at older timestamps. Kept because it costs one folder walk and would pick up anything the district adds there later. Belgaum's 47.7% shortfall against the CEO's count is therefore NOT a crawl gap: both published folders together hold only ~3,000 of Belagavi's ~3,900 booths."
+      }
+    ]
+  }
+}

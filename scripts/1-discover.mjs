@@ -29,7 +29,7 @@
 
 import { resolve } from 'node:path';
 import {
-  CACHE, decodeEntities, driveDownloadUrl, get, getNamed, getText, listDriveFolder, log,
+  CACHE, ROOT, decodeEntities, driveDownloadUrl, get, getNamed, getText, listDriveFolder, log,
   pool, progress, readJson, writeJson
 } from './lib/common.mjs';
 import { NOT_A_BOOTH_LIST, parseBoothName } from './lib/naming.mjs';
@@ -37,6 +37,9 @@ import { looksZip } from './lib/zip.mjs';
 import { openArchiveBuffer } from './lib/archive.mjs';
 
 const SOURCE = 'https://ceo.karnataka.gov.in/asddo.html';
+// Districts that publish across more than one Drive folder, where asddo.html
+// links only one. See seed/extra-sources.json.
+const EXTRA = (await readJson(resolve(ROOT, 'seed', 'extra-sources.json'), { districts: {} }))?.districts ?? {};
 const MANIFEST = resolve(CACHE, 'manifest.json');
 const MAX_DEPTH = 5;
 
@@ -391,6 +394,11 @@ for (const district of districts) {
     driveFileIds = resolved.driveFileIds ?? [];
     if (resolved.error) problems.push(`${district.name}: ${resolved.error}`);
   }
+
+  // A district can publish across several folders; the state page links one.
+  const extra = EXTRA[district.name] ?? [];
+  for (const e of extra) if (e.folderId && !roots.includes(e.folderId)) roots.push(e.folderId);
+  if (extra.length) log(`  ${district.name}: +${extra.length} extra source folder(s) from seed/extra-sources.json`);
 
   progress(`  ${district.name}: walking ${roots.length} Drive folder(s)…`);
   const found = [];
