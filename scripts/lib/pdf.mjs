@@ -134,7 +134,13 @@ const COLUMNS = [
   { key: 'mapping', header: 'Mapping' },
   { key: 'category', header: 'Category' },
   { key: 'dobAge', header: 'DOB/Age' },
-  { key: 'reason', header: 'Uncollectable Reason' }
+  { key: 'reason', header: 'Uncollectable Reason' },
+  // Uttara Kannada and others print a Photo Uploaded column (Yes/No) to the
+  // right of the reason. Unmodelled, its value bled left into the reason —
+  // "Death" became "Death -", and a blank reason became "- No" — which alone
+  // put 76,933 non-deletion rows into Uttara Kannada's "others". Anchoring it
+  // keeps its Yes/No out of the reason entirely.
+  { key: 'photo', header: 'Photo Uploaded' }
 ];
 
 // Without these the row is unreadable; the rest may or may not be printed.
@@ -205,10 +211,13 @@ export function parseBoothPdf(buf) {
     let current = null;
     const flush = () => {
       if (current && EPIC_RE.test(current.epic ?? '')) {
-        // Carried on the row, so a consolidated list can be split back into the
-        // booths it was assembled from. Consumers use it only where the file
-        // name gave them nothing.
-        out.push({ ...finaliseRow(current), pageAc, pagePart });
+        const rec = finaliseRow(current);
+        // A row whose Uncollectable Reason is blank ("-", or empty) is not a
+        // deletion — the ASDDO list is exactly the electors who carry such a
+        // reason. These appear in the wider files alongside real deletions and,
+        // before this, were counted as "others". Drop them so the totals mean
+        // what they say. hasReason keeps anything with a letter in it.
+        if (hasReason(rec.reasonRaw)) out.push({ ...rec, pageAc, pagePart });
       }
       current = null;
     };
@@ -332,6 +341,11 @@ function assign(cells, anchors) {
   }
   return result;
 }
+
+// A real Uncollectable Reason contains letters ("Death", "Permanently Shifted").
+// A blank one is empty, a dash, or the "Yes"/"No" left over from the Photo
+// column before it was modelled — none of which marks a deletion.
+const hasReason = (s) => /[a-z]/i.test((s ?? '').replace(/\b(yes|no)\b/gi, ''));
 
 function finaliseRow(cells) {
   const relative = cells.relative ?? '';

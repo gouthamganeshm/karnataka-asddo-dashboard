@@ -1,5 +1,5 @@
 {
-  "dataVersion": "mslfewi0",
+  "dataVersion": "mslk00bz",
   "total": 10582234,
   "byCategory": {
     "absent": 1543452,
@@ -218,8 +218,8 @@
     {
       "name": "BELLARY",
       "total": 177050,
-      "constituencies": 6,
-      "booths": 1070,
+      "constituencies": 5,
+      "booths": 1069,
       "absent": 31005,
       "shifted": 86261,
       "death": 33908,
@@ -1535,13 +1535,13 @@
       "no": 92,
       "name": "Siraguppa",
       "district": "BELLARY",
-      "total": 32149,
+      "total": 32153,
       "booths": 228,
       "absent": 4643,
-      "shifted": 17518,
+      "shifted": 17521,
       "death": 6704,
       "duplicate": 3226,
-      "others": 58
+      "others": 59
     },
     {
       "no": 181,
@@ -3102,18 +3102,6 @@
       "death": 9,
       "duplicate": 10,
       "others": 30
-    },
-    {
-      "no": null,
-      "name": "AC ?",
-      "district": "BELLARY",
-      "total": 4,
-      "booths": 1,
-      "absent": 0,
-      "shifted": 3,
-      "death": 0,
-      "duplicate": 0,
-      "others": 1
     }
   ],
   "topConstituencies": [
