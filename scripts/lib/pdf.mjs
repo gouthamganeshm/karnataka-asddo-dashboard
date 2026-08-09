@@ -237,6 +237,16 @@ export function parseBoothPdf(buf) {
     flush();
   }
 
+  // A file sometimes opens with data before its first section header, so the
+  // earliest rows carry no constituency and land under "AC ?" — 4 of Siruguppa's
+  // 32,153, enough to put a real elector in a bucket with no constituency name.
+  // Back-fill from the first header the document does state; a booth list covers
+  // one constituency, and a consolidated list names it before the rows that
+  // matter.
+  const firstAc = out.find((r) => r.pageAc)?.pageAc ?? null;
+  const firstPart = out.find((r) => r.pagePart)?.pagePart ?? null;
+  if (firstAc) for (const r of out) if (!r.pageAc) { r.pageAc = firstAc; r.pagePart ??= firstPart; }
+
   return { rows: out, meta, unreadablePages };
 }
 
