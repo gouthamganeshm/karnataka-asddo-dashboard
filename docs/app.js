@@ -49,11 +49,11 @@ const STRINGS = {
     ],
     copyBtn: 'Copy these details', copiedBtn: 'Copied', printBtn: 'Print / save as PDF',
 
-    clearHeading: 'Not on the deleted list',
+    clearHeading: 'Not found in the ASDDO list',
     clearLede: 'EPIC {epic} is on the electoral roll and is not on the ASDDO list.',
     clearNote: 'This covers the ASDDO list only. If anything still looks wrong, confirm at ceo.karnataka.gov.in, voters.eci.gov.in, or with your BLO.',
 
-    notListedHeading: 'Not on the deleted list',
+    notListedHeading: 'Not found in the ASDDO list',
     notListedLede: 'EPIC {epic} does not appear in the ASDDO deletion data loaded here.',
     notListedNote: 'This build has no electoral-roll index, so it cannot confirm that the number exists at all — a typo would look exactly like this result. Check the number on your card, and confirm your roll status at voters.eci.gov.in.',
     notListedPartialNote: 'The roll index loaded here covers only about {coverage}% of electors — most entries in the published roll carry no standard EPIC number — so not finding this number says nothing about whether you are registered. It also cannot rule out a typo. Confirm your roll status at voters.eci.gov.in or with your BLO.',
@@ -132,11 +132,11 @@ const STRINGS = {
     ],
     copyBtn: 'ವಿವರಗಳನ್ನು ನಕಲಿಸಿ', copiedBtn: 'ನಕಲಾಗಿದೆ', printBtn: 'ಮುದ್ರಿಸಿ / PDF ಆಗಿ ಉಳಿಸಿ',
 
-    clearHeading: 'ತೆಗೆದುಹಾಕಿದ ಪಟ್ಟಿಯಲ್ಲಿ ಇಲ್ಲ',
+    clearHeading: 'ASDDO ಪಟ್ಟಿಯಲ್ಲಿ ಕಂಡುಬಂದಿಲ್ಲ',
     clearLede: 'EPIC {epic} ಮತದಾರರ ಪಟ್ಟಿಯಲ್ಲಿ ಇದೆ ಮತ್ತು ASDDO ಪಟ್ಟಿಯಲ್ಲಿ ಇಲ್ಲ.',
     clearNote: 'ಇದು ASDDO ಪಟ್ಟಿಯನ್ನು ಮಾತ್ರ ಒಳಗೊಂಡಿದೆ. ಏನಾದರೂ ತಪ್ಪಾಗಿ ಕಂಡರೆ ceo.karnataka.gov.in ಅಥವಾ voters.eci.gov.in ನೋಡಿ, ಅಥವಾ ನಿಮ್ಮ BLO ಅವರನ್ನು ಸಂಪರ್ಕಿಸಿ.',
 
-    notListedHeading: 'ತೆಗೆದುಹಾಕಿದ ಪಟ್ಟಿಯಲ್ಲಿ ಇಲ್ಲ',
+    notListedHeading: 'ASDDO ಪಟ್ಟಿಯಲ್ಲಿ ಕಂಡುಬಂದಿಲ್ಲ',
     notListedLede: 'ಇಲ್ಲಿ ಲೋಡ್ ಆಗಿರುವ ASDDO ದತ್ತಾಂಶದಲ್ಲಿ EPIC {epic} ಕಂಡುಬಂದಿಲ್ಲ.',
     notListedNote: 'ಈ ಆವೃತ್ತಿಯಲ್ಲಿ ಮತದಾರರ ಪಟ್ಟಿಯ ಸೂಚಿಕೆ ಇಲ್ಲ, ಆದ್ದರಿಂದ ಸಂಖ್ಯೆ ಅಸ್ತಿತ್ವದಲ್ಲಿದೆಯೇ ಎಂದು ಖಚಿತಪಡಿಸಲಾಗದು — ಟೈಪಿಂಗ್ ತಪ್ಪೂ ಹೀಗೆಯೇ ಕಾಣುತ್ತದೆ. ನಿಮ್ಮ ಚೀಟಿಯ ಸಂಖ್ಯೆ ಪರಿಶೀಲಿಸಿ ಮತ್ತು voters.eci.gov.in ನೋಡಿ.',
     notListedPartialNote: 'ಇಲ್ಲಿ ಲೋಡ್ ಆದ ಪಟ್ಟಿಯ ಸೂಚಿಕೆ ಸುಮಾರು {coverage}% ಮತದಾರರನ್ನು ಮಾತ್ರ ಒಳಗೊಂಡಿದೆ — ಪ್ರಕಟಿತ ಪಟ್ಟಿಯ ಹೆಚ್ಚಿನ ದಾಖಲೆಗಳಲ್ಲಿ ಪ್ರಮಾಣಿತ EPIC ಸಂಖ್ಯೆ ಇಲ್ಲ — ಆದ್ದರಿಂದ ಈ ಸಂಖ್ಯೆ ಸಿಗದಿರುವುದು ನೀವು ನೋಂದಾಯಿತರಲ್ಲ ಎಂದು ಅರ್ಥವಲ್ಲ. voters.eci.gov.in ನಲ್ಲಿ ಅಥವಾ BLO ಬಳಿ ಖಚಿತಪಡಿಸಿಕೊಳ್ಳಿ.',
