@@ -32,6 +32,7 @@ const STRINGS = {
     fieldName: 'Elector name', fieldRelative: 'Relative', fieldAge: 'Age',
     fieldDistrict: 'District', fieldAc: 'Constituency', fieldPart: 'Polling booth',
     fieldSerial: 'Serial number in the roll', fieldReason: 'Reason listed',
+    fieldBlo: 'Your Booth Level Officer (BLO)',
     fieldDup: 'Retained voter ID',
     fieldGender: 'Gender',
     sourcePdf: 'Open the official PDF this record came from',
@@ -115,6 +116,7 @@ const STRINGS = {
     fieldName: 'ಮತದಾರರ ಹೆಸರು', fieldRelative: 'ಸಂಬಂಧಿ', fieldAge: 'ವಯಸ್ಸು',
     fieldDistrict: 'ಜಿಲ್ಲೆ', fieldAc: 'ಕ್ಷೇತ್ರ', fieldPart: 'ಮತಗಟ್ಟೆ',
     fieldSerial: 'ಪಟ್ಟಿಯಲ್ಲಿ ಕ್ರಮ ಸಂಖ್ಯೆ', fieldReason: 'ನಮೂದಿಸಿದ ಕಾರಣ',
+    fieldBlo: 'ನಿಮ್ಮ ಮತಗಟ್ಟೆ ಮಟ್ಟದ ಅಧಿಕಾರಿ (BLO)',
     fieldDup: 'ಉಳಿಸಿಕೊಂಡ ಗುರುತಿನ ಚೀಟಿ',
     fieldGender: 'ಲಿಂಗ',
     sourcePdf: 'ಈ ದಾಖಲೆ ಬಂದ ಅಧಿಕೃತ PDF ತೆರೆಯಿರಿ',
@@ -198,6 +200,7 @@ let manifest = null;
 let stats = null;
 let lastResult = null;
 const partsCache = new Map();
+const bloCache = new Map();
 
 async function loadJson(path) {
   const res = await fetch(path, { cache: 'no-cache' });
@@ -366,6 +369,14 @@ async function decodeRecord(row) {
   const part = Array.isArray(sources) ? sources[fileIdx] : sources?.[fileIdx];
   const partNo = part ? part[1] : 0;
 
+  // The BLO for this exact booth, fetched one small file per constituency —
+  // present only when a blo/ shard was built. Never a list; the card only ever
+  // shows the officer for the record being looked at.
+  if (!bloCache.has(acIdx)) {
+    bloCache.set(acIdx, loadJson(`data/blo/${acIdx}.json?v=${manifest.dataVersion}`).catch(() => null));
+  }
+  const blo = partNo ? (await bloCache.get(acIdx))?.[partNo] ?? null : null;
+
   return {
     name,
     relative,
@@ -381,6 +392,7 @@ async function decodeRecord(row) {
     sourceUrl: part ? sourceUrl(part[0]) : '',
     sourceName: part ? part[0] : '',
     generatedOn: part ? part[3] : '',
+    blo,
     dup
   };
 }
@@ -514,11 +526,24 @@ function renderDeleted(host, data) {
       [t('fieldAc'), record.acNo ? `${record.acNo} — ${record.acName}` : record.acName],
       [t('fieldPart'), record.partNo ? `${record.partNo}${record.partName ? ` — ${record.partName}` : ''}` : ''],
       [t('fieldSerial'), record.serial ? nf().format(record.serial) : ''],
+      [t('fieldBlo'), record.blo && record.blo.name
+        ? `${record.blo.name}${record.blo.mobile ? ` — ${record.blo.mobile}` : ''}` : ''],
       [t('fieldDup'), record.dup]
     ];
     for (const [term, value] of rows) {
       if (!value) continue;
       dl.appendChild(el('dt', null, term));
+      // The BLO's number is the one field a person will act on immediately, so
+      // make it dialable on a phone rather than a string to copy by hand.
+      if (term === t('fieldBlo') && record.blo?.mobile) {
+        const dd = el('dd');
+        dd.appendChild(document.createTextNode(record.blo.name ? `${record.blo.name} — ` : ''));
+        const tel = el('a', 'blo-tel', record.blo.mobile);
+        tel.href = `tel:+91${record.blo.mobile}`;
+        dd.appendChild(tel);
+        dl.appendChild(dd);
+        continue;
+      }
       dl.appendChild(el('dd', term === 'EPIC' ? 'epic-value' : null, value));
     }
     dl.appendChild(el('dt', null, t('fieldReason')));

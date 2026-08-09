@@ -398,3 +398,7 @@ main { padding-bottom: 56px; }
 }
 .source-link { display: inline-block; font-size: 0.95rem; color: var(--series-seq); font-weight: 700; }
 .source-detail { margin: 5px 0 0; font-size: 0.82rem; color: var(--ink-2); }
+
+/* BLO phone number — a real link, so it dials on a phone. */
+.record .blo-tel { color: var(--series-seq); text-decoration: none; font-weight: 600; white-space: nowrap; }
+.record .blo-tel:hover { text-decoration: underline; }
