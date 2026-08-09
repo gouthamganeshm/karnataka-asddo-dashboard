@@ -18,13 +18,29 @@
  */
 
 import { resolve } from 'node:path';
-import { DOCS, ROOT, log, readJson } from './lib/common.mjs';
+import { CACHE, DOCS, ROOT, log, readJson } from './lib/common.mjs';
 
 const args = process.argv.slice(2);
 const argValue = (f) => { const i = args.indexOf(f); return i === -1 ? null : args[i + 1]; };
 const TOLERANCE = Number(argValue('--tolerance') ?? 2);   // percent
 
 const official = await readJson(resolve(ROOT, 'seed', 'official-asddo.json'));
+// The age of a district's own lists, when the manifest is to hand. It explains
+// most of the shortfalls: the CEO's count is current, while a district that last
+// published on 27 July is compared against a figure that has grown since.
+const manifest = await readJson(resolve(CACHE, 'manifest.json'), null);
+const listDate = new Map();
+for (const d of manifest?.districts ?? []) {
+  const times = [];
+  for (const ac of d.acs) for (const f of ac.files) {
+    if (!f.generatedOn) continue;
+    const [dd, mm, yy] = f.generatedOn.split('/').map(Number);
+    if (dd && mm && yy) times.push(Date.UTC(yy, mm - 1, dd));
+  }
+  if (!times.length) continue;
+  times.sort((a, b) => a - b);
+  listDate.set(d.name, new Date(times[Math.floor(times.length / 2)]).toISOString().slice(0, 10));
+}
 const stats = await readJson(resolve(argValue('--data') ? resolve(argValue('--data')) : resolve(DOCS, 'data'), 'stats.json'));
 if (!official || !stats) { log('Need seed/official-asddo.json and built stats.json.'); process.exit(1); }
 
@@ -41,16 +57,18 @@ log(`Published data: ${fmt(stats.total)} records\n`);
 const rows = [];
 for (const [name, expected] of Object.entries(official.districts)) {
   const got = ours.get(norm(name)) ?? 0;
-  rows.push({ name, expected, got, diff: got - expected, pct: pct(got, expected) });
+  rows.push({ name, expected, got, diff: got - expected, pct: pct(got, expected), asOf: listDate.get(name) ?? '' });
 }
 rows.sort((a, b) => Math.abs(b.pct) - Math.abs(a.pct));
 
-log('  district                 official      ours         diff       %');
+log(`  official count is as on ${official.asOf}; "lists" is the median generation date of that district's own documents
+`);
+log('  district                 official      ours         diff       %   lists');
 for (const r of rows) {
   const flag = Math.abs(r.pct) > TOLERANCE ? '  <<<' : '';
   log(`  ${r.name.padEnd(20)} ${fmt(r.expected).padStart(11)} ${fmt(r.got).padStart(11)} ` +
       `${(r.diff >= 0 ? '+' : '') + fmt(r.diff)}`.padStart(12) +
-      ` ${r.pct.toFixed(1).padStart(7)}%${flag}`);
+      ` ${r.pct.toFixed(1).padStart(7)}%  ${r.asOf.slice(5)}${flag}`);
 }
 
 const stateDiff = stats.total - official.state.asddo;

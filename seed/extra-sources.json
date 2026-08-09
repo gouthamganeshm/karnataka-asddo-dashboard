@@ -6,7 +6,12 @@
       {
         "folderId": "10K0yxneCdkH1BqXg2Drit2q9OF9QNFlg",
         "why": "Second Belagavi folder, one directory per constituency (01-Nippani … 18-Ramdurg). Crawled and merged: it contributed 0 new booths — all 1,323 of its files duplicate booths already found, at older timestamps. Kept because it costs one folder walk and would pick up anything the district adds there later. Belgaum's 47.7% shortfall against the CEO's count is therefore NOT a crawl gap: both published folders together hold only ~3,000 of Belagavi's ~3,900 booths."
+      },
+      {
+        "folderId": "1KjWCg906zZlAS21qw9kk3ofxSJPAkX7y",
+        "why": "Third Belagavi folder, one directory per constituency with July dates in the names (\"09-Gokak ASDDO List 21.07.26\", \"18-Ramdurg ASDD List as on 24.07.2026\"), 2,828 documents. Crawled and merged: contributed 0 new booths. With all three folders walked Belgaum still resolves to 3,464 booth PDFs, unchanged — the folders share the same underlying Drive objects rather than holding different booths."
       }
     ]
-  }
+  },
+  "_finding": "Belgaum was investigated across three folders and none adds coverage. Its 47.7% shortfall tracks the age of its own lists, not a crawl gap: median generation date 31/07 against a CEO count current to 08/08. The same holds for Bidar (28/07, -37.2%) and Davangere (30/07, -10.5%), while every district publishing from 02/08 onward reconciles within a few percent. Those districts need to republish; there is nothing to find."
 }
