@@ -1,6 +1,6 @@
 {
-  "dataVersion": "mslxky4r",
-  "importedAt": "2026-08-09T15:03:04.222Z",
+  "dataVersion": "msm9asc7",
+  "importedAt": "2026-08-09T20:30:43.363Z",
   "source": "https://ceo.karnataka.gov.in/asddo.html",
   "hash": "SHA-256",
   "shardDepth": 4,
@@ -336,8 +336,13 @@
         6
       ],
       [
-        93,
-        "Bellary",
+        91,
+        "Kampli",
+        7
+      ],
+      [
+        92,
+        "Siraguppa",
         7
       ],
       [
@@ -346,18 +351,13 @@
         7
       ],
       [
-        91,
-        "Kampli",
-        7
-      ],
-      [
         94,
         "Bellary City",
         7
       ],
       [
-        92,
-        "Siraguppa",
+        93,
+        "Bellary",
         7
       ],
       [
@@ -451,11 +451,6 @@
         10
       ],
       [
-        141,
-        "Chikkaballapur",
-        11
-      ],
-      [
         142,
         "Sidlaghatta",
         11
@@ -466,13 +461,18 @@
         11
       ],
       [
-        139,
-        "Gauribidanur",
+        141,
+        "Chikkaballapur",
         11
       ],
       [
         140,
         "Bagepalli",
+        11
+      ],
+      [
+        139,
+        "Gauribidanur",
         11
       ],
       [
@@ -1173,10 +1173,10 @@
     ],
     "reasons": [
       "Permanently Shifted",
-      "Death",
-      "Already enrolled",
       "EF Refused",
+      "Death",
       "Untraceable/Absent",
+      "Already enrolled",
       "Permanently",
       "Untraceable/Absen t",
       "Untraceable/Absent Already enrolled",
@@ -1199,8 +1199,8 @@
       "Father",
       "Husband",
       "Mother",
-      "Wife",
       "Other",
+      "Wife",
       "\u0000F\u0000a\u0000t\u0000h\u0000e\u0000r\u0000",
       "\u0000M\u0000o\u0000t\u0000h\u0000e\u0000r\u0000",
       "\u0000O\u0000t\u0000h\u0000e\u0000r\u0000",
@@ -1212,11 +1212,11 @@
   },
   "hasRoll": false,
   "counts": {
-    "records": 10360691,
+    "records": 10363432,
     "districts": 34,
     "districtsInSource": 34,
     "constituencies": 224,
-    "booths": 56975,
+    "booths": 56988,
     "buckets": 65536
   },
   "districtsMissing": []
