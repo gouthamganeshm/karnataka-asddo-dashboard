@@ -1,20 +1,20 @@
 {
-  "dataVersion": "msl0ct81",
-  "total": 10548815,
+  "dataVersion": "mslfewi0",
+  "total": 10582234,
   "byCategory": {
-    "absent": 1538796,
-    "shifted": 6137922,
-    "death": 1527632,
-    "duplicate": 632801,
-    "others": 711664
+    "absent": 1543452,
+    "shifted": 6156049,
+    "death": 1534841,
+    "duplicate": 636112,
+    "others": 711780
   },
   "ageBands": {
-    "18-29": 1409964,
-    "30-44": 4069052,
-    "45-59": 2745497,
-    "60-79": 1827907,
-    "80+": 494833,
-    "unknown": 1562
+    "18-29": 1416801,
+    "30-44": 4081047,
+    "45-59": 2752489,
+    "60-79": 1832995,
+    "80+": 496073,
+    "unknown": 2829
   },
   "generatedOn": [
     "01/08/2026",
@@ -140,14 +140,14 @@
     },
     {
       "name": "BELGAUM",
-      "total": 268216,
+      "total": 269482,
       "constituencies": 18,
-      "booths": 3470,
-      "absent": 6155,
-      "shifted": 111653,
-      "death": 79338,
-      "duplicate": 32573,
-      "others": 38497
+      "booths": 3471,
+      "absent": 6168,
+      "shifted": 112259,
+      "death": 79843,
+      "duplicate": 32658,
+      "others": 38554
     },
     {
       "name": "BAGALKOT",
@@ -214,6 +214,17 @@
       "death": 31924,
       "duplicate": 26291,
       "others": 1024
+    },
+    {
+      "name": "BELLARY",
+      "total": 177050,
+      "constituencies": 6,
+      "booths": 1070,
+      "absent": 31005,
+      "shifted": 86261,
+      "death": 33908,
+      "duplicate": 18524,
+      "others": 7352
     },
     {
       "name": "KOLAR",
@@ -291,17 +302,6 @@
       "death": 28650,
       "duplicate": 28030,
       "others": 62
-    },
-    {
-      "name": "BELLARY",
-      "total": 144897,
-      "constituencies": 4,
-      "booths": 841,
-      "absent": 26362,
-      "shifted": 68740,
-      "death": 27204,
-      "duplicate": 15298,
-      "others": 7293
     },
     {
       "name": "CHITRADURGA",
@@ -1532,6 +1532,18 @@
       "others": 82
     },
     {
+      "no": 92,
+      "name": "Siraguppa",
+      "district": "BELLARY",
+      "total": 32149,
+      "booths": 228,
+      "absent": 4643,
+      "shifted": 17518,
+      "death": 6704,
+      "duplicate": 3226,
+      "others": 58
+    },
+    {
       "no": 181,
       "name": "Nelamangala",
       "district": "BANGALORE RURAL",
@@ -2120,6 +2132,18 @@
       "others": 80
     },
     {
+      "no": 13,
+      "name": "BGM Rural",
+      "district": "BELGAUM",
+      "total": 21313,
+      "booths": 235,
+      "absent": 806,
+      "shifted": 11389,
+      "death": 5666,
+      "duplicate": 3294,
+      "others": 158
+    },
+    {
       "no": 221,
       "name": "Hanur",
       "district": "CHAMARAJNAGAR",
@@ -2202,18 +2226,6 @@
       "death": 8047,
       "duplicate": 1751,
       "others": 46
-    },
-    {
-      "no": 13,
-      "name": "BGM Rural",
-      "district": "BELGAUM",
-      "total": 20047,
-      "booths": 234,
-      "absent": 793,
-      "shifted": 10783,
-      "death": 5161,
-      "duplicate": 3209,
-      "others": 101
     },
     {
       "no": 76,
@@ -3090,6 +3102,18 @@
       "death": 9,
       "duplicate": 10,
       "others": 30
+    },
+    {
+      "no": null,
+      "name": "AC ?",
+      "district": "BELLARY",
+      "total": 4,
+      "booths": 1,
+      "absent": 0,
+      "shifted": 3,
+      "death": 0,
+      "duplicate": 0,
+      "others": 1
     }
   ],
   "topConstituencies": [
