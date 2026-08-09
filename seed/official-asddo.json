@@ -1,0 +1,52 @@
+{
+  "_source": "Office of the Chief Electoral Officer, Karnataka — Daily Press Release, No. DPAR 172 ChuMaPa 2026, 08.08.2026 04:00 PM; attached 'Enumeration Form Digitization (Including ASDDO)' district table.",
+  "_note": "The CEO's own count of electors marked ASDDO/UEF. Independent of the booth PDFs, so it is the only external check on whether the import is complete. Update this whenever a newer press release is published, and re-run scripts/reconcile.mjs.",
+  "asOf": "2026-08-08",
+  "state": {
+    "electors": 55432314,
+    "asddo": 10929262,
+    "categories": {
+      "absent": 1571849,
+      "shifted": 6591525,
+      "death": 1635379,
+      "duplicate": 698479,
+      "others": 432030
+    }
+  },
+  "districts": {
+    "UDUPI": 63719,
+    "HAVERI": 114853,
+    "UTTARA KANNADA": 107076,
+    "DAKSHINA KANNADA": 158205,
+    "CHAMARAJNAGAR": 86209,
+    "CHITRADURGA": 141805,
+    "CHIKKMAGALUR": 97074,
+    "TUMKUR": 239601,
+    "MANDYA": 168359,
+    "HASSAN": 166773,
+    "CHIKKABALLAPUR": 121118,
+    "RAMANAGARAM": 110983,
+    "SHIMOGA": 189464,
+    "KOPPAL": 149151,
+    "BANGALORE RURAL": 117419,
+    "VIJAYANAGARA": 148853,
+    "KOLAR": 172241,
+    "GADAG": 120859,
+    "DAVANGERE": 201666,
+    "KODAGU": 63198,
+    "BAGALKOT": 237554,
+    "BIJAPUR": 299236,
+    "BIDAR": 243903,
+    "DHARWAD": 273728,
+    "YADGIR": 188521,
+    "BELLARY": 223555,
+    "RAICHUR": 321721,
+    "MYSORE": 561457,
+    "GULBARGA": 527645,
+    "BANGALORE URBAN": 1759871,
+    "B.B.M.P(NORTH)": 1074459,
+    "B.B.M.P(CENTRAL)": 884976,
+    "B.B.M.P(SOUTH)": 1079155,
+    "BELGAUM": 514855
+  }
+}

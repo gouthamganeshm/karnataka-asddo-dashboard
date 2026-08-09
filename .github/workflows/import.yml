@@ -243,6 +243,16 @@ jobs:
       - name: Sanity-check the lookup before publishing
         run: node scripts/smoke-test.mjs
 
+      # The only check here that does not come from the booth PDFs. Everything
+      # else compares the site to documents we found, so a document the crawl
+      # never found is invisible to all of them -- which is exactly how
+      # 92-Siruguppa went missing while verification reported zero problems.
+      # Reporting, not blocking: district labels differ between the CEO's tables
+      # and the Drive folders, so a clean run is not yet the expected state.
+      - name: Reconcile against the CEO's official ASDDO totals
+        continue-on-error: true
+        run: node scripts/reconcile.mjs
+
       - name: Report size
         run: |
           echo "docs/data: $(du -sh docs/data | cut -f1) across $(find docs/data -type f | wc -l) files"
