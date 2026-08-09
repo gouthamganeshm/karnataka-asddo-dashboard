@@ -35,7 +35,12 @@ export function extractItems(buf) {
   const pages = [];
   for (const raw of streams) {
     let data = raw;
-    if (raw[0] === 0x78) {
+    // A zlib header's first byte is (window size << 4) | 8, so any of 0x08,
+    // 0x18 … 0x78 is a valid deflate stream. Requiring 0x78 — the largest window
+    // and the most common — silently skipped 1,006 of the 1,008 streams in
+    // Siruguppa's list, which then read as a PDF containing no text at all, and
+    // cost the site a whole constituency with no error anywhere.
+    if ((raw[0] & 0x0f) === 8) {
       try {
         data = inflateSync(raw);
       } catch {
