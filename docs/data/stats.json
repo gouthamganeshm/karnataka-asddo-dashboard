@@ -1,12 +1,12 @@
 {
-  "dataVersion": "mslp0k93",
+  "dataVersion": "mslxky4r",
   "total": 10360691,
   "byCategory": {
     "absent": 1543455,
     "shifted": 6156289,
     "death": 1535015,
-    "duplicate": 636957,
-    "others": 488975
+    "duplicate": 636914,
+    "others": 489018
   },
   "ageBands": {
     "18-29": 1360764,
@@ -168,8 +168,8 @@
       "absent": 6170,
       "shifted": 112480,
       "death": 80014,
-      "duplicate": 32878,
-      "others": 694
+      "duplicate": 32835,
+      "others": 737
     },
     {
       "name": "SHIMOGA",
@@ -2080,8 +2080,8 @@
       "absent": 808,
       "shifted": 11610,
       "death": 5837,
-      "duplicate": 3338,
-      "others": 186
+      "duplicate": 3295,
+      "others": 229
     },
     {
       "no": 197,
