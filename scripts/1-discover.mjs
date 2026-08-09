@@ -32,7 +32,7 @@ import {
   CACHE, ROOT, decodeEntities, driveDownloadUrl, get, getNamed, getText, listDriveFolder, log,
   pool, progress, readJson, writeJson
 } from './lib/common.mjs';
-import { NOT_A_BOOTH_LIST, parseBoothName } from './lib/naming.mjs';
+import { isNotBoothList, parseBoothName } from './lib/naming.mjs';
 import { looksZip } from './lib/zip.mjs';
 import { openArchiveBuffer } from './lib/archive.mjs';
 
@@ -172,7 +172,7 @@ async function expandArchive(file, trail, prefetched = null) {
   for (const entry of entries) {
     const base = entry.name.split('/').pop();
     if (!/\.pdf$/i.test(base)) { other++; continue; }
-    if (NOT_A_BOOTH_LIST.test(base)) continue;
+    if (isNotBoothList(base)) continue;
     out.push({
       id: null,
       zipId: file.id ?? null,
@@ -208,7 +208,7 @@ async function resolveDriveFile(id, trail) {
   }
 
   const name = filename || id;
-  if (NOT_A_BOOTH_LIST.test(name)) return [];
+  if (isNotBoothList(name)) return [];
 
   if (looksZip(buf)) return expandArchive({ id, name }, trail, buf);
   if (buf.subarray(0, 4).toString('latin1') === '%PDF') {
@@ -233,7 +233,7 @@ async function collectPdfs(folderId, trail = [], depth = 0, seen = new Set()) {
   const out = [];
   const folders = entries.filter((e) => e.isFolder);
   for (const file of entries) {
-    if (file.isFolder || NOT_A_BOOTH_LIST.test(file.name)) continue;
+    if (file.isFolder || isNotBoothList(file.name)) continue;
     if (/\.pdf$/i.test(file.name)) {
       out.push({ id: file.id, name: file.name, trail });
     } else if (/\.zip$/i.test(file.name)) {

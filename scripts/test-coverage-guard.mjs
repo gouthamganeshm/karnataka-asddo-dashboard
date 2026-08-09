@@ -9,7 +9,7 @@
  */
 
 import { plan } from './plan-matrix.mjs';
-import { NOT_A_BOOTH_LIST, parseBoothName } from './lib/naming.mjs';
+import { isNotBoothList, parseBoothName } from './lib/naming.mjs';
 import { listZipEntries, looksZip } from './lib/zip.mjs';
 import { deflateRawSync } from 'node:zlib';
 import { log } from './lib/common.mjs';
@@ -107,8 +107,17 @@ const district = (name, booths) => ({
 }
 
 check('a PDF is not mistaken for a zip', looksZip(Buffer.from('%PDF-1.7 ....')), false);
-check('judgements are still excluded', NOT_A_BOOTH_LIST.test('Copy of SIR JUDGEMENT 27 MAY 2026.pdf'), true);
-check('booth lists are not', NOT_A_BOOTH_LIST.test('S10_90_7_Govt School_03_08_2026_21_05_20.pdf'), false);
+check('judgements are still excluded', isNotBoothList('Copy of SIR JUDGEMENT 27 MAY 2026.pdf'), true);
+check('booth lists are not', isNotBoothList('S10_90_7_Govt School_03_08_2026_21_05_20.pdf'), false);
+// Regression: booth names that happen to contain a guidance-document word must
+// survive when they carry the canonical S10_<ac>_<part>_ prefix. These three
+// real Gandhinagar (AC164) booths were being dropped statewide.
+check('booth in a Public Instructions office is kept',
+  isNotBoothList('S10_164_171_Deputy Director, Department of Public Instructions Office Room No. 1_03_08_2026_10_00_00.pdf'), false);
+check('booth in an annexure building is kept',
+  isNotBoothList('S10_164_214_Bangalore One annexure Building_03_08_2026_10_00_00.pdf'), false);
+// A bare guidance document with no booth prefix is still excluded.
+check('a loose annexure document is still excluded', isNotBoothList('Annexure-7 SIR format.pdf'), true);
 
 // ------------------------------------------------------------------ verdict
 

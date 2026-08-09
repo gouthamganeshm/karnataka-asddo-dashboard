@@ -68,3 +68,25 @@ export function parseBoothName(fileName) {
 // Parsing a guidance booklet as a deletion table yields nothing useful and
 // pollutes the counts.
 export const NOT_A_BOOTH_LIST = /booklet|guideline|instruction|manual|circular|notice|format|annexure|judge?ment|judgment|order|affidavit|press.?note/i;
+
+// The canonical ECI booth-list prefix: state code, AC number, part number.
+// A real per-booth deletion list always carries it; a guidance document never
+// does. Files that have it are booth lists whatever words follow.
+const BOOTH_PREFIX = /^[A-Z]\d+_\d+_\d+_/i;
+
+/**
+ * Whether a file is a non-booth document that should be skipped.
+ *
+ * NOT_A_BOOTH_LIST alone is too eager: the words that flag a guidance booklet
+ * also occur in real polling-station names — "Department of Public
+ * Instructions", "Bangalore One annexure Building", a school on "Notice Board
+ * Road". Karnataka runs many booths out of DDPI/BEO ("Public Instructions")
+ * offices, so matching the bare word silently dropped whole booths statewide
+ * (Gandhinagar parts 171, 172, 214 among them). A file carrying the canonical
+ * S10_<ac>_<part>_ booth prefix is a booth list regardless of those words; only
+ * files without it are tested against the guidance-document pattern.
+ */
+export function isNotBoothList(name) {
+  if (BOOTH_PREFIX.test(name)) return false;
+  return NOT_A_BOOTH_LIST.test(name);
+}
