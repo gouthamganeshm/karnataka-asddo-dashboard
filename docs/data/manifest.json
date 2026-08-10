@@ -1,6 +1,6 @@
 {
-  "dataVersion": "msmn1w2q",
-  "importedAt": "2026-08-10T02:56:05.186Z",
+  "dataVersion": "msn2u4zf",
+  "importedAt": "2026-08-10T10:17:55.632Z",
   "source": "https://ceo.karnataka.gov.in/asddo.html",
   "hash": "SHA-256",
   "shardDepth": 4,
@@ -331,13 +331,18 @@
         6
       ],
       [
-        91,
-        "Kampli",
+        92,
+        "Siraguppa",
         7
       ],
       [
-        92,
-        "Siraguppa",
+        94,
+        "Bellary City",
+        7
+      ],
+      [
+        91,
+        "Kampli",
         7
       ],
       [
@@ -348,11 +353,6 @@
       [
         93,
         "Bellary",
-        7
-      ],
-      [
-        94,
-        "Bellary City",
         7
       ],
       [
@@ -456,6 +456,11 @@
         11
       ],
       [
+        140,
+        "Bagepalli",
+        11
+      ],
+      [
         143,
         "Chintamani",
         11
@@ -463,11 +468,6 @@
       [
         139,
         "Gauribidanur",
-        11
-      ],
-      [
-        140,
-        "Bagepalli",
         11
       ],
       [
@@ -1168,9 +1168,9 @@
     ],
     "reasons": [
       "Permanently Shifted",
-      "EF Refused",
       "Death",
       "Already enrolled",
+      "EF Refused",
       "Untraceable/Absent",
       "Permanently",
       "Untraceable/Absen t",
@@ -1193,9 +1193,9 @@
     "relations": [
       "Father",
       "Husband",
+      "Mother",
       "Wife",
       "Other",
-      "Mother",
       "\u0000F\u0000a\u0000t\u0000h\u0000e\u0000r\u0000",
       "\u0000M\u0000o\u0000t\u0000h\u0000e\u0000r\u0000",
       "\u0000O\u0000t\u0000h\u0000e\u0000r\u0000",
@@ -1207,11 +1207,11 @@
   },
   "hasRoll": false,
   "counts": {
-    "records": 10363432,
+    "records": 10363971,
     "districts": 34,
     "districtsInSource": 34,
     "constituencies": 223,
-    "booths": 56988,
+    "booths": 56991,
     "buckets": 65536
   },
   "districtsMissing": []

@@ -1,19 +1,19 @@
 {
-  "dataVersion": "msmn1w2q",
-  "total": 10363432,
+  "dataVersion": "msn2u4zf",
+  "total": 10363971,
   "byCategory": {
-    "absent": 1543526,
-    "shifted": 6158369,
-    "death": 1535326,
-    "duplicate": 637044,
+    "absent": 1543530,
+    "shifted": 6158606,
+    "death": 1535558,
+    "duplicate": 637110,
     "others": 489167
   },
   "ageBands": {
-    "18-29": 1361160,
-    "30-44": 4003032,
-    "45-59": 2699931,
-    "60-79": 1804131,
-    "80+": 493446,
+    "18-29": 1361256,
+    "30-44": 4003189,
+    "45-59": 2700062,
+    "60-79": 1804266,
+    "80+": 493466,
     "unknown": 1732
   },
   "generatedOn": [
@@ -360,13 +360,13 @@
     },
     {
       "name": "UTTARA KANNADA",
-      "total": 103094,
+      "total": 103633,
       "constituencies": 6,
-      "booths": 1414,
-      "absent": 4814,
-      "shifted": 43819,
-      "death": 42541,
-      "duplicate": 11865,
+      "booths": 1417,
+      "absent": 4818,
+      "shifted": 44056,
+      "death": 42773,
+      "duplicate": 11931,
       "others": 55
     },
     {
@@ -2540,6 +2540,18 @@
       "others": 56
     },
     {
+      "no": 81,
+      "name": "Yellapur",
+      "district": "UTTARA KANNADA",
+      "total": 16119,
+      "booths": 234,
+      "absent": 181,
+      "shifted": 6805,
+      "death": 7295,
+      "duplicate": 1837,
+      "others": 1
+    },
+    {
       "no": 194,
       "name": "Arsikere",
       "district": "HASSAN",
@@ -2610,18 +2622,6 @@
       "death": 3688,
       "duplicate": 1288,
       "others": 8
-    },
-    {
-      "no": 81,
-      "name": "Yellapur",
-      "district": "UTTARA KANNADA",
-      "total": 15580,
-      "booths": 231,
-      "absent": 177,
-      "shifted": 6568,
-      "death": 7063,
-      "duplicate": 1771,
-      "others": 1
     },
     {
       "no": 128,
