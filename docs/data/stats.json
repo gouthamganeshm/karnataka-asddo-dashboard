@@ -1,19 +1,19 @@
 {
-  "dataVersion": "msn2u4zf",
-  "total": 10363971,
+  "dataVersion": "msn7heqi",
+  "total": 10614743,
   "byCategory": {
-    "absent": 1543530,
-    "shifted": 6158606,
-    "death": 1535558,
-    "duplicate": 637110,
-    "others": 489167
+    "absent": 1585264,
+    "shifted": 6350869,
+    "death": 1545992,
+    "duplicate": 638514,
+    "others": 494104
   },
   "ageBands": {
-    "18-29": 1361256,
-    "30-44": 4003189,
-    "45-59": 2700062,
-    "60-79": 1804266,
-    "80+": 493466,
+    "18-29": 1385222,
+    "30-44": 4115536,
+    "45-59": 2769881,
+    "60-79": 1840744,
+    "80+": 501628,
     "unknown": 1732
   },
   "generatedOn": [
@@ -25,6 +25,7 @@
     "06/08/2026",
     "07/08/2026",
     "08/08/2026",
+    "10/08/2026",
     "20/07/2026",
     "21/07/2026",
     "22/07/2026",
@@ -74,14 +75,14 @@
     },
     {
       "name": "B.B.M.P(CENTRAL)",
-      "total": 650762,
-      "constituencies": 6,
-      "booths": 1213,
-      "absent": 113715,
-      "shifted": 401412,
-      "death": 52493,
-      "duplicate": 7933,
-      "others": 75209
+      "total": 901513,
+      "constituencies": 7,
+      "booths": 1650,
+      "absent": 155443,
+      "shifted": 593665,
+      "death": 62924,
+      "duplicate": 9335,
+      "others": 80146
     },
     {
       "name": "MYSORE",
@@ -250,13 +251,13 @@
     },
     {
       "name": "MANDYA",
-      "total": 158812,
+      "total": 158833,
       "constituencies": 7,
-      "booths": 1817,
-      "absent": 22287,
-      "shifted": 80517,
-      "death": 41790,
-      "duplicate": 13733,
+      "booths": 1818,
+      "absent": 22293,
+      "shifted": 80527,
+      "death": 41793,
+      "duplicate": 13735,
       "others": 485
     },
     {
@@ -486,6 +487,18 @@
       "death": 11874,
       "duplicate": 1442,
       "others": 6154
+    },
+    {
+      "no": 154,
+      "name": "Rajarajeshwarinagar",
+      "district": "B.B.M.P(CENTRAL)",
+      "total": 250751,
+      "booths": 437,
+      "absent": 41728,
+      "shifted": 192253,
+      "death": 10431,
+      "duplicate": 1402,
+      "others": 4937
     },
     {
       "no": 152,
@@ -2699,12 +2712,12 @@
       "no": 191,
       "name": "Nagamangala",
       "district": "MANDYA",
-      "total": 14674,
-      "booths": 257,
-      "absent": 739,
-      "shifted": 8693,
-      "death": 3719,
-      "duplicate": 1391,
+      "total": 14695,
+      "booths": 258,
+      "absent": 745,
+      "shifted": 8703,
+      "death": 3722,
+      "duplicate": 1393,
       "others": 132
     },
     {
@@ -3130,6 +3143,12 @@
       "total": 254887
     },
     {
+      "no": 154,
+      "name": "Rajarajeshwarinagar",
+      "district": "B.B.M.P(CENTRAL)",
+      "total": 250751
+    },
+    {
       "no": 152,
       "name": "Byatarayanapura",
       "district": "BANGALORE URBAN",
@@ -3236,12 +3255,6 @@
       "name": "Gulbarga Uttar",
       "district": "GULBARGA",
       "total": 110462
-    },
-    {
-      "no": 157,
-      "name": "Malleshwaram",
-      "district": "B.B.M.P(NORTH)",
-      "total": 110217
     }
   ]
 }

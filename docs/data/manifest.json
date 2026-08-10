@@ -1,6 +1,6 @@
 {
-  "dataVersion": "msn2u4zf",
-  "importedAt": "2026-08-10T10:17:55.632Z",
+  "dataVersion": "msn7heqi",
+  "importedAt": "2026-08-10T12:27:56.038Z",
   "source": "https://ceo.karnataka.gov.in/asddo.html",
   "hash": "SHA-256",
   "shardDepth": 4,
@@ -50,6 +50,11 @@
       "YADGIR"
     ],
     "acs": [
+      [
+        154,
+        "Rajarajeshwarinagar",
+        0
+      ],
       [
         162,
         "Shivajinagar",
@@ -331,18 +336,13 @@
         6
       ],
       [
-        92,
-        "Siraguppa",
-        7
-      ],
-      [
-        94,
-        "Bellary City",
-        7
-      ],
-      [
         91,
         "Kampli",
+        7
+      ],
+      [
+        92,
+        "Siraguppa",
         7
       ],
       [
@@ -353,6 +353,11 @@
       [
         93,
         "Bellary",
+        7
+      ],
+      [
+        94,
+        "Bellary City",
         7
       ],
       [
@@ -451,8 +456,8 @@
         11
       ],
       [
-        141,
-        "Chikkaballapur",
+        139,
+        "Gauribidanur",
         11
       ],
       [
@@ -461,13 +466,13 @@
         11
       ],
       [
-        143,
-        "Chintamani",
+        141,
+        "Chikkaballapur",
         11
       ],
       [
-        139,
-        "Gauribidanur",
+        143,
+        "Chintamani",
         11
       ],
       [
@@ -1167,11 +1172,11 @@
       ]
     ],
     "reasons": [
-      "Permanently Shifted",
       "Death",
-      "Already enrolled",
-      "EF Refused",
       "Untraceable/Absent",
+      "Permanently Shifted",
+      "EF Refused",
+      "Already enrolled",
       "Permanently",
       "Untraceable/Absen t",
       "Untraceable/Absent Already enrolled",
@@ -1193,25 +1198,25 @@
     "relations": [
       "Father",
       "Husband",
-      "Mother",
-      "Wife",
       "Other",
+      "Wife",
+      "Mother",
       "\u0000F\u0000a\u0000t\u0000h\u0000e\u0000r\u0000",
+      "\u0000H\u0000u\u0000s\u0000b\u0000a\u0000n\u0000d\u0000",
+      "\u0000W\u0000i\u0000f\u0000e\u0000",
       "\u0000M\u0000o\u0000t\u0000h\u0000e\u0000r\u0000",
       "\u0000O\u0000t\u0000h\u0000e\u0000r\u0000",
-      "\u0000H\u0000u\u0000s\u0000b\u0000a\u0000n\u0000d\u0000",
       "GUARDIAN",
-      "\u0000W\u0000i\u0000f\u0000e\u0000",
       "KALLEGOWDA"
     ]
   },
   "hasRoll": false,
   "counts": {
-    "records": 10363971,
+    "records": 10614743,
     "districts": 34,
     "districtsInSource": 34,
-    "constituencies": 223,
-    "booths": 56991,
+    "constituencies": 224,
+    "booths": 57429,
     "buckets": 65536
   },
   "districtsMissing": []
