@@ -59,13 +59,50 @@
     </div>
 
     <form id="lookup-form" class="lookup-form" novalidate>
-      <label for="epic" data-i18n="epicLabel">EPIC number</label>
-      <input id="epic" name="epic" type="text" inputmode="text" autocomplete="off"
-             autocapitalize="characters" spellcheck="false" maxlength="10"
-             placeholder="ABC1234567" aria-describedby="epic-help">
-      <p class="help" id="epic-help" data-i18n="epicHelp">
-        Printed on the front of your voter ID card. Exactly 3 letters followed by 7 digits.
-      </p>
+      <div class="mode-switch" role="tablist" aria-label="Search mode">
+        <button type="button" class="mode-btn is-active" data-mode="epic" role="tab" aria-selected="true" data-i18n="modeEpic">By EPIC number</button>
+        <button type="button" class="mode-btn" data-mode="serial" role="tab" aria-selected="false" data-i18n="modeSerial">By serial number</button>
+        <button type="button" class="mode-btn" data-mode="name" role="tab" aria-selected="false" data-i18n="modeName">By name</button>
+      </div>
+
+      <!-- EPIC mode -->
+      <div class="mode-fields" data-modes="epic">
+        <label for="epic" data-i18n="epicLabel">EPIC number</label>
+        <input id="epic" name="epic" type="text" inputmode="text" autocomplete="off"
+               autocapitalize="characters" spellcheck="false" maxlength="10"
+               placeholder="ABC1234567" aria-describedby="epic-help">
+        <p class="help" id="epic-help" data-i18n="epicHelp">
+          Printed on the front of your voter ID card. Exactly 3 letters followed by 7 digits.
+        </p>
+      </div>
+
+      <!-- Shared cascade for serial + name -->
+      <div class="mode-fields" data-modes="serial name" hidden>
+        <label for="sel-district" data-i18n="selDistrictLabel">District</label>
+        <select id="sel-district"></select>
+        <label for="sel-ac" data-i18n="selAcLabel">Constituency</label>
+        <select id="sel-ac" disabled></select>
+        <p class="help" data-i18n="searchNote">Searching by name or serial reads the public ASDDO list. It never reveals a voter ID number.</p>
+      </div>
+
+      <!-- Serial-only fields -->
+      <div class="mode-fields" data-modes="serial" hidden>
+        <label for="sel-booth" data-i18n="selBoothLabel">Polling booth</label>
+        <select id="sel-booth" disabled></select>
+        <label for="serial-input" data-i18n="serialLabel">Serial number in the roll</label>
+        <input id="serial-input" type="number" inputmode="numeric" min="1" step="1"
+               autocomplete="off" placeholder="145" aria-describedby="serial-help">
+        <p class="help" id="serial-help" data-i18n="serialHelp">The serial number printed against the name in that booth's list.</p>
+      </div>
+
+      <!-- Name-only field -->
+      <div class="mode-fields" data-modes="name" hidden>
+        <label for="name-input" data-i18n="nameLabel">Name</label>
+        <input id="name-input" type="text" autocomplete="off" spellcheck="false"
+               placeholder="e.g. RAMESH" aria-describedby="name-help">
+        <p class="help" id="name-help" data-i18n="nameHelp">Type part of the name as printed on the roll. The voter ID is never shown.</p>
+      </div>
+
       <button type="submit" class="submit" id="submit-btn">
         <span data-i18n="checkBtn">Check this EPIC</span>
       </button>

@@ -185,6 +185,47 @@ main { padding-bottom: 56px; }
 .lookup-form input:focus-visible { outline: 3px solid var(--series-seq); outline-offset: 1px; border-color: transparent; }
 .help { font-size: 0.85rem; color: var(--ink-2); margin: 8px 0 16px; }
 
+/* --- search-mode switch + cascade fields --- */
+.mode-switch {
+  display: flex; gap: 4px; margin-bottom: 18px;
+  background: var(--rule); border-radius: 10px; padding: 4px;
+}
+.mode-btn {
+  flex: 1 1 0; font: inherit; font-size: 0.9rem; font-weight: 600;
+  padding: 9px 8px; border: 0; border-radius: 7px; cursor: pointer;
+  background: transparent; color: var(--ink-2); white-space: nowrap;
+}
+.mode-btn:hover { color: var(--ink); }
+.mode-btn.is-active { background: var(--surface); color: var(--ink); box-shadow: var(--shadow); }
+.mode-btn:focus-visible { outline: 2px solid var(--series-seq); outline-offset: 1px; }
+.mode-fields[hidden] { display: none; }
+.mode-fields > label { display: block; font-weight: 600; margin-bottom: 6px; }
+.lookup-form select {
+  font: inherit; font-size: 1.05rem;
+  padding: 12px 14px; border-radius: 10px; margin-bottom: 14px;
+  border: 2px solid var(--rule); background: var(--page); color: var(--ink);
+  width: 100%;
+}
+.lookup-form select:disabled { opacity: 0.5; cursor: not-allowed; }
+.lookup-form select:focus-visible { outline: 3px solid var(--series-seq); outline-offset: 1px; border-color: transparent; }
+
+/* --- name-search results list --- */
+.back-btn { margin-bottom: 12px; }
+.search-results { display: flex; flex-direction: column; gap: 8px; margin-top: 8px; }
+.search-result {
+  display: flex; flex-direction: column; align-items: flex-start; gap: 6px;
+  width: 100%; text-align: left; cursor: pointer;
+  padding: 12px 14px; border-radius: 10px;
+  border: 1px solid var(--hairline); background: var(--surface); color: var(--ink);
+  font: inherit;
+}
+.search-result:hover { border-color: var(--series-seq); }
+.search-result:focus-visible { outline: 2px solid var(--series-seq); outline-offset: 1px; }
+.sr-name { font-weight: 700; font-size: 1.02rem; }
+.sr-meta { display: flex; flex-wrap: wrap; gap: 6px 10px; align-items: center; }
+.sr-tag { font-size: 0.85rem; color: var(--ink-2); }
+.sr-reason { display: inline-flex; align-items: center; gap: 6px; }
+
 .submit {
   font: inherit; font-weight: 600; font-size: 1.05rem;
   background: linear-gradient(100deg, #c2185b 0%, #e2543c 100%);

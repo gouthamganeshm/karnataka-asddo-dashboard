@@ -24,7 +24,32 @@ const STRINGS = {
     epicLabel: 'EPIC number',
     epicHelp: 'Printed on the front of your voter ID card. Exactly 3 letters followed by 7 digits.',
     checkBtn: 'Check this EPIC',
+    searchBtn: 'Search the ASDDO list',
     checking: 'Checking',
+
+    modeEpic: 'By EPIC number', modeSerial: 'By serial number', modeName: 'By name',
+    selDistrictLabel: 'District', selAcLabel: 'Constituency', selBoothLabel: 'Polling booth',
+    selDistrictPlaceholder: 'Select a district…', selAcPlaceholder: 'Select a constituency…', selBoothPlaceholder: 'Select a booth…',
+    serialLabel: 'Serial number in the roll',
+    serialHelp: 'The serial number printed against the name in that booth’s list.',
+    nameLabel: 'Name',
+    nameHelp: 'Type part of the name as printed on the roll. The voter ID is never shown.',
+    searchNote: 'Searching by name or serial reads the public ASDDO list. It never reveals a voter ID number.',
+    errPickDistrict: 'Choose a district first.',
+    errPickAc: 'Choose a constituency.',
+    errPickBooth: 'Choose a polling booth.',
+    errSerialEmpty: 'Enter the serial number to look up.',
+    errNameShort: 'Enter at least two letters of the name.',
+    searchResultsHeading: '{n} on the ASDDO list match “{q}”',
+    searchResultsHeadingOne: '1 on the ASDDO list matches “{q}”',
+    searchResultsCapped: 'Showing the first {shown}. Narrow the name to see fewer.',
+    searchResultsIn: 'in {ac}',
+    resultOpen: 'View full record',
+    backToResults: '‹ Back to results',
+    searchNoMatchNameHeading: 'No match on the ASDDO list',
+    searchNoMatchName: 'No name containing “{q}” is on the ASDDO list for {ac}. That is the expected result if the voter is not flagged.',
+    searchNoMatchSerialHeading: 'Not on the ASDDO list',
+    searchNoMatchSerial: 'Serial {serial} in {booth} is not on the ASDDO list. That is the expected result if the voter is not flagged.',
 
     deletedHeading: 'This EPIC is on the ASDDO list',
     deletedLede: 'This voter ID has been flagged for verification under SIR. That does not by itself mean your name has been deleted \u2014 but it does need acting on now.',
@@ -113,7 +138,32 @@ const STRINGS = {
     epicLabel: 'EPIC ಸಂಖ್ಯೆ',
     epicHelp: 'ನಿಮ್ಮ ಮತದಾರರ ಗುರುತಿನ ಚೀಟಿಯ ಮುಂಭಾಗದಲ್ಲಿ ಮುದ್ರಿತವಾಗಿರುತ್ತದೆ. ನಿಖರವಾಗಿ 3 ಅಕ್ಷರಗಳು ನಂತರ 7 ಅಂಕಿಗಳು.',
     checkBtn: 'ಪರಿಶೀಲಿಸಿ',
+    searchBtn: 'ASDDO ಪಟ್ಟಿ ಹುಡುಕಿ',
     checking: 'ಪರಿಶೀಲಿಸಲಾಗುತ್ತಿದೆ',
+
+    modeEpic: 'EPIC ಸಂಖ್ಯೆಯಿಂದ', modeSerial: 'ಕ್ರಮ ಸಂಖ್ಯೆಯಿಂದ', modeName: 'ಹೆಸರಿನಿಂದ',
+    selDistrictLabel: 'ಜಿಲ್ಲೆ', selAcLabel: 'ಕ್ಷೇತ್ರ', selBoothLabel: 'ಮತಗಟ್ಟೆ',
+    selDistrictPlaceholder: 'ಜಿಲ್ಲೆಯನ್ನು ಆಯ್ಕೆಮಾಡಿ…', selAcPlaceholder: 'ಕ್ಷೇತ್ರವನ್ನು ಆಯ್ಕೆಮಾಡಿ…', selBoothPlaceholder: 'ಮತಗಟ್ಟೆಯನ್ನು ಆಯ್ಕೆಮಾಡಿ…',
+    serialLabel: 'ಪಟ್ಟಿಯಲ್ಲಿ ಕ್ರಮ ಸಂಖ್ಯೆ',
+    serialHelp: 'ಆ ಮತಗಟ್ಟೆಯ ಪಟ್ಟಿಯಲ್ಲಿ ಹೆಸರಿನ ಎದುರು ಮುದ್ರಿತವಾದ ಕ್ರಮ ಸಂಖ್ಯೆ.',
+    nameLabel: 'ಹೆಸರು',
+    nameHelp: 'ಪಟ್ಟಿಯಲ್ಲಿ ಮುದ್ರಿತವಾದಂತೆ ಹೆಸರಿನ ಭಾಗವನ್ನು ನಮೂದಿಸಿ. ಮತದಾರರ ಗುರುತಿನ ಚೀಟಿ ಸಂಖ್ಯೆ ತೋರಿಸುವುದಿಲ್ಲ.',
+    searchNote: 'ಹೆಸರು ಅಥವಾ ಕ್ರಮ ಸಂಖ್ಯೆಯಿಂದ ಹುಡುಕುವುದು ಸಾರ್ವಜನಿಕ ASDDO ಪಟ್ಟಿಯನ್ನು ಓದುತ್ತದೆ. ಇದು ಎಂದಿಗೂ ಮತದಾರರ ಗುರುತಿನ ಸಂಖ್ಯೆಯನ್ನು ತೋರಿಸುವುದಿಲ್ಲ.',
+    errPickDistrict: 'ಮೊದಲು ಜಿಲ್ಲೆಯನ್ನು ಆಯ್ಕೆಮಾಡಿ.',
+    errPickAc: 'ಕ್ಷೇತ್ರವನ್ನು ಆಯ್ಕೆಮಾಡಿ.',
+    errPickBooth: 'ಮತಗಟ್ಟೆಯನ್ನು ಆಯ್ಕೆಮಾಡಿ.',
+    errSerialEmpty: 'ಹುಡುಕಲು ಕ್ರಮ ಸಂಖ್ಯೆಯನ್ನು ನಮೂದಿಸಿ.',
+    errNameShort: 'ಹೆಸರಿನ ಕನಿಷ್ಠ ಎರಡು ಅಕ್ಷರಗಳನ್ನು ನಮೂದಿಸಿ.',
+    searchResultsHeading: '“{q}” ಗೆ ಹೊಂದುವ {n} ಹೆಸರುಗಳು ASDDO ಪಟ್ಟಿಯಲ್ಲಿವೆ',
+    searchResultsHeadingOne: '“{q}” ಗೆ ಹೊಂದುವ 1 ಹೆಸರು ASDDO ಪಟ್ಟಿಯಲ್ಲಿದೆ',
+    searchResultsCapped: 'ಮೊದಲ {shown} ತೋರಿಸಲಾಗಿದೆ. ಕಡಿಮೆ ನೋಡಲು ಹೆಸರನ್ನು ಸಂಕುಚಿತಗೊಳಿಸಿ.',
+    searchResultsIn: '{ac} ನಲ್ಲಿ',
+    resultOpen: 'ಪೂರ್ಣ ದಾಖಲೆ ನೋಡಿ',
+    backToResults: '‹ ಫಲಿತಾಂಶಗಳಿಗೆ ಹಿಂತಿರುಗಿ',
+    searchNoMatchNameHeading: 'ASDDO ಪಟ್ಟಿಯಲ್ಲಿ ಹೊಂದಿಕೆಯಿಲ್ಲ',
+    searchNoMatchName: '{ac} ನ ASDDO ಪಟ್ಟಿಯಲ್ಲಿ “{q}” ಹೊಂದಿರುವ ಯಾವ ಹೆಸರೂ ಇಲ್ಲ. ಮತದಾರರು ಗುರುತಿಸಲ್ಪಡದಿದ್ದರೆ ಇದು ನಿರೀಕ್ಷಿತ ಫಲಿತಾಂಶ.',
+    searchNoMatchSerialHeading: 'ASDDO ಪಟ್ಟಿಯಲ್ಲಿ ಇಲ್ಲ',
+    searchNoMatchSerial: '{booth} ನಲ್ಲಿ ಕ್ರಮ ಸಂಖ್ಯೆ {serial} ASDDO ಪಟ್ಟಿಯಲ್ಲಿ ಇಲ್ಲ. ಮತದಾರರು ಗುರುತಿಸಲ್ಪಡದಿದ್ದರೆ ಇದು ನಿರೀಕ್ಷಿತ ಫಲಿತಾಂಶ.',
 
     deletedHeading: 'ಈ EPIC ASDDO ಪಟ್ಟಿಯಲ್ಲಿ ಇದೆ',
     deletedLede: 'ಈ ಗುರುತಿನ ಚೀಟಿ SIR ಅಡಿಯಲ್ಲಿ ಪರಿಶೀಲನೆಗೆ ಗುರುತಿಸಲ್ಪಟ್ಟಿದೆ. ಇದರರ್ಥ ನಿಮ್ಮ ಹೆಸರು ಡಿಲೀಟ್ ಆಗಿದೆ ಎಂದಲ್ಲ — ಆದರೆ ಈಗಲೇ ಕ್ರಮ ತೆಗೆದುಕೊಳ್ಳುವುದು ಅಗತ್ಯ.',
@@ -252,6 +302,7 @@ async function refreshManifest() {
       manifest = fresh;
       partsCache.clear();
       bloCache.clear();
+      searchCache.clear();
     }
   } catch { /* keep the manifest we have if the refresh fails */ }
 }
@@ -397,6 +448,13 @@ function cleanReason(reason) {
   return (reason || '').replace(/\s*\(.*$/s, '').trim() || 'Not stated';
 }
 
+// Some districts host booth PDFs under a purely numeric filename (Bellary's NIC
+// files, e.g. 17858435222676.pdf), and when the station name wasn't parsed from
+// the PDF body the filename stem leaked into partName. A real polling-station
+// name is never a bare run of digits, so drop it and let the booth show as just
+// its number rather than "20 — 17858435222676".
+const cleanBoothName = (name) => (/^\d{6,}$/.test(String(name ?? '').trim()) ? '' : (name || ''));
+
 async function decodeRecord(row) {
   const [, name, relative, relIdx, age, serial, reasonIdx, acIdx, fileIdx, dup] = row;
   const [acNo, acName, districtIdx] = manifest.dicts.acs[acIdx];
@@ -432,13 +490,88 @@ async function decodeRecord(row) {
     acNo,
     acName,
     partNo,
-    partName: part ? part[2] : '',
+    partName: cleanBoothName(part ? part[2] : ''),
     sourceUrl: part ? sourceUrl(part[0]) : '',
     sourceName: part ? part[0] : '',
     generatedOn: part ? part[3] : '',
     blo,
     dup
   };
+}
+
+// ------------------------------------------------------- search (name/serial)
+
+// A name or a booth+serial can't be hashed into a bucket path the way an EPIC
+// can, so these lookups read a per-constituency index (data/search/<acIdx>.json)
+// that is loaded only when the visitor picks that constituency. Each row is
+// [fileIdx, serial, name, reasonIdx, hash12]; hash12 locates the record's bucket
+// so the full card is decoded from the SAME files an EPIC lookup uses — nothing
+// here is a second copy of the record, and the EPIC is still never published.
+const NAME_RESULTS_CAP = 200;
+const searchCache = new Map();
+let lastNameResults = null;
+
+function loadSearch(acIdx) {
+  if (!searchCache.has(acIdx)) {
+    searchCache.set(acIdx, loadJson(`data/search/${acIdx}.json?v=${manifest.dataVersion}`).catch(() => []));
+  }
+  return searchCache.get(acIdx);
+}
+
+// Parts file for a constituency: [source, partNo, partName, generatedOn] indexed
+// by fileIdx. Shares partsCache with decodeRecord so a card lookup and a search
+// never fetch it twice.
+function loadParts(acIdx) {
+  if (!partsCache.has(acIdx)) {
+    partsCache.set(acIdx, loadJson(`data/parts/${acIdx}.json?v=${manifest.dataVersion}`).catch(() => []));
+  }
+  return partsCache.get(acIdx);
+}
+
+/** Fetch and decode one record by its stored hash12 (bucket prefix + suffix). */
+async function fetchRecordByHash12(hash12, acIdx) {
+  const prefix = hash12.slice(0, manifest.shardDepth);
+  const suffix = hash12.slice(manifest.shardDepth);
+  let bucket = [];
+  try {
+    bucket = await loadJson(`data/asddo/${bucketPath(prefix, 'json')}?v=${manifest.dataVersion}`);
+  } catch (err) {
+    if (err.status !== 404) throw err;
+  }
+  const rec = bucket.find((r) => r[0] === suffix && (acIdx == null || r[7] === acIdx));
+  return rec ? decodeRecord(rec) : null;
+}
+
+const partField = (parts, fileIdx, i) => (Array.isArray(parts) ? parts[fileIdx] : null)?.[i];
+
+function boothLabel(parts, partNo) {
+  const entry = (Array.isArray(parts) ? parts : []).find((p) => p[1] === partNo);
+  const name = cleanBoothName(entry ? entry[2] : '');
+  return `${partNo}${name ? ` — ${name}` : ''}`;
+}
+
+async function serialSearch(acIdx, partNo, serial) {
+  await refreshManifest();
+  const [rows, parts] = await Promise.all([loadSearch(acIdx), loadParts(acIdx)]);
+  const hits = rows.filter((r) => partField(parts, r[0], 1) === partNo && r[1] === serial);
+  if (!hits.length) {
+    return { kind: 'searchNone', mode: 'serial', serial, booth: boothLabel(parts, partNo) };
+  }
+  const records = (await Promise.all(hits.map((r) => fetchRecordByHash12(r[4], acIdx)))).filter(Boolean);
+  return records.length ? { kind: 'deleted', epic: '', records } : { kind: 'searchNone', mode: 'serial', serial, booth: boothLabel(parts, partNo) };
+}
+
+const acLabel = (acIdx) => {
+  const a = manifest.dicts.acs[acIdx];
+  return a ? `${a[0] != null ? `${a[0]} ` : ''}${titleCase(a[1] || '')}`.trim() : '';
+};
+
+async function nameSearch(acIdx, query) {
+  await refreshManifest();
+  const [rows, parts] = await Promise.all([loadSearch(acIdx), loadParts(acIdx)]);
+  const q = query.trim().toUpperCase();
+  const matches = rows.filter((r) => r[2].includes(q));
+  return { kind: 'nameResults', acIdx, query: q, matches, parts, ac: acLabel(acIdx) };
 }
 
 // ------------------------------------------------------------------- result
@@ -451,7 +584,17 @@ function renderResult(data) {
   host.innerHTML = '';
   host.hidden = false;
 
-  if (data.kind === 'deleted') renderDeleted(host, data);
+  if (data.kind === 'deleted') {
+    if (data.from === 'name' && lastNameResults) {
+      const back = el('button', 'ghost-btn back-btn', t('backToResults'));
+      back.type = 'button';
+      back.addEventListener('click', () => renderResult(lastNameResults));
+      host.appendChild(back);
+    }
+    renderDeleted(host, data);
+  }
+  else if (data.kind === 'nameResults') { lastNameResults = data; renderNameResults(host, data); }
+  else if (data.kind === 'searchNone') renderSearchNone(host, data);
   else if (data.kind === 'clear') renderClear(host, data);
   else if (data.kind === 'notListed') {
     renderVerdict(host, data, 'is-caution', '–', 'notListedHeading', 'notListedLede',
@@ -654,6 +797,80 @@ function renderDeleted(host, data) {
   action.appendChild(buttons);
 
   card.appendChild(action);
+  host.appendChild(card);
+}
+
+/**
+ * Results of a name search: a scannable list, not a wall of full cards. Each row
+ * shows only what identifies the right person (name, booth, serial, reason);
+ * opening one fetches that record's bucket and renders the same full card an
+ * EPIC lookup would, with a link back to the list.
+ */
+function renderNameResults(host, data) {
+  const { matches, query, ac, parts, acIdx } = data;
+  if (!matches.length) {
+    renderSearchNone(host, { kind: 'searchNone', mode: 'name', query, ac });
+    return;
+  }
+
+  const card = el('div', 'result-card is-caution');
+  const headKey = matches.length === 1 ? 'searchResultsHeadingOne' : 'searchResultsHeading';
+  card.appendChild(el('h2', null, fill(t(headKey), { n: nf().format(matches.length), q: query })));
+  card.appendChild(el('p', 'lede', fill(t('searchResultsIn'), { ac })));
+  if (matches.length > NAME_RESULTS_CAP) {
+    card.appendChild(el('p', 'next-steps', fill(t('searchResultsCapped'), { shown: NAME_RESULTS_CAP })));
+  }
+
+  const list = el('div', 'search-results');
+  for (const r of matches.slice(0, NAME_RESULTS_CAP)) {
+    const [fileIdx, serial, name, reasonIdx, hash12] = r;
+    const partNo = partField(parts, fileIdx, 1) ?? 0;
+    const reason = cleanReason(manifest.dicts.reasons[reasonIdx]);
+
+    const item = el('button', 'search-result');
+    item.type = 'button';
+    item.setAttribute('aria-label', `${name} — ${t('resultOpen')}`);
+    item.appendChild(el('span', 'sr-name', name));
+
+    const meta = el('span', 'sr-meta');
+    if (partNo) meta.appendChild(el('span', 'sr-tag', `${t('fieldPart')} ${partNo}`));
+    if (serial) meta.appendChild(el('span', 'sr-tag', `${t('fieldSerial')} ${nf().format(serial)}`));
+    const rc = el('span', 'sr-tag sr-reason');
+    const dot = el('span', 'dot');
+    dot.dataset.cat = categoryOf(reason);
+    rc.append(dot, document.createTextNode(reason));
+    meta.appendChild(rc);
+    item.appendChild(meta);
+
+    item.addEventListener('click', async () => {
+      if (busy) return;
+      setBusy(true);
+      try {
+        const rec = await fetchRecordByHash12(hash12, acIdx);
+        if (rec) renderResult({ kind: 'deleted', epic: '', records: [rec], from: 'name' });
+      } catch {
+        renderResult({ kind: 'problem', message: t('errNetwork') });
+      } finally {
+        setBusy(false);
+      }
+    });
+    list.appendChild(item);
+  }
+  card.appendChild(list);
+  host.appendChild(card);
+}
+
+/** A booth+serial or name search that matched nothing — a clean, reassuring miss. */
+function renderSearchNone(host, data) {
+  const card = el('div', 'result-card is-clear');
+  if (data.mode === 'serial') {
+    card.appendChild(el('h2', null, `✓  ${t('searchNoMatchSerialHeading')}`));
+    card.appendChild(el('p', 'lede', fill(t('searchNoMatchSerial'), { serial: nf().format(data.serial), booth: data.booth })));
+  } else {
+    card.appendChild(el('h2', null, `✓  ${t('searchNoMatchNameHeading')}`));
+    card.appendChild(el('p', 'lede', fill(t('searchNoMatchName'), { q: data.query, ac: data.ac })));
+  }
+  card.appendChild(el('p', 'next-steps', t('clearNote')));
   host.appendChild(card);
 }
 
@@ -999,6 +1216,7 @@ function applyLanguage() {
     renderDashboard();
     renderFooterMeta();
   }
+  refreshSearchUI(); // re-localise the cascade placeholders, keeping choices
   if (lastResult) renderResult(lastResult); // keep the answer on screen
 }
 
@@ -1087,6 +1305,10 @@ function applyTheme(theme) {
 
 let busy = false;
 
+// The submit button reads "Check this EPIC" in EPIC mode and "Search…" in the
+// serial/name modes, in whichever language is active.
+const submitKey = () => (mode === 'epic' ? 'checkBtn' : 'searchBtn');
+
 function setBusy(state) {
   busy = state;
   const btn = $('#submit-btn');
@@ -1096,35 +1318,122 @@ function setBusy(state) {
     btn.appendChild(el('span', 'spinner'));
     btn.appendChild(document.createTextNode(`${t('checking')}…`));
   } else {
-    const span = el('span', null, t('checkBtn'));
-    span.setAttribute('data-i18n', 'checkBtn');
+    const key = submitKey();
+    const span = el('span', null, t(key));
+    span.setAttribute('data-i18n', key);
     btn.appendChild(span);
   }
 }
 
-$('#lookup-form').addEventListener('submit', async (event) => {
-  event.preventDefault();
-  if (busy) return;
+// --- mode switching (EPIC / serial / name) ----------------------------------
 
+let mode = 'epic';
+
+function setMode(newMode) {
+  if (!['epic', 'serial', 'name'].includes(newMode)) return;
+  mode = newMode;
+  for (const btn of document.querySelectorAll('.mode-btn')) {
+    const on = btn.dataset.mode === mode;
+    btn.classList.toggle('is-active', on);
+    btn.setAttribute('aria-selected', on ? 'true' : 'false');
+  }
+  for (const group of document.querySelectorAll('.mode-fields')) {
+    group.hidden = !group.dataset.modes.split(' ').includes(mode);
+  }
+  // A stale answer from the previous mode would be confusing next to new inputs.
+  const host = resultEl();
+  host.hidden = true;
+  host.innerHTML = '';
+  lastResult = null;
+  lastNameResults = null;
+  if (!busy) setBusy(false); // refresh the button label for the new mode
+}
+
+// --- cascade population (district -> constituency -> booth) ------------------
+
+const optionEl = (label, value) => {
+  const o = el('option', null, label);
+  o.value = value;
+  return o;
+};
+
+// [{ acIdx, acNo, acName, district }] for every constituency, acIdx being the
+// index the data files are keyed by.
+const acListForSearch = () =>
+  (manifest?.dicts?.acs ?? []).map((a, i) => ({
+    acIdx: i, acNo: a[0], acName: a[1], district: manifest.dicts.districts[a[2]]
+  }));
+
+function populateSearchDistricts() {
+  const sel = $('#sel-district');
+  if (!sel) return;
+  const districts = [...new Set(acListForSearch().map((a) => a.district))].sort((x, y) => x.localeCompare(y));
+  sel.innerHTML = '';
+  sel.appendChild(optionEl(t('selDistrictPlaceholder'), ''));
+  for (const d of districts) sel.appendChild(optionEl(titleCase(d), d));
+}
+
+function populateSearchAcs(district) {
+  const sel = $('#sel-ac');
+  if (!sel) return;
+  sel.innerHTML = '';
+  sel.appendChild(optionEl(t('selAcPlaceholder'), ''));
+  const acs = acListForSearch()
+    .filter((a) => a.district === district)
+    .sort((a, b) => (a.acNo ?? 0) - (b.acNo ?? 0));
+  for (const a of acs) sel.appendChild(optionEl(`${a.acNo ?? '-'} ${titleCase(a.acName || '')}`.trim(), String(a.acIdx)));
+  sel.disabled = !district || !acs.length;
+}
+
+async function populateSearchBooths(acIdxValue) {
+  const sel = $('#sel-booth');
+  if (!sel) return;
+  sel.innerHTML = '';
+  sel.appendChild(optionEl(t('selBoothPlaceholder'), ''));
+  sel.disabled = true;
+  if (acIdxValue === '' || acIdxValue == null) return;
+  const parts = await loadParts(Number(acIdxValue));
+  // One entry per booth: a constituency can have the same partNo in more than
+  // one source file (a consolidated list plus the booth list).
+  const seen = new Map();
+  for (const p of Array.isArray(parts) ? parts : []) {
+    const [, partNo, partName] = p;
+    if (partNo && !seen.has(partNo)) seen.set(partNo, partName);
+  }
+  for (const [no, rawName] of [...seen.entries()].sort((a, b) => a[0] - b[0])) {
+    const name = cleanBoothName(rawName);
+    sel.appendChild(optionEl(`${no}${name ? ` — ${name}` : ''}`, String(no)));
+  }
+  sel.disabled = !seen.size;
+}
+
+// Rebuild the three selects, preserving the current choices — used at boot and
+// when the language changes (the placeholder options are localised).
+async function refreshSearchUI() {
+  if (!manifest?.dicts?.acs) return;
+  const d = $('#sel-district'), a = $('#sel-ac'), b = $('#sel-booth');
+  const dv = d?.value ?? '', av = a?.value ?? '', bv = b?.value ?? '';
+  populateSearchDistricts();
+  if (d) d.value = dv;
+  populateSearchAcs(dv);
+  if (a) a.value = av;
+  await populateSearchBooths(av);
+  if (b) b.value = bv;
+}
+
+const problem = (key, focusSel) => {
+  renderResult({ kind: 'problem', message: t(key) });
+  if (focusSel) $(focusSel)?.focus();
+};
+
+async function handleEpicSubmit() {
   const input = $('#epic');
   const epic = input.value.toUpperCase().replace(/[^A-Z0-9]/g, '');
-
-  if (!epic) {
-    renderResult({ kind: 'problem', message: t('errEmpty') });
-    input.focus();
-    return;
-  }
+  if (!epic) return problem('errEmpty', '#epic');
   // Refusing malformed input is what stops a typed name returning "not on the
   // deleted list", which reads as an all-clear to someone who may be deleted.
-  if (!EPIC_RE.test(epic)) {
-    renderResult({ kind: 'problem', message: t('errInvalid') });
-    input.focus();
-    return;
-  }
-  if (!globalThis.crypto?.subtle) {
-    renderResult({ kind: 'problem', message: t('errCrypto') });
-    return;
-  }
+  if (!EPIC_RE.test(epic)) return problem('errInvalid', '#epic');
+  if (!globalThis.crypto?.subtle) return void renderResult({ kind: 'problem', message: t('errCrypto') });
 
   setBusy(true);
   try {
@@ -1134,7 +1443,61 @@ $('#lookup-form').addEventListener('submit', async (event) => {
   } finally {
     setBusy(false);
   }
+}
+
+async function handleSerialSubmit() {
+  if (!$('#sel-district').value) return problem('errPickDistrict', '#sel-district');
+  const acIdx = $('#sel-ac').value;
+  if (acIdx === '') return problem('errPickAc', '#sel-ac');
+  const boothVal = $('#sel-booth').value;
+  if (boothVal === '') return problem('errPickBooth', '#sel-booth');
+  const serialVal = $('#serial-input').value.trim();
+  if (!serialVal) return problem('errSerialEmpty', '#serial-input');
+
+  setBusy(true);
+  try {
+    renderResult(await serialSearch(Number(acIdx), Number(boothVal), Number(serialVal)));
+  } catch {
+    renderResult({ kind: 'problem', message: t('errNetwork') });
+  } finally {
+    setBusy(false);
+  }
+}
+
+async function handleNameSubmit() {
+  if (!$('#sel-district').value) return problem('errPickDistrict', '#sel-district');
+  const acIdx = $('#sel-ac').value;
+  if (acIdx === '') return problem('errPickAc', '#sel-ac');
+  const name = $('#name-input').value.trim();
+  if (name.replace(/\s/g, '').length < 2) return problem('errNameShort', '#name-input');
+
+  setBusy(true);
+  try {
+    renderResult(await nameSearch(Number(acIdx), name));
+  } catch {
+    renderResult({ kind: 'problem', message: t('errNetwork') });
+  } finally {
+    setBusy(false);
+  }
+}
+
+$('#lookup-form').addEventListener('submit', (event) => {
+  event.preventDefault();
+  if (busy) return;
+  if (mode === 'epic') handleEpicSubmit();
+  else if (mode === 'serial') handleSerialSubmit();
+  else if (mode === 'name') handleNameSubmit();
 });
+
+for (const btn of document.querySelectorAll('.mode-btn')) {
+  btn.addEventListener('click', () => setMode(btn.dataset.mode));
+}
+
+$('#sel-district')?.addEventListener('change', (e) => {
+  populateSearchAcs(e.target.value);
+  populateSearchBooths(''); // reset booth until an AC is chosen
+});
+$('#sel-ac')?.addEventListener('change', (e) => { populateSearchBooths(e.target.value); });
 
 $('#epic').addEventListener('input', function () {
   const start = this.selectionStart;
@@ -1195,6 +1558,7 @@ try {
   applyAcNames(await loadJson('data/ac-names.json').catch(() => ({})));
   renderDashboard();
   renderFooterMeta();
+  refreshSearchUI(); // populate the district cascade once the manifest is in
 } catch {
   $('#dash-scope').textContent = t('errNetwork');
 }
