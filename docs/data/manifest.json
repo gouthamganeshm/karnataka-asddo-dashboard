@@ -1,6 +1,6 @@
 {
-  "dataVersion": "msn7heqi",
-  "importedAt": "2026-08-10T12:27:56.038Z",
+  "dataVersion": "msnc4ld4",
+  "importedAt": "2026-08-10T14:37:53.106Z",
   "source": "https://ceo.karnataka.gov.in/asddo.html",
   "hash": "SHA-256",
   "shardDepth": 4,
@@ -346,13 +346,13 @@
         7
       ],
       [
-        95,
-        "Sandur",
+        93,
+        "Bellary",
         7
       ],
       [
-        93,
-        "Bellary",
+        95,
+        "Sandur",
         7
       ],
       [
@@ -456,16 +456,6 @@
         11
       ],
       [
-        139,
-        "Gauribidanur",
-        11
-      ],
-      [
-        140,
-        "Bagepalli",
-        11
-      ],
-      [
         141,
         "Chikkaballapur",
         11
@@ -473,6 +463,16 @@
       [
         143,
         "Chintamani",
+        11
+      ],
+      [
+        139,
+        "Gauribidanur",
+        11
+      ],
+      [
+        140,
+        "Bagepalli",
         11
       ],
       [
@@ -1172,11 +1172,11 @@
       ]
     ],
     "reasons": [
+      "Permanently Shifted",
       "Death",
       "Untraceable/Absent",
-      "Permanently Shifted",
-      "EF Refused",
       "Already enrolled",
+      "EF Refused",
       "Permanently",
       "Untraceable/Absen t",
       "Untraceable/Absent Already enrolled",
@@ -1198,9 +1198,9 @@
     "relations": [
       "Father",
       "Husband",
-      "Other",
-      "Wife",
       "Mother",
+      "Wife",
+      "Other",
       "\u0000F\u0000a\u0000t\u0000h\u0000e\u0000r\u0000",
       "\u0000H\u0000u\u0000s\u0000b\u0000a\u0000n\u0000d\u0000",
       "\u0000W\u0000i\u0000f\u0000e\u0000",
@@ -1212,11 +1212,11 @@
   },
   "hasRoll": false,
   "counts": {
-    "records": 10614743,
+    "records": 10614040,
     "districts": 34,
     "districtsInSource": 34,
     "constituencies": 224,
-    "booths": 57429,
+    "booths": 57428,
     "buckets": 65536
   },
   "districtsMissing": []

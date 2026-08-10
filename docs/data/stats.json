@@ -1,19 +1,19 @@
 {
-  "dataVersion": "msn7heqi",
-  "total": 10614743,
+  "dataVersion": "msnc4ld4",
+  "total": 10614040,
   "byCategory": {
-    "absent": 1585264,
-    "shifted": 6350869,
-    "death": 1545992,
-    "duplicate": 638514,
-    "others": 494104
+    "absent": 1585089,
+    "shifted": 6350146,
+    "death": 1546078,
+    "duplicate": 638660,
+    "others": 494067
   },
   "ageBands": {
-    "18-29": 1385222,
-    "30-44": 4115536,
-    "45-59": 2769881,
-    "60-79": 1840744,
-    "80+": 501628,
+    "18-29": 1385098,
+    "30-44": 4115210,
+    "45-59": 2769705,
+    "60-79": 1840665,
+    "80+": 501630,
     "unknown": 1732
   },
   "generatedOn": [
@@ -53,14 +53,14 @@
     },
     {
       "name": "B.B.M.P(NORTH)",
-      "total": 1112516,
+      "total": 1112038,
       "constituencies": 7,
-      "booths": 2079,
-      "absent": 127917,
-      "shifted": 814186,
-      "death": 78636,
-      "duplicate": 14503,
-      "others": 77274
+      "booths": 2078,
+      "absent": 127766,
+      "shifted": 813909,
+      "death": 78628,
+      "duplicate": 14501,
+      "others": 77234
     },
     {
       "name": "B.B.M.P(SOUTH)",
@@ -305,17 +305,6 @@
       "others": 1049
     },
     {
-      "name": "BANGALORE RURAL",
-      "total": 117493,
-      "constituencies": 4,
-      "booths": 1140,
-      "absent": 14021,
-      "shifted": 65764,
-      "death": 24969,
-      "duplicate": 11944,
-      "others": 795
-    },
-    {
       "name": "GADAG",
       "total": 117459,
       "constituencies": 4,
@@ -325,6 +314,17 @@
       "death": 29087,
       "duplicate": 12668,
       "others": 276
+    },
+    {
+      "name": "BANGALORE RURAL",
+      "total": 117268,
+      "constituencies": 4,
+      "booths": 1140,
+      "absent": 13997,
+      "shifted": 65318,
+      "death": 25063,
+      "duplicate": 12092,
+      "others": 798
     },
     {
       "name": "CHIKKABALLAPUR",
@@ -576,13 +576,13 @@
       "no": 161,
       "name": "C.V. RamannNagar",
       "district": "B.B.M.P(NORTH)",
-      "total": 143959,
-      "booths": 244,
-      "absent": 22724,
-      "shifted": 101186,
-      "death": 7363,
-      "duplicate": 1888,
-      "others": 10798
+      "total": 143481,
+      "booths": 243,
+      "absent": 22573,
+      "shifted": 100909,
+      "death": 7355,
+      "duplicate": 1886,
+      "others": 10758
     },
     {
       "no": 158,
@@ -1548,13 +1548,13 @@
       "no": 180,
       "name": "Doddaballapur",
       "district": "BANGALORE RURAL",
-      "total": 31468,
+      "total": 31320,
       "booths": 276,
-      "absent": 888,
-      "shifted": 19705,
-      "death": 6437,
-      "duplicate": 4194,
-      "others": 244
+      "absent": 858,
+      "shifted": 19484,
+      "death": 6480,
+      "duplicate": 4257,
+      "others": 241
     },
     {
       "no": 220,
@@ -1713,18 +1713,6 @@
       "others": 146
     },
     {
-      "no": 178,
-      "name": "Hosakote",
-      "district": "BANGALORE RURAL",
-      "total": 28938,
-      "booths": 293,
-      "absent": 1532,
-      "shifted": 17891,
-      "death": 6334,
-      "duplicate": 2854,
-      "others": 327
-    },
-    {
       "no": 32,
       "name": "Indi",
       "district": "BIJAPUR",
@@ -1747,6 +1735,18 @@
       "death": 4664,
       "duplicate": 2998,
       "others": 398
+    },
+    {
+      "no": 178,
+      "name": "Hosakote",
+      "district": "BANGALORE RURAL",
+      "total": 28418,
+      "booths": 293,
+      "absent": 1485,
+      "shifted": 17399,
+      "death": 6332,
+      "duplicate": 2877,
+      "others": 325
     },
     {
       "no": 211,
@@ -1833,6 +1833,18 @@
       "others": 58
     },
     {
+      "no": 179,
+      "name": "Devanahalli",
+      "district": "BANGALORE RURAL",
+      "total": 25413,
+      "booths": 294,
+      "absent": 4310,
+      "shifted": 12303,
+      "death": 6168,
+      "duplicate": 2560,
+      "others": 72
+    },
+    {
       "no": 28,
       "name": "Basavana Bagevadi",
       "district": "BIJAPUR",
@@ -1867,18 +1879,6 @@
       "death": 6342,
       "duplicate": 3253,
       "others": 12
-    },
-    {
-      "no": 179,
-      "name": "Devanahalli",
-      "district": "BANGALORE RURAL",
-      "total": 24970,
-      "booths": 294,
-      "absent": 4257,
-      "shifted": 12036,
-      "death": 6115,
-      "duplicate": 2498,
-      "others": 64
     },
     {
       "no": 142,
@@ -3188,7 +3188,7 @@
       "no": 161,
       "name": "C.V. RamannNagar",
       "district": "B.B.M.P(NORTH)",
-      "total": 143959
+      "total": 143481
     },
     {
       "no": 158,
