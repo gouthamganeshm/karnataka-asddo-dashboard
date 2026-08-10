@@ -233,7 +233,31 @@ const bucketPath = (prefix, ext) =>
 
 // ------------------------------------------------------------------- lookup
 
+// Each record stores its constituency, reason, relation and district as indices
+// into manifest.dicts, and every rebuild reassigns those indices from scratch.
+// The manifest is loaded once at page-load and kept in memory, but the buckets
+// are fetched live per lookup. So if a new build is published while this tab is
+// open, a lookup reads fresh buckets yet decodes them against the OLD in-memory
+// dicts — and acIdx/reasonIdx then point at the wrong constituency and reason
+// (e.g. an Anekal record shown under Belagavi with the wrong reason). The record
+// itself is never wrong or lost; only the decode drifts.
+//
+// Fix: re-fetch the manifest (17 KB) before each lookup. If the data version
+// moved, adopt the new dicts and drop the acIdx-keyed caches, so every field is
+// decoded against dicts that match the buckets being read.
+async function refreshManifest() {
+  try {
+    const fresh = await loadJson('data/manifest.json');
+    if (fresh?.dataVersion && fresh.dataVersion !== manifest.dataVersion) {
+      manifest = fresh;
+      partsCache.clear();
+      bloCache.clear();
+    }
+  } catch { /* keep the manifest we have if the refresh fails */ }
+}
+
 async function lookup(epic) {
+  await refreshManifest();
   const hash = await sha256hex(epic);
   const prefix = hash.slice(0, manifest.shardDepth);
   const suffix = hash.slice(manifest.shardDepth, manifest.shardDepth + manifest.suffixLength);
