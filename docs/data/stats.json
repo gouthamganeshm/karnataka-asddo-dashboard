@@ -1,19 +1,19 @@
 {
-  "dataVersion": "msnjokj9",
-  "total": 10614401,
+  "dataVersion": "msnojqbx",
+  "total": 10614518,
   "byCategory": {
-    "absent": 1585234,
-    "shifted": 6350374,
-    "death": 1546041,
-    "duplicate": 638645,
+    "absent": 1585240,
+    "shifted": 6350423,
+    "death": 1546086,
+    "duplicate": 638662,
     "others": 494107
   },
   "ageBands": {
-    "18-29": 1385121,
-    "30-44": 4115378,
-    "45-59": 2769808,
-    "60-79": 1840724,
-    "80+": 501638,
+    "18-29": 1385135,
+    "30-44": 4115416,
+    "45-59": 2769838,
+    "60-79": 1840749,
+    "80+": 501648,
     "unknown": 1732
   },
   "generatedOn": [
@@ -86,13 +86,13 @@
     },
     {
       "name": "MYSORE",
-      "total": 579194,
+      "total": 579311,
       "constituencies": 11,
-      "booths": 2899,
-      "absent": 149814,
-      "shifted": 249147,
-      "death": 111954,
-      "duplicate": 41535,
+      "booths": 2900,
+      "absent": 149820,
+      "shifted": 249196,
+      "death": 111999,
+      "duplicate": 41552,
       "others": 26744
     },
     {
@@ -1392,12 +1392,12 @@
       "no": 213,
       "name": "Heggadadevankote",
       "district": "MYSORE",
-      "total": 33506,
-      "booths": 281,
-      "absent": 4456,
-      "shifted": 13149,
-      "death": 11397,
-      "duplicate": 4446,
+      "total": 33623,
+      "booths": 282,
+      "absent": 4462,
+      "shifted": 13198,
+      "death": 11442,
+      "duplicate": 4463,
       "others": 58
     },
     {
