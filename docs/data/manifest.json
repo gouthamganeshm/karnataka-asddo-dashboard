@@ -1,6 +1,6 @@
 {
-  "dataVersion": "msnc4ld4",
-  "importedAt": "2026-08-10T14:37:53.106Z",
+  "dataVersion": "msnjokj9",
+  "importedAt": "2026-08-10T18:09:16.317Z",
   "source": "https://ceo.karnataka.gov.in/asddo.html",
   "hash": "SHA-256",
   "shardDepth": 4,
@@ -351,13 +351,13 @@
         7
       ],
       [
-        95,
-        "Sandur",
+        94,
+        "Bellary City",
         7
       ],
       [
-        94,
-        "Bellary City",
+        95,
+        "Sandur",
         7
       ],
       [
@@ -451,8 +451,8 @@
         10
       ],
       [
-        142,
-        "Sidlaghatta",
+        143,
+        "Chintamani",
         11
       ],
       [
@@ -461,13 +461,13 @@
         11
       ],
       [
-        143,
-        "Chintamani",
+        139,
+        "Gauribidanur",
         11
       ],
       [
-        139,
-        "Gauribidanur",
+        142,
+        "Sidlaghatta",
         11
       ],
       [
@@ -1173,10 +1173,10 @@
     ],
     "reasons": [
       "Permanently Shifted",
-      "Death",
       "Untraceable/Absent",
-      "Already enrolled",
+      "Death",
       "EF Refused",
+      "Already enrolled",
       "Permanently",
       "Untraceable/Absen t",
       "Untraceable/Absent Already enrolled",
@@ -1196,9 +1196,9 @@
       "\u0000A\u0000l\u0000r\u0000e\u0000a\u0000d\u0000y\u0000 \u0000e\u0000n\u0000r\u0000o\u0000l\u0000l\u0000e\u0000d\u0000 \u0000"
     ],
     "relations": [
-      "Father",
       "Husband",
       "Mother",
+      "Father",
       "Wife",
       "Other",
       "\u0000F\u0000a\u0000t\u0000h\u0000e\u0000r\u0000",
@@ -1211,8 +1211,9 @@
     ]
   },
   "hasRoll": false,
+  "hasSearch": true,
   "counts": {
-    "records": 10614040,
+    "records": 10614401,
     "districts": 34,
     "districtsInSource": 34,
     "constituencies": 224,

@@ -1,19 +1,19 @@
 {
-  "dataVersion": "msnc4ld4",
-  "total": 10614040,
+  "dataVersion": "msnjokj9",
+  "total": 10614401,
   "byCategory": {
-    "absent": 1585089,
-    "shifted": 6350146,
-    "death": 1546078,
-    "duplicate": 638660,
-    "others": 494067
+    "absent": 1585234,
+    "shifted": 6350374,
+    "death": 1546041,
+    "duplicate": 638645,
+    "others": 494107
   },
   "ageBands": {
-    "18-29": 1385098,
-    "30-44": 4115210,
-    "45-59": 2769705,
-    "60-79": 1840665,
-    "80+": 501630,
+    "18-29": 1385121,
+    "30-44": 4115378,
+    "45-59": 2769808,
+    "60-79": 1840724,
+    "80+": 501638,
     "unknown": 1732
   },
   "generatedOn": [
@@ -53,14 +53,14 @@
     },
     {
       "name": "B.B.M.P(NORTH)",
-      "total": 1112038,
+      "total": 1112516,
       "constituencies": 7,
-      "booths": 2078,
-      "absent": 127766,
-      "shifted": 813909,
-      "death": 78628,
-      "duplicate": 14501,
-      "others": 77234
+      "booths": 2079,
+      "absent": 127917,
+      "shifted": 814186,
+      "death": 78636,
+      "duplicate": 14503,
+      "others": 77274
     },
     {
       "name": "B.B.M.P(SOUTH)",
@@ -86,13 +86,13 @@
     },
     {
       "name": "MYSORE",
-      "total": 579311,
+      "total": 579194,
       "constituencies": 11,
-      "booths": 2900,
-      "absent": 149820,
-      "shifted": 249196,
-      "death": 111999,
-      "duplicate": 41552,
+      "booths": 2899,
+      "absent": 149814,
+      "shifted": 249147,
+      "death": 111954,
+      "duplicate": 41535,
       "others": 26744
     },
     {
@@ -576,13 +576,13 @@
       "no": 161,
       "name": "C.V. RamannNagar",
       "district": "B.B.M.P(NORTH)",
-      "total": 143481,
-      "booths": 243,
-      "absent": 22573,
-      "shifted": 100909,
-      "death": 7355,
-      "duplicate": 1886,
-      "others": 10758
+      "total": 143959,
+      "booths": 244,
+      "absent": 22724,
+      "shifted": 101186,
+      "death": 7363,
+      "duplicate": 1888,
+      "others": 10798
     },
     {
       "no": 158,
@@ -1392,12 +1392,12 @@
       "no": 213,
       "name": "Heggadadevankote",
       "district": "MYSORE",
-      "total": 33623,
-      "booths": 282,
-      "absent": 4462,
-      "shifted": 13198,
-      "death": 11442,
-      "duplicate": 4463,
+      "total": 33506,
+      "booths": 281,
+      "absent": 4456,
+      "shifted": 13149,
+      "death": 11397,
+      "duplicate": 4446,
       "others": 58
     },
     {
@@ -3188,7 +3188,7 @@
       "no": 161,
       "name": "C.V. RamannNagar",
       "district": "B.B.M.P(NORTH)",
-      "total": 143481
+      "total": 143959
     },
     {
       "no": 158,
