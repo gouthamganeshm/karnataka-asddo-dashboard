@@ -1,6 +1,6 @@
 {
-  "dataVersion": "msm9asc7",
-  "importedAt": "2026-08-09T20:30:43.363Z",
+  "dataVersion": "msmn1w2q",
+  "importedAt": "2026-08-10T02:56:05.186Z",
   "source": "https://ceo.karnataka.gov.in/asddo.html",
   "hash": "SHA-256",
   "shardDepth": 4,
@@ -231,11 +231,6 @@
         5
       ],
       [
-        174,
-        "Mahadevapura",
-        5
-      ],
-      [
         176,
         "Bangalore South",
         5
@@ -351,13 +346,13 @@
         7
       ],
       [
-        94,
-        "Bellary City",
+        93,
+        "Bellary",
         7
       ],
       [
-        93,
-        "Bellary",
+        94,
+        "Bellary City",
         7
       ],
       [
@@ -456,23 +451,23 @@
         11
       ],
       [
-        143,
-        "Chintamani",
-        11
-      ],
-      [
         141,
         "Chikkaballapur",
         11
       ],
       [
-        140,
-        "Bagepalli",
+        143,
+        "Chintamani",
         11
       ],
       [
         139,
         "Gauribidanur",
+        11
+      ],
+      [
+        140,
+        "Bagepalli",
         11
       ],
       [
@@ -1175,8 +1170,8 @@
       "Permanently Shifted",
       "EF Refused",
       "Death",
-      "Untraceable/Absent",
       "Already enrolled",
+      "Untraceable/Absent",
       "Permanently",
       "Untraceable/Absen t",
       "Untraceable/Absent Already enrolled",
@@ -1198,9 +1193,9 @@
     "relations": [
       "Father",
       "Husband",
-      "Mother",
-      "Other",
       "Wife",
+      "Other",
+      "Mother",
       "\u0000F\u0000a\u0000t\u0000h\u0000e\u0000r\u0000",
       "\u0000M\u0000o\u0000t\u0000h\u0000e\u0000r\u0000",
       "\u0000O\u0000t\u0000h\u0000e\u0000r\u0000",
@@ -1215,7 +1210,7 @@
     "records": 10363432,
     "districts": 34,
     "districtsInSource": 34,
-    "constituencies": 224,
+    "constituencies": 223,
     "booths": 56988,
     "buckets": 65536
   },

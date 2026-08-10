@@ -1,5 +1,5 @@
 {
-  "dataVersion": "msm9asc7",
+  "dataVersion": "msmn1w2q",
   "total": 10363432,
   "byCategory": {
     "absent": 1543526,
@@ -431,13 +431,13 @@
       "no": 174,
       "name": "Mahadevapura",
       "district": "BANGALORE URBAN",
-      "total": 316853,
-      "booths": 526,
+      "total": 317226,
+      "booths": 527,
       "absent": 62882,
-      "shifted": 227951,
-      "death": 16306,
-      "duplicate": 3794,
-      "others": 5920
+      "shifted": 228275,
+      "death": 16315,
+      "duplicate": 3804,
+      "others": 5950
     },
     {
       "no": 175,
@@ -3090,18 +3090,6 @@
       "death": 225,
       "duplicate": 71,
       "others": 0
-    },
-    {
-      "no": 174,
-      "name": "Mahadevapura",
-      "district": "BANGALORE URBAN",
-      "total": 373,
-      "booths": 1,
-      "absent": 0,
-      "shifted": 324,
-      "death": 9,
-      "duplicate": 10,
-      "others": 30
     }
   ],
   "topConstituencies": [
@@ -3115,7 +3103,7 @@
       "no": 174,
       "name": "Mahadevapura",
       "district": "BANGALORE URBAN",
-      "total": 316853
+      "total": 317226
     },
     {
       "no": 175,
