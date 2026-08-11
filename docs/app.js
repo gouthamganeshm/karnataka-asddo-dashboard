@@ -616,7 +616,11 @@ function renderResult(data) {
   else if (data.kind === 'searchNone') renderSearchNone(host, data);
   else if (data.kind === 'clear') renderClear(host, data);
   else if (data.kind === 'notListed') {
-    renderVerdict(host, data, 'is-caution', '–', 'notListedHeading', 'notListedLede',
+    // Not on the ASDDO list is GOOD news — the elector isn't flagged for deletion.
+    // Show it in the same reassuring green as a serial/name "not found", not the
+    // amber caution that reads as alarming (the typo caveat still rides along in
+    // the note). Consistent across all three search modes.
+    renderVerdict(host, data, 'is-clear', '✓', 'notListedHeading', 'notListedLede',
       data.partialRoll ? 'notListedPartialNote' : 'notListedNote');
   }
   else if (data.kind === 'unknown') renderVerdict(host, data, 'is-problem', '?', 'unknownHeading', 'unknownLede', 'unknownNote');
