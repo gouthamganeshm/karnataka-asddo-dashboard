@@ -219,8 +219,21 @@ jobs:
           fi
           wc -l cache/extracted/*.ndjson | tail -1
 
+      # Snapshot the last build's per-district counts before the rebuild wipes
+      # them, so the collapse guard below can compare against known-good numbers.
+      - name: Snapshot previous coverage
+        run: cp docs/data/stats.json /tmp/prev-stats.json 2>/dev/null || echo '{"districts":[]}' > /tmp/prev-stats.json
+
       - name: Build site data
         run: node scripts/3-build-site-data.mjs
+
+      # A district that collapsed to a fraction of last build's electors is a
+      # Drive-throttling download failure, not real data — refuse rather than
+      # overwrite good data with a truncated district (Bagalkot 0, Mandya 17k).
+      # allow_partial=true bypasses it for a deliberate partial publish.
+      - name: Guard against a collapsed district
+        if: ${{ inputs.allow_partial != true }}
+        run: PREV_STATS=/tmp/prev-stats.json node scripts/guard-district-coverage.mjs
 
       # Before trusting the checks below, check the checks. Both of these have
       # blocked a correct import: the coverage guard is what a lost district
