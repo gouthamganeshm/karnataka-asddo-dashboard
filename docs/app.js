@@ -550,8 +550,25 @@ function boothLabel(parts, partNo) {
   return `${partNo}${name ? ` — ${name}` : ''}`;
 }
 
-async function serialSearch(acIdx, partNo, serial) {
+// acIdx is reassigned every build, so the value picked in the dropdown can point
+// at a DIFFERENT constituency once a new import lands while the page is open. The
+// stable identity is (district, acNo) — resolve the current acIdx from that at
+// search time, AFTER refreshManifest, so a rebuild never redirects a search to
+// the wrong constituency. (The EPIC lookup is immune because it hashes the EPIC.)
+function resolveAcIdx(sel) {
+  const acs = manifest?.dicts?.acs ?? [];
+  for (let i = 0; i < acs.length; i++) {
+    const [acNo, acName, dIdx] = acs[i];
+    if (manifest.dicts.districts[dIdx] !== sel.district) continue;
+    if (sel.acNo != null ? acNo === sel.acNo : acName === sel.acName) return i;
+  }
+  return -1;
+}
+
+async function serialSearch(sel, partNo, serial) {
   await refreshManifest();
+  const acIdx = resolveAcIdx(sel);
+  if (acIdx < 0) return { kind: 'searchNone', mode: 'serial', serial, booth: String(partNo) };
   const [rows, parts] = await Promise.all([loadSearch(acIdx), loadParts(acIdx)]);
   const hits = rows.filter((r) => partField(parts, r[0], 1) === partNo && r[1] === serial);
   if (!hits.length) {
@@ -566,10 +583,12 @@ const acLabel = (acIdx) => {
   return a ? `${a[0] != null ? `${a[0]} ` : ''}${titleCase(a[1] || '')}`.trim() : '';
 };
 
-async function nameSearch(acIdx, query) {
+async function nameSearch(sel, query) {
   await refreshManifest();
-  const [rows, parts] = await Promise.all([loadSearch(acIdx), loadParts(acIdx)]);
+  const acIdx = resolveAcIdx(sel);
   const q = query.trim().toUpperCase();
+  if (acIdx < 0) return { kind: 'nameResults', acIdx, query: q, matches: [], parts: [], ac: '' };
+  const [rows, parts] = await Promise.all([loadSearch(acIdx), loadParts(acIdx)]);
   const matches = rows.filter((r) => r[2].includes(q));
   return { kind: 'nameResults', acIdx, query: q, matches, parts, ac: acLabel(acIdx) };
 }
@@ -1381,18 +1400,46 @@ function populateSearchAcs(district) {
   const acs = acListForSearch()
     .filter((a) => a.district === district)
     .sort((a, b) => (a.acNo ?? 0) - (b.acNo ?? 0));
-  for (const a of acs) sel.appendChild(optionEl(`${a.acNo ?? '-'} ${titleCase(a.acName || '')}`.trim(), String(a.acIdx)));
+  for (const a of acs) {
+    // The option VALUE is the constituency's stable identity (acNo, or its name
+    // when a district publishes an AC with no number), NOT the build-specific
+    // acIdx. This is what makes the chosen constituency survive a rebuild that
+    // reshuffles acIdx while the page is open — otherwise "66 Gadag" could
+    // silently become "67 Ron" when the dropdown is repopulated.
+    const o = optionEl(`${a.acNo ?? '-'} ${titleCase(a.acName || '')}`.trim(), acIdentityValue(a.acNo, a.acName));
+    o.dataset.acname = a.acName ?? '';
+    sel.appendChild(o);
+  }
   sel.disabled = !district || !acs.length;
 }
 
-async function populateSearchBooths(acIdxValue) {
+const acIdentityValue = (acNo, acName) => (acNo != null ? String(acNo) : `name:${acName ?? ''}`);
+
+// The stable (district, acNo/acName) identity of the currently chosen AC, read
+// from the option's value (never acIdx).
+function selectedAc() {
+  const opt = $('#sel-ac')?.selectedOptions?.[0];
+  const v = opt?.value ?? '';
+  const isName = v.startsWith('name:');
+  return {
+    district: $('#sel-district')?.value ?? '',
+    acNo: v === '' || isName ? null : Number(v),
+    acName: isName ? v.slice(5) : (opt?.dataset.acname ?? '')
+  };
+}
+
+// Booths are populated from the current-build acIdx, resolved fresh from the
+// stable selection so a rebuild can never point this at the wrong constituency.
+async function populateSearchBooths() {
   const sel = $('#sel-booth');
   if (!sel) return;
   sel.innerHTML = '';
   sel.appendChild(optionEl(t('selBoothPlaceholder'), ''));
   sel.disabled = true;
-  if (acIdxValue === '' || acIdxValue == null) return;
-  const parts = await loadParts(Number(acIdxValue));
+  if ($('#sel-ac')?.value === '' || $('#sel-ac')?.value == null) return;
+  const acIdx = resolveAcIdx(selectedAc());
+  if (acIdx < 0) return;
+  const parts = await loadParts(acIdx);
   // One entry per booth: a constituency can have the same partNo in more than
   // one source file (a consolidated list plus the booth list).
   const seen = new Map();
@@ -1417,7 +1464,7 @@ async function refreshSearchUI() {
   if (d) d.value = dv;
   populateSearchAcs(dv);
   if (a) a.value = av;
-  await populateSearchBooths(av);
+  await populateSearchBooths();
   if (b) b.value = bv;
 }
 
@@ -1447,8 +1494,7 @@ async function handleEpicSubmit() {
 
 async function handleSerialSubmit() {
   if (!$('#sel-district').value) return problem('errPickDistrict', '#sel-district');
-  const acIdx = $('#sel-ac').value;
-  if (acIdx === '') return problem('errPickAc', '#sel-ac');
+  if ($('#sel-ac').value === '') return problem('errPickAc', '#sel-ac');
   const boothVal = $('#sel-booth').value;
   if (boothVal === '') return problem('errPickBooth', '#sel-booth');
   const serialVal = $('#serial-input').value.trim();
@@ -1456,7 +1502,7 @@ async function handleSerialSubmit() {
 
   setBusy(true);
   try {
-    renderResult(await serialSearch(Number(acIdx), Number(boothVal), Number(serialVal)));
+    renderResult(await serialSearch(selectedAc(), Number(boothVal), Number(serialVal)));
   } catch {
     renderResult({ kind: 'problem', message: t('errNetwork') });
   } finally {
@@ -1466,14 +1512,13 @@ async function handleSerialSubmit() {
 
 async function handleNameSubmit() {
   if (!$('#sel-district').value) return problem('errPickDistrict', '#sel-district');
-  const acIdx = $('#sel-ac').value;
-  if (acIdx === '') return problem('errPickAc', '#sel-ac');
+  if ($('#sel-ac').value === '') return problem('errPickAc', '#sel-ac');
   const name = $('#name-input').value.trim();
   if (name.replace(/\s/g, '').length < 2) return problem('errNameShort', '#name-input');
 
   setBusy(true);
   try {
-    renderResult(await nameSearch(Number(acIdx), name));
+    renderResult(await nameSearch(selectedAc(), name));
   } catch {
     renderResult({ kind: 'problem', message: t('errNetwork') });
   } finally {
@@ -1495,9 +1540,9 @@ for (const btn of document.querySelectorAll('.mode-btn')) {
 
 $('#sel-district')?.addEventListener('change', (e) => {
   populateSearchAcs(e.target.value);
-  populateSearchBooths(''); // reset booth until an AC is chosen
+  populateSearchBooths(); // AC reset to placeholder, so this just clears booths
 });
-$('#sel-ac')?.addEventListener('change', (e) => { populateSearchBooths(e.target.value); });
+$('#sel-ac')?.addEventListener('change', () => { populateSearchBooths(); });
 
 $('#epic').addEventListener('input', function () {
   const start = this.selectionStart;
