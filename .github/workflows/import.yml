@@ -130,17 +130,6 @@ jobs:
           ALLOW_PARTIAL: ${{ inputs.allow_partial }}
         run: node scripts/plan-matrix.mjs
 
-      # Restore the rows pulled by previous runs so the plan below can pull ONLY
-      # the districts whose source changed (or that the cache is missing), instead
-      # of re-downloading every booth from Drive. A cold cache => every district
-      # is "missing" => a full pull, so a first run or an evicted cache is safe.
-      - name: Restore extracted-rows cache
-        uses: actions/cache/restore@v4
-        with:
-          path: cache/extracted
-          key: extracted-${{ github.run_id }}
-          restore-keys: extracted-
-
       - name: Decide which districts to pull this run
         id: incr
         env:
@@ -227,16 +216,11 @@ jobs:
       - uses: actions/setup-node@v4
         with: { node-version: '20' }
 
-      # Restore every district's rows from previous runs first; the freshly
-      # pulled ones below overwrite only the districts that changed. Together they
-      # give the build a complete set without re-downloading unchanged districts.
-      - name: Restore extracted-rows cache
-        uses: actions/cache/restore@v4
-        with:
-          path: cache/extracted
-          key: extracted-${{ github.run_id }}
-          restore-keys: extracted-
-
+      # The freshly-pulled rows are the ONLY input to the merge — one .ndjson per
+      # district the plan judged complete this run. The merge preserves every
+      # other district from the checked-out live build, so the cache must NOT be
+      # restored here: stale rows for a skipped (short-source) district would make
+      # the merge refresh it from old data instead of preserving the live copy.
       - uses: actions/download-artifact@v4
         continue-on-error: true
         with:
@@ -248,50 +232,36 @@ jobs:
         continue-on-error: true
         with: { name: manifest, path: cache }
 
-      # `if: always()` keeps this job alive so a partial matrix still publishes.
-      # The cost is that it also runs when extract never started, and an empty
-      # download there must read as "upstream failed", not as a build error.
-      # With incremental pulls, "did we produce rows" can no longer be answered by
-      # counting this run's artifacts — most districts come from the restored
-      # cache. Instead require that EVERY district on the source page has a
-      # non-empty rows file in cache/extracted (cache-reused or freshly pulled).
-      # A district missing here would be silently dropped from the site, so refuse
-      # unless allow_partial. A cold cache lands every district in the extract
-      # matrix, so this passes on a full run too.
-      - name: Refuse to publish a partial import
-        env:
-          MODE: ${{ needs.discover.outputs.mode }}
-          ALLOW_PARTIAL: ${{ inputs.allow_partial }}
+      # There must be at least one freshly-pulled district to merge; if the extract
+      # matrix was empty (nothing complete-and-changed) there is nothing to publish.
+      - name: Require some fresh rows to merge
         run: |
-          node -e '
-            const fs = require("fs");
-            const m = JSON.parse(fs.readFileSync("cache/manifest.json", "utf8"));
-            const slug = (s) => s.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
-            const missing = [];
-            for (const d of m.districts) {
-              const p = `cache/extracted/${slug(d.name)}.ndjson`;
-              let size = 0; try { size = fs.statSync(p).size; } catch {}
-              if (!size) missing.push(d.name);
-            }
-            const have = m.districts.length - missing.length;
-            console.log(`districts with rows: ${have}/${m.districts.length} (mode=${process.env.MODE})`);
-            if (missing.length) {
-              if (process.env.ALLOW_PARTIAL === "true") {
-                console.log(`::warning::Publishing without these districts (allow_partial=true): ${missing.join(", ")}`);
-              } else {
-                console.error(`::error::These source districts have no rows (cache miss and not extracted this run): ${missing.join(", ")}. docs/data is unchanged. Re-run — a cold cache pulls every district.`);
-                process.exit(1);
-              }
-            }
-          '
+          GOT=$(ls cache/extracted/*.ndjson 2>/dev/null | wc -l)
+          echo "freshly pulled districts: ${GOT}"
+          if [ "$GOT" -eq 0 ]; then
+            echo "::warning::No district was complete-and-changed this run — nothing to publish. docs/data is unchanged."
+            echo "NOTHING_TO_MERGE=1" >> "$GITHUB_ENV"
+          fi
 
-      # Snapshot the last build's per-district counts before the rebuild wipes
-      # them, so the collapse guard below can compare against known-good numbers.
+      # Snapshot the live per-district counts before the merge, so the collapse
+      # guard can compare the merged result against the known-good numbers.
       - name: Snapshot previous coverage
         run: cp docs/data/stats.json /tmp/prev-stats.json 2>/dev/null || echo '{"districts":[]}' > /tmp/prev-stats.json
 
-      - name: Build site data
-        run: node scripts/3-build-site-data.mjs
+      # MERGE build: refresh the freshly-pulled districts, preserve every other
+      # district byte-for-byte from the checked-out live build. Writes to a scratch
+      # dir, then swaps only the data files it produced into docs/data (roll data
+      # and anything else is left untouched). Its own safety check aborts if any
+      # preserved district's record count changed.
+      - name: Merge fresh districts into the live build
+        if: ${{ env.NOTHING_TO_MERGE != '1' }}
+        run: |
+          LIVE_DATA=docs/data SITE_DATA_OUT=cache/site-merged \
+            node --max-old-space-size=6144 scripts/3b-merge-build.mjs
+          for item in asddo parts search blo manifest.json stats.json official.json; do
+            rm -rf "docs/data/$item"
+            if [ -e "cache/site-merged/$item" ]; then mv "cache/site-merged/$item" "docs/data/$item"; fi
+          done
 
       # A district that collapsed to a fraction of last build's electors is a
       # Drive-throttling download failure, not real data — refuse rather than
@@ -375,14 +345,3 @@ jobs:
           done
           echo "push still failing after 5 attempts"
           exit 1
-
-      # Persist this run's rows so the next run reuses unchanged districts instead
-      # of re-downloading them. Keyed per run_id with an "extracted-" restore
-      # prefix so the next run restores the newest. Runs even on failure — the
-      # pulled rows are still valid and worth keeping to avoid re-hitting Drive.
-      - name: Save extracted-rows cache
-        if: always()
-        uses: actions/cache/save@v4
-        with:
-          path: cache/extracted
-          key: extracted-${{ github.run_id }}
