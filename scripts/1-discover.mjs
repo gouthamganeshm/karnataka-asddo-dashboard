@@ -34,7 +34,7 @@ import {
 } from './lib/common.mjs';
 import { isNotBoothList, parseBoothName } from './lib/naming.mjs';
 import { looksZip } from './lib/zip.mjs';
-import { looksRar } from './lib/rar.mjs';
+import { looksRar, looks7z } from './lib/rar.mjs';
 import { openArchiveBuffer } from './lib/archive.mjs';
 
 const SOURCE = 'https://ceo.karnataka.gov.in/asddo.html';
@@ -131,7 +131,7 @@ async function resolveDistrictPage(url) {
   // Same reason as on the Drive side: a district may hand out an archive rather
   // than loose PDFs, and matching only .pdf loses it entirely. .rar counts too —
   // openArchiveBuffer reads both, and some districts publish a taluk as a .rar.
-  const zips = bySuffix(/\.(zip|rar)$/i);
+  const zips = bySuffix(/\.(zip|rar|7z)$/i);
 
   return { folderIds, driveFileIds, pdfs, zips, error: null };
 }
@@ -212,11 +212,11 @@ async function resolveDriveFile(id, trail) {
   const name = filename || id;
   if (isNotBoothList(name)) return [];
 
-  if (looksZip(buf) || looksRar(buf)) return expandArchive({ id, name }, trail, buf);
+  if (looksZip(buf) || looksRar(buf) || looks7z(buf)) return expandArchive({ id, name }, trail, buf);
   if (buf.subarray(0, 4).toString('latin1') === '%PDF') {
     return [{ id, name, trail }];
   }
-  archiveNotes.push(`drive file ${id} (${name}): neither a PDF nor an archive (zip/rar)`);
+  archiveNotes.push(`drive file ${id} (${name}): neither a PDF nor an archive (zip/rar/7z)`);
   return [];
 }
 
@@ -238,7 +238,7 @@ async function collectPdfs(folderId, trail = [], depth = 0, seen = new Set()) {
     if (file.isFolder || isNotBoothList(file.name)) continue;
     if (/\.pdf$/i.test(file.name)) {
       out.push({ id: file.id, name: file.name, trail });
-    } else if (/\.(zip|rar)$/i.test(file.name)) {
+    } else if (/\.(zip|rar|7z)$/i.test(file.name)) {
       out.push(...await expandArchive(file, trail));
     }
   }

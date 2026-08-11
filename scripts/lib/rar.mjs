@@ -62,15 +62,17 @@ const walk = (dir) =>
  * @throws if no extractor is installed — the caller reports that rather than
  *         silently returning an empty district.
  */
-export function listRarEntries(buf) {
+function extractArchive(buf, suffix) {
   const tool = findRarTool();
   if (!tool) {
-    throw new Error('no RAR extractor found (install one of: 7zz, 7z, unar, unrar)');
+    throw new Error('no archive extractor found (install one of: 7zz, 7z, unar, unrar)');
   }
 
-  const dir = mkdtempSync(join(tmpdir(), 'asddo-rar-'));
+  const dir = mkdtempSync(join(tmpdir(), 'asddo-arc-'));
   try {
-    const archive = join(dir, 'archive.rar');
+    // The extension matters: 7-Zip and unar pick the reader from it, and a .7z
+    // written as archive.rar would be refused.
+    const archive = join(dir, `archive.${suffix}`);
     writeFileSync(archive, buf);
     const out = join(dir, 'out');
     execFileSync(tool.cmd, tool.args(archive, out), { stdio: 'ignore', timeout: 300000 });
@@ -88,5 +90,14 @@ export function listRarEntries(buf) {
   }
 }
 
+/** RAR and 7-Zip go through the same extractor; only the sniff and suffix differ. */
+export const listRarEntries = (buf) => extractArchive(buf, 'rar');
+export const list7zEntries = (buf) => extractArchive(buf, '7z');
+
 export const looksRar = (buf) =>
   buf.length > 8 && buf.subarray(0, 4).toString('latin1') === 'Rar!';
+
+// 7z signature: 37 7A BC AF 27 1C ("7z¼¯'␜"). One district shipped a current
+// ASDDO list only as .7z, which zlib and the RAR reader both refuse.
+export const looks7z = (buf) =>
+  buf.length > 6 && buf.subarray(0, 6).toString('hex') === '377abcaf271c';

@@ -6,9 +6,9 @@
  */
 
 import { listZipEntries, looksZip } from './zip.mjs';
-import { listRarEntries, looksRar } from './rar.mjs';
+import { list7zEntries, listRarEntries, looks7z, looksRar } from './rar.mjs';
 
-const IS_ARCHIVE = /\.(zip|rar)$/i;
+const IS_ARCHIVE = /\.(zip|rar|7z)$/i;
 const IS_PDF = /\.pdf$/i;
 
 /**
@@ -23,6 +23,7 @@ export function openArchiveBuffer(buf, depth = 0) {
   let entries;
   if (looksZip(buf)) entries = listZipEntries(buf);
   else if (looksRar(buf)) entries = listRarEntries(buf);
+  else if (looks7z(buf)) entries = list7zEntries(buf);
   else throw new Error(`not an archive (${JSON.stringify(buf.subarray(0, 4).toString('latin1'))})`);
 
   if (depth >= 3) return entries;
