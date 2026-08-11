@@ -276,4 +276,19 @@ jobs:
 
           Discovered ${{ needs.discover.outputs.total }} booth PDFs. Streamed and
           parsed on the runner; no PDFs stored."
-          git push
+          # The 2-hourly seed sweep (and manual pushes) can land on main while this
+          # import runs. Those commits only touch seed/, this one only docs/data, so
+          # they never conflict — rebase the data commit onto whatever arrived and
+          # retry rather than failing the whole build on a non-fast-forward.
+          for attempt in 1 2 3 4 5; do
+            if git push; then
+              echo "pushed on attempt $attempt"
+              exit 0
+            fi
+            echo "push rejected (attempt $attempt) — rebasing onto origin/main"
+            git fetch origin main
+            git rebase origin/main || { git rebase --abort; echo "rebase conflict"; exit 1; }
+            sleep 3
+          done
+          echo "push still failing after 5 attempts"
+          exit 1
