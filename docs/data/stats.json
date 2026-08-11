@@ -1,19 +1,19 @@
 {
-  "dataVersion": "msnojqbx",
-  "total": 10614518,
+  "dataVersion": "msoatuo1",
+  "total": 10614617,
   "byCategory": {
-    "absent": 1585240,
-    "shifted": 6350423,
-    "death": 1546086,
-    "duplicate": 638662,
-    "others": 494107
+    "absent": 1585071,
+    "shifted": 6350635,
+    "death": 1546110,
+    "duplicate": 638702,
+    "others": 494099
   },
   "ageBands": {
-    "18-29": 1385135,
-    "30-44": 4115416,
-    "45-59": 2769838,
-    "60-79": 1840749,
-    "80+": 501648,
+    "18-29": 1385156,
+    "30-44": 4115465,
+    "45-59": 2769860,
+    "60-79": 1840748,
+    "80+": 501656,
     "unknown": 1732
   },
   "generatedOn": [
@@ -317,14 +317,14 @@
     },
     {
       "name": "BANGALORE RURAL",
-      "total": 117268,
+      "total": 117367,
       "constituencies": 4,
-      "booths": 1140,
-      "absent": 13997,
-      "shifted": 65318,
-      "death": 25063,
-      "duplicate": 12092,
-      "others": 798
+      "booths": 1141,
+      "absent": 13828,
+      "shifted": 65530,
+      "death": 25087,
+      "duplicate": 12132,
+      "others": 790
     },
     {
       "name": "CHIKKABALLAPUR",
@@ -1497,6 +1497,18 @@
       "others": 82
     },
     {
+      "no": 181,
+      "name": "Nelamangala",
+      "district": "BANGALORE RURAL",
+      "total": 32216,
+      "booths": 278,
+      "absent": 7175,
+      "shifted": 16344,
+      "death": 6107,
+      "duplicate": 2438,
+      "others": 152
+    },
+    {
       "no": 92,
       "name": "Siraguppa",
       "district": "BELLARY",
@@ -1507,18 +1519,6 @@
       "death": 6707,
       "duplicate": 3230,
       "others": 58
-    },
-    {
-      "no": 181,
-      "name": "Nelamangala",
-      "district": "BANGALORE RURAL",
-      "total": 32117,
-      "booths": 277,
-      "absent": 7344,
-      "shifted": 16132,
-      "death": 6083,
-      "duplicate": 2398,
-      "others": 160
     },
     {
       "no": 214,
