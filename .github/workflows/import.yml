@@ -180,8 +180,26 @@ jobs:
       - uses: actions/download-artifact@v4
         with: { name: manifest, path: cache }
 
+      # Retry until no booth is left failing, so a transient Drive 403/timeout
+      # cannot silently drop a booth (and its voters). A re-run skips completed
+      # booths via the .done ledger and only re-fetches failures, so this is cheap
+      # even for a fully-successful district. Any booth still failing after the
+      # retries is surfaced loudly and stays out of .done, so a later run retries
+      # it rather than the gap being baked in.
       - name: Stream and parse ${{ matrix.name }} (${{ matrix.booths }} booths)
-        run: node scripts/2-extract.mjs --district "${{ matrix.name }}" --concurrency ${{ inputs.concurrency_per_job || '6' }}
+        run: |
+          failed() { node -e 'try{process.stdout.write(String(require("./cache/extract-report.json").failed||0))}catch{process.stdout.write("0")}'; }
+          for attempt in 1 2 3 4; do
+            node scripts/2-extract.mjs --district "${{ matrix.name }}" --concurrency ${{ inputs.concurrency_per_job || '6' }}
+            F=$(failed)
+            echo "attempt ${attempt}: ${F} booth(s) still failing"
+            [ "$F" = "0" ] && break
+            sleep 20
+          done
+          F=$(failed)
+          if [ "$F" != "0" ]; then
+            echo "::warning::${{ matrix.name }}: ${F} booth(s) still failed after 4 attempts. Their rows are NOT cached, so a later run will retry them; do not treat this district as complete."
+          fi
 
       - name: Rows extracted
         run: wc -l cache/extracted/${{ matrix.slug }}.ndjson || true
