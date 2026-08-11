@@ -25,6 +25,15 @@
  *    re-hosted. It is already downloadable from the CEO site, but a copy on
  *    GitHub is mirrorable and permanent in a way the original is not. Choose
  *    deliberately.
+ *
+ * 3. Vintage (flagged in issue #1). The CEO's `csv_upload/english/A###.csv` and
+ *    `ac_names.csv` are an OLD snapshot: their AC codes and names predate
+ *    Karnataka's 2008 delimitation, so the constituency numbering here does NOT
+ *    match the current SIR/ASDDO rolls. This does not affect the live tool today
+ *    — the ASDDO lookup disables the roll (`manifest.hasRoll` is false) and takes
+ *    its constituency names from the current SIR PDFs via build-ac-names.mjs —
+ *    but the roll index built here would carry stale, mismatched AC numbering.
+ *    Switch to a current roll source before ever re-enabling `hasRoll`.
  */
 
 import { mkdir, readFile, rm, stat, writeFile } from 'node:fs/promises';
@@ -33,6 +42,8 @@ import {
   CACHE, DOCS, fmtBytes, get, log, pool, progress, readJson, sha256hex, writeJson
 } from './lib/common.mjs';
 
+// NOTE: pre-2008-delimitation vintage — see point 3 in the header. Replace with
+// a current roll source before turning `hasRoll` back on.
 const CSV_BASE = 'https://ceo.karnataka.gov.in/csv_upload/english';
 const PART_NAMES = 'https://ceo.karnataka.gov.in/ac_names.csv';
 const ROLL_CACHE = resolve(CACHE, 'roll');
