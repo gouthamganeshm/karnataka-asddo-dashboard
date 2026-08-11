@@ -105,10 +105,7 @@ export async function pool(items, concurrency, worker, onProgress) {
  * legacy `embeddedfolderview` endpoint still returns plain HTML with one
  * `flip-entry` div per child.
  */
-export async function listDriveFolder(folderId) {
-  const html = await getText(
-    `https://drive.google.com/embeddedfolderview?id=${folderId}#list`
-  );
+const parseFolderEntries = (html) => {
   const entries = [];
   const re =
     /<div class="flip-entry" id="entry-([\w-]+)"[\s\S]*?<div class="flip-entry-title">([\s\S]*?)<\/div>/g;
@@ -120,6 +117,37 @@ export async function listDriveFolder(folderId) {
       name: decodeEntities(rawName).trim(),
       isFolder: /drive-sprite-folder|aria-label="Folder"/.test(chunk)
     });
+  }
+  return entries;
+};
+
+/**
+ * List a Drive folder via embeddedfolderview.
+ *
+ * The failure this guards: when Drive throttles the folderview request it returns
+ * a page with NO flip-entry divs, which parses to []. That is byte-identical to a
+ * genuinely empty folder, so a rate-limited constituency folder silently yielded
+ * zero booths and the whole constituency vanished from the manifest — different
+ * folders on different runs, which is why Vijayanagara/Kolar/Mandya/Tumkur kept
+ * coming up short. AC folders are never actually empty, so an empty parse is
+ * treated as a throttle and retried with backoff before it is believed.
+ */
+export async function listDriveFolder(folderId, { tries = 5 } = {}) {
+  const url = `https://drive.google.com/embeddedfolderview?id=${folderId}#list`;
+  let entries = [];
+  for (let attempt = 1; attempt <= tries; attempt++) {
+    let html;
+    try {
+      html = await getText(url, { tries: 2, timeoutMs: 30000 });
+    } catch {
+      await new Promise((r) => setTimeout(r, 600 * attempt));
+      continue;
+    }
+    entries = parseFolderEntries(html);
+    if (entries.length) return entries;
+    // Empty — retry a few times with backoff in case it was throttled. If it is
+    // still empty after the last attempt, accept it as a real empty folder.
+    if (attempt < tries) await new Promise((r) => setTimeout(r, 800 * attempt));
   }
   return entries;
 }
