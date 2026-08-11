@@ -13,9 +13,13 @@ on:
   workflow_dispatch:
     inputs:
       districts:
-        description: 'Comma-separated district names, or "all"'
+        description: 'Force-pull these districts even if unchanged (comma-separated), or "all" for pure incremental'
         default: 'all'
         type: string
+      full_refresh:
+        description: 'Re-pull every district from source, ignoring the cache (use after a parser change)'
+        default: false
+        type: boolean
       concurrency_per_job:
         description: 'Parallel Drive fetches per runner'
         default: '6'
@@ -42,6 +46,11 @@ jobs:
       districts: ${{ steps.plan.outputs.districts }}
       source_districts: ${{ steps.plan.outputs.source_districts }}
       empty: ${{ steps.plan.outputs.empty }}
+      # Incremental plan: the matrix of only the districts that must be pulled
+      # this run (changed at source, or missing from the restored cache).
+      extract_matrix: ${{ steps.incr.outputs.matrix }}
+      extract_districts: ${{ steps.incr.outputs.districts }}
+      mode: ${{ steps.incr.outputs.mode }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -87,15 +96,15 @@ jobs:
       # actually needs; the CEO site is only needed here, to learn which booth
       # PDFs exist. So if the crawl is refused, fall back to the manifest
       # committed in seed/ rather than losing the whole import.
+      # Always crawl the FULL source: discovery only lists which booth PDFs exist
+      # (cheap), and the incremental plan below needs the complete picture to
+      # decide what changed and to keep the built manifest's district metadata
+      # correct. The expensive, throttling-prone part is the per-PDF extract, and
+      # that is what the plan narrows to only the changed districts.
       - name: Crawl source page and Drive folders
         id: crawl
         continue-on-error: true
-        run: |
-          if [ "${{ inputs.districts }}" = "all" ] || [ -z "${{ inputs.districts }}" ]; then
-            node scripts/1-discover.mjs
-          else
-            node scripts/1-discover.mjs --district "${{ inputs.districts }}"
-          fi
+        run: node scripts/1-discover.mjs
 
       - name: Fall back to the committed manifest
         if: steps.crawl.outcome == 'failure'
@@ -121,6 +130,24 @@ jobs:
           ALLOW_PARTIAL: ${{ inputs.allow_partial }}
         run: node scripts/plan-matrix.mjs
 
+      # Restore the rows pulled by previous runs so the plan below can pull ONLY
+      # the districts whose source changed (or that the cache is missing), instead
+      # of re-downloading every booth from Drive. A cold cache => every district
+      # is "missing" => a full pull, so a first run or an evicted cache is safe.
+      - name: Restore extracted-rows cache
+        uses: actions/cache/restore@v4
+        with:
+          path: cache/extracted
+          key: extracted-${{ github.run_id }}
+          restore-keys: extracted-
+
+      - name: Decide which districts to pull this run
+        id: incr
+        env:
+          FORCE_FULL: ${{ inputs.full_refresh }}
+          FORCE_DISTRICTS: ${{ inputs.districts }}
+        run: node scripts/plan-incremental.mjs
+
       - uses: actions/upload-artifact@v4
         with:
           name: manifest
@@ -137,7 +164,9 @@ jobs:
       # sockets is already 36 parallel requests at the source; raising this
       # trades throughput for throttling and 403s.
       max-parallel: 6
-      matrix: ${{ fromJson(needs.discover.outputs.matrix) }}
+      # Only the districts the incremental plan selected — unchanged, already
+      # cached districts are not re-pulled. Empty include => this job is skipped.
+      matrix: ${{ fromJson(needs.discover.outputs.extract_matrix) }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -180,6 +209,16 @@ jobs:
       - uses: actions/setup-node@v4
         with: { node-version: '20' }
 
+      # Restore every district's rows from previous runs first; the freshly
+      # pulled ones below overwrite only the districts that changed. Together they
+      # give the build a complete set without re-downloading unchanged districts.
+      - name: Restore extracted-rows cache
+        uses: actions/cache/restore@v4
+        with:
+          path: cache/extracted
+          key: extracted-${{ github.run_id }}
+          restore-keys: extracted-
+
       - uses: actions/download-artifact@v4
         continue-on-error: true
         with:
@@ -194,30 +233,39 @@ jobs:
       # `if: always()` keeps this job alive so a partial matrix still publishes.
       # The cost is that it also runs when extract never started, and an empty
       # download there must read as "upstream failed", not as a build error.
+      # With incremental pulls, "did we produce rows" can no longer be answered by
+      # counting this run's artifacts — most districts come from the restored
+      # cache. Instead require that EVERY district on the source page has a
+      # non-empty rows file in cache/extracted (cache-reused or freshly pulled).
+      # A district missing here would be silently dropped from the site, so refuse
+      # unless allow_partial. A cold cache lands every district in the extract
+      # matrix, so this passes on a full run too.
       - name: Refuse to publish a partial import
+        env:
+          MODE: ${{ needs.discover.outputs.mode }}
+          ALLOW_PARTIAL: ${{ inputs.allow_partial }}
         run: |
-          GOT=$(ls cache/extracted/*.ndjson 2>/dev/null | wc -l)
-          WANT=${{ needs.discover.outputs.districts }}
-          SOURCE=${{ needs.discover.outputs.source_districts }}
-          echo "districts with rows: ${GOT} of ${WANT} planned, out of ${SOURCE} on the source page"
-          # The planned count can be short of the source count only when someone
-          # asked for that with allow_partial. Say so here as well as at plan
-          # time, so it is visible on the job that actually publishes.
-          if [ -n "$SOURCE" ] && [ "$WANT" -lt "$SOURCE" ]; then
-            echo "::warning::Publishing ${WANT} of ${SOURCE} districts. Not imported: ${{ needs.discover.outputs.empty }}"
-          fi
-          if [ "$GOT" -eq 0 ]; then
-            echo "::error::No district rows were produced. docs/data is unchanged."
-            exit 1
-          fi
-          # Publishing fewer districts than we set out to import silently narrows
-          # the site's coverage, and a visitor from a missing district reads
-          # "not on the list" as an all-clear. That must be a deliberate choice.
-          if [ "$GOT" -lt "$WANT" ] && [ "${{ inputs.allow_partial }}" != "true" ]; then
-            echo "::error::Only ${GOT}/${WANT} districts produced rows. Re-run the failed districts, or re-run with allow_partial=true to publish anyway. docs/data is unchanged."
-            exit 1
-          fi
-          wc -l cache/extracted/*.ndjson | tail -1
+          node -e '
+            const fs = require("fs");
+            const m = JSON.parse(fs.readFileSync("cache/manifest.json", "utf8"));
+            const slug = (s) => s.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+            const missing = [];
+            for (const d of m.districts) {
+              const p = `cache/extracted/${slug(d.name)}.ndjson`;
+              let size = 0; try { size = fs.statSync(p).size; } catch {}
+              if (!size) missing.push(d.name);
+            }
+            const have = m.districts.length - missing.length;
+            console.log(`districts with rows: ${have}/${m.districts.length} (mode=${process.env.MODE})`);
+            if (missing.length) {
+              if (process.env.ALLOW_PARTIAL === "true") {
+                console.log(`::warning::Publishing without these districts (allow_partial=true): ${missing.join(", ")}`);
+              } else {
+                console.error(`::error::These source districts have no rows (cache miss and not extracted this run): ${missing.join(", ")}. docs/data is unchanged. Re-run — a cold cache pulls every district.`);
+                process.exit(1);
+              }
+            }
+          '
 
       # Snapshot the last build's per-district counts before the rebuild wipes
       # them, so the collapse guard below can compare against known-good numbers.
@@ -279,9 +327,12 @@ jobs:
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add docs/data
+          # Refresh the baseline the next run diffs against, so a booth that moved
+          # (even if its parsed rows didn't change) is not re-pulled every run.
+          gzip -9c cache/manifest.json > seed/manifest.json.gz
+          git add docs/data seed/manifest.json.gz
           if git diff --cached --quiet; then
-            echo "No change in docs/data."
+            echo "No change to publish."
             exit 0
           fi
           RECORDS=$(node -e 'console.log(require("./docs/data/manifest.json").counts.records)')
@@ -306,3 +357,14 @@ jobs:
           done
           echo "push still failing after 5 attempts"
           exit 1
+
+      # Persist this run's rows so the next run reuses unchanged districts instead
+      # of re-downloading them. Keyed per run_id with an "extracted-" restore
+      # prefix so the next run restores the newest. Runs even on failure — the
+      # pulled rows are still valid and worth keeping to avoid re-hitting Drive.
+      - name: Save extracted-rows cache
+        if: always()
+        uses: actions/cache/save@v4
+        with:
+          path: cache/extracted
+          key: extracted-${{ github.run_id }}
