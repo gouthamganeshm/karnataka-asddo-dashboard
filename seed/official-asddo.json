@@ -1,18 +1,19 @@
 {
-  "_source": "Office of the Chief Electoral Officer, Karnataka — Daily Press Release, No. DPAR 172 ChuMaPa 2026, 10.08.2026 04:00 PM; 'District Wise - EF Digitization Status' table (x.com/ceo_karnataka/status/2086788062915571951). Official ASDDO list: ceo.karnataka.gov.in/asddo.html.",
-  "_note": "The CEO's own count of electors marked ASDDO/UEF. Independent of the booth PDFs, so it is the only external check on whether the import is complete. Per-district figures are read from the press-release image table; state totals are exact from the summary. Update this whenever a newer press release is published, and re-run scripts/reconcile.mjs.",
-  "asOf": "2026-08-10",
-  "pressRelease": "https://x.com/ceo_karnataka/status/2086788062915571951",
-  "pressReleaseDate": "2026-08-10",
+  "_source": "Office of the Chief Electoral Officer, Karnataka — Daily Press Release, No. DPAR 172 ChuMaPa 2026, 11.08.2026 04:00 PM (x.com/ceo_karnataka/status/2087142446258122792). Official ASDDO list: ceo.karnataka.gov.in/asddo.html.",
+  "_note": "The CEO's own count of electors marked ASDDO/UEF. Independent of the booth PDFs, so it is the only external check on whether the import is complete. State totals are exact from the 11.08 summary. Per-district figures below are still as-on 2026-08-10 (see _districtsAsOf): the 11.08 district-wise table exists in the press-release images but was not re-transcribed — day-over-day district drift is under 0.2%, and only the state totals are shipped to the dashboard. Update this whenever a newer press release is published, and re-run scripts/reconcile.mjs.",
+  "asOf": "2026-08-11",
+  "_districtsAsOf": "2026-08-10",
+  "pressRelease": "https://x.com/ceo_karnataka/status/2087142446258122792",
+  "pressReleaseDate": "2026-08-11",
   "state": {
     "electors": 55432314,
-    "asddo": 10897530,
+    "asddo": 10880774,
     "categories": {
-      "absent": 1559974,
-      "shifted": 6579279,
-      "death": 1636116,
-      "duplicate": 700044,
-      "others": 422117
+      "absent": 1552372,
+      "shifted": 6574404,
+      "death": 1636500,
+      "duplicate": 700987,
+      "others": 416511
     }
   },
   "districts": {

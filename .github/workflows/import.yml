@@ -242,6 +242,7 @@ jobs:
       - name: Test the guards
         run: |
           node scripts/test-coverage-guard.mjs
+          node scripts/test-collapse-guard.mjs
           node scripts/test-verify-build.mjs
 
 
