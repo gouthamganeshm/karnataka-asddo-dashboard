@@ -1,19 +1,19 @@
 {
-  "dataVersion": "msoatuo1",
-  "total": 10614617,
+  "dataVersion": "msof4jso",
+  "total": 10631201,
   "byCategory": {
-    "absent": 1585071,
-    "shifted": 6350635,
-    "death": 1546110,
-    "duplicate": 638702,
-    "others": 494099
+    "absent": 1585784,
+    "shifted": 6360159,
+    "death": 1548894,
+    "duplicate": 642552,
+    "others": 493812
   },
   "ageBands": {
-    "18-29": 1385156,
-    "30-44": 4115465,
-    "45-59": 2769860,
-    "60-79": 1840748,
-    "80+": 501656,
+    "18-29": 1388684,
+    "30-44": 4121527,
+    "45-59": 2773228,
+    "60-79": 1843458,
+    "80+": 502572,
     "unknown": 1732
   },
   "generatedOn": [
@@ -53,14 +53,14 @@
     },
     {
       "name": "B.B.M.P(NORTH)",
-      "total": 1112516,
+      "total": 1111330,
       "constituencies": 7,
       "booths": 2079,
-      "absent": 127917,
-      "shifted": 814186,
-      "death": 78636,
-      "duplicate": 14503,
-      "others": 77274
+      "absent": 127821,
+      "shifted": 813397,
+      "death": 78637,
+      "duplicate": 14516,
+      "others": 76959
     },
     {
       "name": "B.B.M.P(SOUTH)",
@@ -140,6 +140,17 @@
       "others": 2125
     },
     {
+      "name": "BELGAUM",
+      "total": 250155,
+      "constituencies": 18,
+      "booths": 3500,
+      "absent": 6979,
+      "shifted": 122871,
+      "death": 82836,
+      "duplicate": 36704,
+      "others": 765
+    },
+    {
       "name": "BAGALKOT",
       "total": 237520,
       "constituencies": 7,
@@ -160,17 +171,6 @@
       "death": 48350,
       "duplicate": 18051,
       "others": 2151
-    },
-    {
-      "name": "BELGAUM",
-      "total": 232385,
-      "constituencies": 18,
-      "booths": 3474,
-      "absent": 6170,
-      "shifted": 112558,
-      "death": 80053,
-      "duplicate": 32867,
-      "others": 737
     },
     {
       "name": "SHIMOGA",
@@ -720,13 +720,13 @@
       "no": 157,
       "name": "Malleshwaram",
       "district": "B.B.M.P(NORTH)",
-      "total": 110217,
+      "total": 109031,
       "booths": 205,
-      "absent": 6783,
-      "shifted": 85214,
-      "death": 12777,
-      "duplicate": 1151,
-      "others": 4292
+      "absent": 6687,
+      "shifted": 84425,
+      "death": 12778,
+      "duplicate": 1164,
+      "others": 3977
     },
     {
       "no": 165,
@@ -1663,6 +1663,18 @@
       "death": 6729,
       "duplicate": 4036,
       "others": 59
+    },
+    {
+      "no": 5,
+      "name": "Kudachi",
+      "district": "BELGAUM",
+      "total": 29577,
+      "booths": 219,
+      "absent": 1034,
+      "shifted": 15284,
+      "death": 6938,
+      "duplicate": 6170,
+      "others": 151
     },
     {
       "no": 208,
@@ -2947,18 +2959,6 @@
       "death": 4225,
       "duplicate": 1176,
       "others": 25
-    },
-    {
-      "no": 5,
-      "name": "Kudachi",
-      "district": "BELGAUM",
-      "total": 11807,
-      "booths": 193,
-      "absent": 225,
-      "shifted": 4971,
-      "death": 4155,
-      "duplicate": 2333,
-      "others": 123
     },
     {
       "no": 119,

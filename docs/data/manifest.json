@@ -1,6 +1,6 @@
 {
-  "dataVersion": "msoatuo1",
-  "importedAt": "2026-08-11T06:50:06.089Z",
+  "dataVersion": "msof4jso",
+  "importedAt": "2026-08-11T08:50:27.333Z",
   "source": "https://ceo.karnataka.gov.in/asddo.html",
   "hash": "SHA-256",
   "shardDepth": 4,
@@ -336,13 +336,8 @@
         6
       ],
       [
-        91,
-        "Kampli",
-        7
-      ],
-      [
-        92,
-        "Siraguppa",
+        93,
+        "Bellary",
         7
       ],
       [
@@ -351,13 +346,18 @@
         7
       ],
       [
+        91,
+        "Kampli",
+        7
+      ],
+      [
         95,
         "Sandur",
         7
       ],
       [
-        93,
-        "Bellary",
+        92,
+        "Siraguppa",
         7
       ],
       [
@@ -451,8 +451,13 @@
         10
       ],
       [
-        142,
-        "Sidlaghatta",
+        143,
+        "Chintamani",
+        11
+      ],
+      [
+        141,
+        "Chikkaballapur",
         11
       ],
       [
@@ -461,18 +466,13 @@
         11
       ],
       [
+        142,
+        "Sidlaghatta",
+        11
+      ],
+      [
         140,
         "Bagepalli",
-        11
-      ],
-      [
-        143,
-        "Chintamani",
-        11
-      ],
-      [
-        141,
-        "Chikkaballapur",
         11
       ],
       [
@@ -1173,10 +1173,10 @@
     ],
     "reasons": [
       "Permanently Shifted",
-      "Untraceable/Absent",
       "Death",
-      "EF Refused",
       "Already enrolled",
+      "EF Refused",
+      "Untraceable/Absent",
       "Permanently",
       "Untraceable/Absen t",
       "Untraceable/Absent Already enrolled",
@@ -1196,11 +1196,11 @@
       "\u0000A\u0000l\u0000r\u0000e\u0000a\u0000d\u0000y\u0000 \u0000e\u0000n\u0000r\u0000o\u0000l\u0000l\u0000e\u0000d\u0000 \u0000"
     ],
     "relations": [
+      "Father",
+      "Other",
       "Husband",
       "Mother",
-      "Father",
       "Wife",
-      "Other",
       "\u0000F\u0000a\u0000t\u0000h\u0000e\u0000r\u0000",
       "\u0000H\u0000u\u0000s\u0000b\u0000a\u0000n\u0000d\u0000",
       "\u0000W\u0000i\u0000f\u0000e\u0000",
@@ -1213,11 +1213,11 @@
   "hasRoll": false,
   "hasSearch": true,
   "counts": {
-    "records": 10614617,
+    "records": 10631201,
     "districts": 34,
     "districtsInSource": 34,
     "constituencies": 224,
-    "booths": 57430,
+    "booths": 57456,
     "buckets": 65536
   },
   "districtsMissing": []
