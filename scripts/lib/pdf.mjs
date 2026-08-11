@@ -226,6 +226,13 @@ export function parseBoothPdf(buf) {
 
     let current = null;
     const flush = () => {
+      // Strip whitespace the EPIC never contains: in narrow tables the last
+      // digit wraps to the next baseline (e.g. "STZ051150" + "1"), and the
+      // continuation-merge below rejoins them with a space — "STZ051150 1".
+      // Normalising here turns that back into a valid EPIC instead of dropping
+      // the whole row (which silently lost every voter in Malleshwaram's
+      // narrowest booths).
+      if (current) current.epic = (current.epic ?? '').replace(/\s+/g, '');
       if (current && EPIC_RE.test(current.epic ?? '')) {
         const rec = finaliseRow(current);
         // A row whose Uncollectable Reason is blank ("-", or empty) is not a
@@ -249,7 +256,10 @@ export function parseBoothPdf(buf) {
         continue;
       }
 
-      if (/^\d+$/.test(cells.sno ?? '') && EPIC_RE.test(cells.epic ?? '')) {
+      // Start a record on any numbered row whose EPIC is 3 letters + 6-or-7
+      // digits: 7 is the clean case, 6 is a wrapped EPIC whose final digit sits
+      // on the next baseline and gets appended by the continuation branch below.
+      if (/^\d+$/.test(cells.sno ?? '') && /^[A-Z]{3}\d{6,7}$/.test((cells.epic ?? '').replace(/\s+/g, ''))) {
         flush();
         current = cells;
       } else if (current) {
@@ -289,8 +299,11 @@ function findHeader(rows) {
   const labels = COLUMNS.map((c) => ({ ...c, want: norm(c.header) }));
 
   for (let i = 0; i < rows.length; i++) {
-    // Allow the header to occupy up to two baselines.
-    for (const span of [1, 2]) {
+    // Allow the header to occupy up to three baselines. The narrowest booths
+    // wrap a label over three lines ("Serial No." as "Seri" + "al" + "No."),
+    // which a two-baseline span cannot complete. span=1 is tried first, so a
+    // clean single-line header never pulls in the rows beneath it.
+    for (const span of [1, 2, 3]) {
       const cells = rows
         .slice(i, i + span)
         .flatMap((r) => r.cells)
@@ -304,7 +317,11 @@ function findHeader(rows) {
       const anchors = [];
       const taken = new Set();
       for (let c = 0; c < cells.length; c++) {
-        if (taken.has(c)) continue;
+        // Skip cells that carry no letters (e.g. the lone "." left when "S.No."
+        // is drawn as "S.No" + "."). If such a cell started a label buffer, the
+        // anchor took ITS x — so "Serial No." anchored at the S.No column, its
+        // values folded into sno as "1 1", and the whole booth parsed to nothing.
+        if (taken.has(c) || !norm(cells[c].text)) continue;
         let buffer = '';
         for (let n = 0; n < 4 && c + n < cells.length; n++) {
           buffer += norm(cells[c + n].text);
