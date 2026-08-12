@@ -145,6 +145,15 @@ if (demotedSet.size) {
   for (const acIdx of [...refreshedAcIdx]) {
     if (demotedSet.has(dicts.districts[dicts.acs[acIdx][2]])) { refreshedAcIdx.delete(acIdx); sourceFiles.delete(acIdx); }
   }
+  // A demoted district is preserved from live, so its freshly-extracted rows are
+  // deliberately NOT published. Remove them from cache/extracted so verify-build
+  // (which checks every extracted row is in the built data) does not flag them as
+  // missing and fail the run.
+  const dslug = (s) => s.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+  for (const name of demotedSet) {
+    await rm(resolve(IN_DIR, `${dslug(name)}.ndjson`), { force: true });
+    await rm(resolve(IN_DIR, `${dslug(name)}.done`), { force: true });
+  }
   const detail = [...demotedSet].map((n) => `${n} (fresh ${freshDistrictTotals.get(n)} vs live ${liveTotalByDistrict.get(n)} = ${((freshDistrictTotals.get(n) / liveTotalByDistrict.get(n)) * 100).toFixed(0)}%)`);
   log(`::warning::${demotedSet.size} district(s) collapsed on fetch — PRESERVED from live (kept on old data, flagged for review) so the healthy districts still publish: ${detail.join(', ')}`);
 }
@@ -256,7 +265,11 @@ for (let i = 0; i < total; i++) {
   let fresh = dedupeFresh(freshShards.get(prefix) ?? []);
   freshShards.delete(prefix);
   if (demotedSet.size) fresh = fresh.filter((rec) => !demotedSet.has(districtOfAcIdx(rec[7])));  // collapsed districts: preserve live, drop fresh
-  const merged = kept.concat(fresh);
+  // Prefer a refreshed booth over a preserved (failed) booth for the same
+  // (voter, constituency), so a voter listed in both never appears twice and
+  // trips verify-build's duplicate check.
+  const freshKeys = new Set(fresh.map((r) => r[0] + '/' + r[7]));
+  const merged = kept.filter((r) => !freshKeys.has(r[0] + '/' + r[7])).concat(fresh);
   if (!merged.length) continue;
   bucketCount++;
   merged.sort((a, b) => (a[0] < b[0] ? -1 : a[0] > b[0] ? 1 : 0));
