@@ -22,7 +22,7 @@ on:
         type: boolean
       concurrency_per_job:
         description: 'Parallel Drive fetches per runner'
-        default: '6'
+        default: '3'
         type: string
       allow_partial:
         description: 'Publish even if some districts failed (normally refused)'
@@ -152,7 +152,7 @@ jobs:
       # Every runner fetches from the same Drive endpoints. 6 runners x 6
       # sockets is already 36 parallel requests at the source; raising this
       # trades throughput for throttling and 403s.
-      max-parallel: 6
+      max-parallel: 3
       # Only the districts the incremental plan selected — unchanged, already
       # cached districts are not re-pulled. Empty include => this job is skipped.
       matrix: ${{ fromJson(needs.discover.outputs.extract_matrix) }}
@@ -178,16 +178,24 @@ jobs:
       - name: Stream and parse ${{ matrix.name }} (${{ matrix.booths }} booths)
         run: |
           failed() { node -e 'try{process.stdout.write(String(require("./cache/extract-report.json").failed||0))}catch{process.stdout.write("0")}'; }
-          for attempt in 1 2 3 4; do
-            node scripts/2-extract.mjs --district "${{ matrix.name }}" --concurrency ${{ inputs.concurrency_per_job || '6' }}
+          for attempt in 1 2 3 4 5; do
+            node scripts/2-extract.mjs --district "${{ matrix.name }}" --concurrency ${{ inputs.concurrency_per_job || '3' }}
             F=$(failed)
             echo "attempt ${attempt}: ${F} booth(s) still failing"
             [ "$F" = "0" ] && break
-            sleep 20
+            sleep 45
           done
           F=$(failed)
           if [ "$F" != "0" ]; then
-            echo "::warning::${{ matrix.name }}: ${F} booth(s) still failed after 4 attempts. Their rows are NOT cached, so a later run will retry them; do not treat this district as complete."
+            # BOOTH-LEVEL COMPLETENESS GATE: a district with any booth still failing
+            # after all retries is INCOMPLETE (Drive throttled the runner, or a booth
+            # is 404). Refreshing it would silently drop those electors, and a 15%
+            # booth shortfall sails under the district-level coverage guard. So fail
+            # the job: the artifact upload below is skipped, the merge never sees this
+            # district, and it is PRESERVED from the live build instead of published
+            # short. A later run (less load) retries and refreshes it cleanly.
+            echo "::error::${{ matrix.name }}: ${F} booth(s) still failed after 5 attempts (throttled/404). NOT publishing this district — it will be preserved from the live build and retried next run."
+            exit 1
           fi
 
       - name: Rows extracted
