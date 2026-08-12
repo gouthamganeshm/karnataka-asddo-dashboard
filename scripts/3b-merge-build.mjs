@@ -74,6 +74,7 @@ const freshShards = new Map();      // prefix -> record[]
 const sourceFiles = new Map();      // acIdx -> { index:Map, list:[] }  (fresh acIdx only)
 const refreshedAcIdx = new Set();
 const refreshedDistricts = new Set();
+const freshDistrictTotals = new Map();   // district -> fresh row count (for the collapse check)
 let freshRows = 0;
 
 async function eachRow(path, fn) {
@@ -89,6 +90,7 @@ for (const f of files) {
 
     const districtIdx = intern('districts', row.district);
     refreshedDistricts.add(row.district);
+    freshDistrictTotals.set(row.district, (freshDistrictTotals.get(row.district) ?? 0) + 1);
     const acKey = row.acNo != null ? `#${row.acNo}${districtIdx}` : `name:${row.acName}${districtIdx}`;
     let acIdx = index.get('acs ' + acKey);
     if (acIdx === undefined) {
@@ -120,6 +122,32 @@ for (const f of files) {
   });
 }
 progress('');
+
+// ---- collapse guard: preserve a whole district whose fresh rows fell far below
+// the live build (a district-wide download shortfall or a source reduction). This
+// keeps one collapsed district from blocking the entire publish — the other,
+// healthy districts still go live, and the collapsed one stays on its live data
+// and is flagged for review. (Booth-level shortfalls don't reach here: those
+// booths are preserved individually, so the district total stays near live.)
+const COLLAPSE_FLOOR = Number(process.env.MERGE_COLLAPSE_FLOOR ?? 0.7);
+const liveStats0 = await readJson(resolve(LIVE, 'stats.json'), { districts: [] });
+const liveTotalByDistrict = new Map((liveStats0.districts ?? []).map((d) => [d.name, d.total]));
+const demotedSet = new Set();
+for (const name of [...refreshedDistricts]) {
+  const live = liveTotalByDistrict.get(name) ?? 0;
+  const fresh = freshDistrictTotals.get(name) ?? 0;
+  if (live > 1000 && fresh < live * COLLAPSE_FLOOR) {
+    demotedSet.add(name);
+    refreshedDistricts.delete(name);
+  }
+}
+if (demotedSet.size) {
+  for (const acIdx of [...refreshedAcIdx]) {
+    if (demotedSet.has(dicts.districts[dicts.acs[acIdx][2]])) { refreshedAcIdx.delete(acIdx); sourceFiles.delete(acIdx); }
+  }
+  const detail = [...demotedSet].map((n) => `${n} (fresh ${freshDistrictTotals.get(n)} vs live ${liveTotalByDistrict.get(n)} = ${((freshDistrictTotals.get(n) / liveTotalByDistrict.get(n)) * 100).toFixed(0)}%)`);
+  log(`::warning::${demotedSet.size} district(s) collapsed on fetch — PRESERVED from live (kept on old data, flagged for review) so the healthy districts still publish: ${detail.join(', ')}`);
+}
 log(`Refreshing ${refreshedDistricts.size} district(s): ${[...refreshedDistricts].sort().join(', ')}`);
 log(`Preserving ${dicts.districts.length - refreshedDistricts.size} district(s) from the live build.`);
 
@@ -225,8 +253,9 @@ for (let i = 0; i < total; i++) {
       kept.push(kr); preservedBooths++;
     }
   }
-  const fresh = dedupeFresh(freshShards.get(prefix) ?? []);
+  let fresh = dedupeFresh(freshShards.get(prefix) ?? []);
   freshShards.delete(prefix);
+  if (demotedSet.size) fresh = fresh.filter((rec) => !demotedSet.has(districtOfAcIdx(rec[7])));  // collapsed districts: preserve live, drop fresh
   const merged = kept.concat(fresh);
   if (!merged.length) continue;
   bucketCount++;
