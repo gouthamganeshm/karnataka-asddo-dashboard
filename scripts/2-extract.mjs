@@ -71,8 +71,27 @@ function openArchive(file) {
 
 const report = {
   files: 0, skipped: 0, failed: 0, scanned: 0, empty: 0, rows: 0, bytes: 0,
-  unmappedReasons: {}, byDistrict: {}
+  unmappedReasons: {}, byDistrict: {}, failedFiles: []
 };
+
+// Record + log exactly which booth file failed to fetch and why, so the failures
+// can be analysed separately: "not-pdf" means Drive returned an HTML page (rate
+// limit / permission), "fetch-error" means the request itself failed (404/timeout).
+function recordFail(district, ac, file, reason) {
+  report.failed++;
+  const rec = {
+    district: district.name,
+    acNo: ac?.no ?? file.acNo ?? null,
+    partNo: file.partNo ?? null,
+    name: file.name || file.partName || '',
+    id: file.id || file.zipId || '',
+    url: file.url || file.zipUrl || '',
+    entry: file.entry || '',
+    reason
+  };
+  report.failedFiles.push(rec);
+  log(`  FETCH FAIL: ${rec.district} AC${rec.acNo ?? '?'} part ${rec.partNo ?? '?'} "${rec.name}" [${rec.id || rec.url}${rec.entry ? '#' + rec.entry : ''}] — ${reason}`);
+}
 
 for (const district of manifest.districts) {
   if (only && !only.some((o) => district.name.includes(o))) continue;
@@ -113,13 +132,13 @@ for (const district of manifest.districts) {
         buf = await get(file.url ?? driveDownloadUrl(file.id));
         report.bytes += buf.length;
       }
-    } catch {
-      report.failed++;
+    } catch (err) {
+      recordFail(district, ac, file, `fetch-error: ${(err?.message ?? '').slice(0, 100)}`);
       return;
     }
     if (buf.subarray(0, 4).toString('latin1') !== '%PDF') {
       // Throttling and permission changes come back as an HTML page.
-      report.failed++;
+      recordFail(district, ac, file, 'not-pdf (Drive rate limit / permission — returned HTML)');
       return;
     }
 
