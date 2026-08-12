@@ -123,9 +123,30 @@ progress('');
 log(`Refreshing ${refreshedDistricts.size} district(s): ${[...refreshedDistricts].sort().join(', ')}`);
 log(`Preserving ${dicts.districts.length - refreshedDistricts.size} district(s) from the live build.`);
 
-// ---- source-file lists for stats: fresh from memory, preserved from LIVE parts
+// ---- BOOTH-LEVEL preserve: for each refreshed AC, keep the live records of any
+// booth that was NOT re-fetched this run (a failed download), and append those
+// failed booths' source-file entries onto the fresh parts list, remapping their
+// fileIdx. So every booth that downloaded is refreshed and only the failed booths
+// stay on their previous data — a few failed booths never discard a whole
+// district (the BAGALKOT-lost-to-one-booth case).
+const acMerge = new Map(); // acIdx -> { freshPartNos:Set, mergedList, remap:Map(oldFileIdx->newFileIdx), livePartNo:[partNo by live fileIdx] }
+for (const acIdx of refreshedAcIdx) {
+  const freshList = sourceFiles.get(acIdx)?.list ?? [];
+  const freshPartNos = new Set(freshList.map((e) => e[1]));
+  const liveList = (await readJson(resolve(LIVE, 'parts', `${acIdx}.json`), [])) ?? [];
+  const mergedList = [...freshList];
+  const remap = new Map();
+  liveList.forEach((entry, oldIdx) => {
+    if (!freshPartNos.has(entry[1])) { remap.set(oldIdx, mergedList.length); mergedList.push(entry); }
+  });
+  acMerge.set(acIdx, { freshPartNos, mergedList, remap, livePartNo: liveList.map((e) => e[1]) });
+}
+
+// Source-file list for stats/search: the merged list for a refreshed AC, the
+// fresh list for a brand-new AC, else the live list for a preserved AC.
 const livePartsCache = new Map();
 async function partsFor(acIdx) {
+  if (acMerge.has(acIdx)) return acMerge.get(acIdx).mergedList;
   if (sourceFiles.has(acIdx)) return sourceFiles.get(acIdx).list;
   if (!livePartsCache.has(acIdx)) livePartsCache.set(acIdx, (await readJson(resolve(LIVE, 'parts', `${acIdx}.json`), [])) ?? []);
   return livePartsCache.get(acIdx);
@@ -143,8 +164,8 @@ const stats = {
   booths: new Set(), generatedOn: new Set()
 };
 const searchRows = new Map();
-const livePreserved = new Map();     // district -> count preserved (for verification)
-let dropped = 0, bytes = 0, written = 0, bucketCount = 0;
+const livePreserved = new Map();     // district -> count preserved (untouched districts, for verification)
+let dropped = 0, bytes = 0, written = 0, bucketCount = 0, preservedBooths = 0;
 
 async function tally(rec) {
   const [, , , , age, , reasonIdx, acIdx, fileIdx] = rec;
@@ -187,10 +208,21 @@ for (let i = 0; i < total; i++) {
   const kept = [];
   if (liveRecs) {
     for (const rec of liveRecs) {
-      const district = districtOfAcIdx(rec[7]);
-      if (refreshedDistricts.has(district)) { dropped++; continue; }  // replaced by fresh
-      kept.push(rec);
-      livePreserved.set(district, (livePreserved.get(district) ?? 0) + 1);
+      const acIdx = rec[7];
+      const district = districtOfAcIdx(acIdx);
+      if (!refreshedDistricts.has(district)) {          // untouched district — preserve verbatim
+        kept.push(rec);
+        livePreserved.set(district, (livePreserved.get(district) ?? 0) + 1);
+        continue;
+      }
+      const m = acMerge.get(acIdx);
+      if (!m) { kept.push(rec); continue; }             // AC had zero fresh booths — preserve the whole AC
+      const partNo = m.livePartNo[rec[8]];
+      if (m.freshPartNos.has(partNo)) { dropped++; continue; }  // this booth was re-fetched — fresh copy replaces it
+      const nf = m.remap.get(rec[8]);                   // failed booth — keep its old data, remap the source-file index
+      if (nf === undefined) { dropped++; continue; }
+      const kr = rec.slice(); kr[8] = nf;
+      kept.push(kr); preservedBooths++;
     }
   }
   const fresh = dedupeFresh(freshShards.get(prefix) ?? []);
@@ -215,7 +247,10 @@ progress('');
 // ---- parts: fresh acIdx from memory; preserved acIdx copied from LIVE ---------
 await rm(resolve(OUT, 'parts'), { recursive: true, force: true });
 for (let acIdx = 0; acIdx < dicts.acs.length; acIdx++) {
-  const list = sourceFiles.has(acIdx) ? sourceFiles.get(acIdx).list : (await readJson(resolve(LIVE, 'parts', `${acIdx}.json`), null));
+  let list;
+  if (acMerge.has(acIdx)) list = acMerge.get(acIdx).mergedList;         // fresh booths + preserved failed booths
+  else if (sourceFiles.has(acIdx)) list = sourceFiles.get(acIdx).list;  // brand-new AC
+  else list = await readJson(resolve(LIVE, 'parts', `${acIdx}.json`), null); // preserved AC
   if (list) await writeJson(resolve(OUT, 'parts', `${acIdx}.json`), list);
 }
 
@@ -276,7 +311,7 @@ for (const [name, before] of liveBy) {
   if (after !== before) problems.push(`${name}: preserved ${after} != live ${before}`);
 }
 log(`\nMerged: ${stats.total} records | ${stats.districts.size} districts | ${dicts.acs.length} constituencies | ${bucketCount} buckets (${fmtBytes(bytes)})`);
-log(`  dropped ${dropped} old records from refreshed districts; preserved the rest verbatim.`);
+log(`  replaced ${dropped} records with freshly-downloaded booths; kept ${preservedBooths} record(s) from booths that failed to download (old data preserved).`);
 if (problems.length) {
   log(`::error::MERGE SAFETY CHECK FAILED — a preserved district changed:`);
   for (const p of problems) log(`  ${p}`);

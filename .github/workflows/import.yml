@@ -184,19 +184,16 @@ jobs:
           path: cache/extract-report.json
           retention-days: 3
 
-      # BOOTH-LEVEL COMPLETENESS GATE (single try): any booth that failed means the
-      # district did not fully download. Fail the job so its rows are NOT uploaded
-      # and the merge PRESERVES this district from the live build instead of
-      # publishing it short — while every district that downloaded cleanly still
-      # commits and goes live. (A 15% booth shortfall otherwise sails under the
-      # district-level coverage guard.)
-      - name: Require the district downloaded completely
+      # Report failed booths — but do NOT fail the district. The rows that DID
+      # download are uploaded and refreshed; the booth-level merge (3b-merge) keeps
+      # each FAILED booth on its previous data. A few failed booths never discard a
+      # whole district's fresh data, and no downloaded voter is dropped either.
+      - name: Report failed booths (their old data is kept by the merge)
         run: |
           F=$(node -e 'try{process.stdout.write(String(require("./cache/extract-report.json").failed||0))}catch{process.stdout.write("0")}')
           echo "${{ matrix.name }}: ${F} booth(s) failed to fetch"
           if [ "$F" != "0" ]; then
-            echo "::error::${{ matrix.name }}: ${F} booth(s) failed — NOT publishing this district (preserved from live). Failed files are in the failed-${{ matrix.slug }} artifact."
-            exit 1
+            echo "::warning::${{ matrix.name }}: ${F} booth(s) failed — the merge refreshes every downloaded booth and keeps the failed booths' previous data. Failed files: failed-${{ matrix.slug }} artifact."
           fi
 
       - name: Rows extracted
