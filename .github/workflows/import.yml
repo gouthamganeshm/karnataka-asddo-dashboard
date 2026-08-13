@@ -196,6 +196,26 @@ jobs:
             echo "::warning::${{ matrix.name }}: ${F} booth(s) failed — the merge refreshes every downloaded booth and keeps the failed booths' previous data. Failed files: failed-${{ matrix.slug }} artifact."
           fi
 
+      # verify-build.mjs (in the build job) proves the built site matches what got
+      # extracted; it can't see a booth that was never even fetched. This closes
+      # that gap for this one district: the source manifest lists every booth PDF
+      # that should exist, cache/extracted/<slug>.done lists every one that
+      # actually downloaded, and any booth in the first set but not the second is
+      # an elector this run would silently drop. Non-blocking, like the failed-
+      # booth report above — the merge already keeps this district's previous
+      # data for whatever fails, so a gap here is visibility, not a new failure
+      # mode to guard against.
+      - name: Check every booth on the source page was fetched
+        env:
+          # Per-booth gaps are already tolerated elsewhere in this pipeline (the
+          # failed-booth report above, the booth-level merge that keeps old data
+          # for whatever didn't download) — this step adds visibility, not a new
+          # thing to hard-block a district on. The aggregate, harder-to-tolerate
+          # failure mode (a whole district collapsing) is still hard-blocked by
+          # the coverage guard in the build job.
+          ALLOW_PARTIAL: 'true'
+        run: node scripts/verify-completeness.mjs --district "${{ matrix.name }}"
+
       - name: Rows extracted
         run: wc -l cache/extracted/${{ matrix.slug }}.ndjson || true
 
