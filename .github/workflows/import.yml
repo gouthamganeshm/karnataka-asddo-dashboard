@@ -372,10 +372,15 @@ jobs:
 
           Discovered ${{ needs.discover.outputs.total }} booth PDFs. Streamed and
           parsed on the runner; no PDFs stored."
-          # The 2-hourly seed sweep (and manual pushes) can land on main while this
-          # import runs. Those commits only touch seed/, this one only docs/data, so
-          # they never conflict — rebase the data commit onto whatever arrived and
-          # retry rather than failing the whole build on a non-fast-forward.
+          # Refresh source links (and manual pushes) can land on main while this
+          # import runs. Both those and this commit touch seed/manifest.json.gz —
+          # they used to be assumed never to conflict because only this workflow
+          # touched it, but 2026-08-13 proved that wrong (a manual seed refresh
+          # landed mid-run and the two gzip blobs couldn't be merged, failing the
+          # whole job and losing an already-fully-extracted run). It's a derived
+          # cache, not hand-authored, so on a conflict there regenerate it fresh
+          # from this run's own cache/manifest.json instead of trying to merge two
+          # binary blobs — cheaper and always resolvable, unlike a real merge.
           for attempt in 1 2 3 4 5; do
             if git push; then
               echo "pushed on attempt $attempt"
@@ -383,7 +388,19 @@ jobs:
             fi
             echo "push rejected (attempt $attempt) — rebasing onto origin/main"
             git fetch origin main
-            git rebase origin/main || { git rebase --abort; echo "rebase conflict"; exit 1; }
+            if ! git rebase origin/main; then
+              if git status --porcelain | grep -q '^UU seed/manifest\.json\.gz$' \
+                 && [ "$(git status --porcelain | grep -cv '^UU seed/manifest\.json\.gz$')" -eq 0 ]; then
+                echo "binary conflict isolated to seed/manifest.json.gz — regenerating instead of merging"
+                gzip -9c cache/manifest.json > seed/manifest.json.gz
+                git add seed/manifest.json.gz
+                git rebase --continue || { git rebase --abort; echo "rebase conflict (unresolved beyond manifest)"; exit 1; }
+              else
+                git rebase --abort
+                echo "rebase conflict"
+                exit 1
+              fi
+            fi
             sleep 3
           done
           echo "push still failing after 5 attempts"

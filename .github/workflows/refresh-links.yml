@@ -56,9 +56,12 @@ jobs:
             exit 0
           fi
           git commit -m "Refresh seed manifest: source links as of $(date -u +%Y-%m-%d)"
-          # Import ASDDO data's own data commits only touch docs/data + this
-          # same file; a manifest-only commit here can still race a concurrent
-          # import run's own manifest refresh, so rebase-and-retry the same way.
+          # Import ASDDO data's own data commits touch this same file, so a
+          # manifest-only commit here can race a concurrent import run's own
+          # refresh. It's a derived cache, not hand-authored — on a rebase
+          # conflict here (always this file, since it's the only thing this
+          # commit touches) regenerate it fresh from this run's own
+          # cache/manifest.json instead of trying to merge two binary blobs.
           for attempt in 1 2 3 4 5; do
             if git push; then
               echo "pushed on attempt $attempt"
@@ -66,7 +69,12 @@ jobs:
             fi
             echo "push rejected (attempt $attempt) — rebasing onto origin/main"
             git fetch origin main
-            git rebase origin/main || { git rebase --abort; echo "rebase conflict"; exit 1; }
+            if ! git rebase origin/main; then
+              echo "conflict — regenerating seed/manifest.json.gz instead of merging"
+              gzip -9c cache/manifest.json > seed/manifest.json.gz
+              git add seed/manifest.json.gz
+              git rebase --continue || { git rebase --abort; echo "rebase conflict (unresolved)"; exit 1; }
+            fi
             sleep 3
           done
           echo "push still failing after 5 attempts"
