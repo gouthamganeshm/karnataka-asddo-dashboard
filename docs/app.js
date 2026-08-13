@@ -9,6 +9,33 @@
 const CATEGORIES = ['absent', 'shifted', 'death', 'duplicate', 'others'];
 const EPIC_RE = /^[A-Z]{3}[0-9]{7}$/;
 
+// The ASDDO release line. A booth list generated before this date was NOT
+// refreshed in the latest crawl — it is preserved from an earlier build (the
+// district's source folder was unshared/removed, or a few booths failed to
+// re-fetch). Records carry the booth's own generation date (generatedOn), so a
+// record dated before this shows a staleness disclaimer: the data is real but
+// predates the latest release, and the visitor is told to confirm on the
+// official portal. Purely a display decision — nothing about the data changes.
+const FRESH_SINCE = new Date(Date.UTC(2026, 7, 11)); // 11 Aug 2026 (month is 0-based)
+
+// generatedOn is stored as DD/MM/YYYY (some older rows use DD-MM-YYYY). Returns a
+// Date, or null when the string is missing/unparseable (an unknown date is never
+// treated as stale — better to say nothing than flag good data on a bad parse).
+function parseGeneratedOn(s) {
+  const m = /(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{4})/.exec(String(s ?? ''));
+  if (!m) return null;
+  const [, dd, mm, yyyy] = m.map(Number);
+  const d = new Date(Date.UTC(yyyy, mm - 1, dd));
+  return Number.isNaN(d.getTime()) ? null : d;
+}
+
+// True when a record's booth list predates the latest release and should carry
+// the "verify on the official portal" disclaimer.
+function isStaleBooth(generatedOn) {
+  const d = parseGeneratedOn(generatedOn);
+  return d != null && d < FRESH_SINCE;
+}
+
 // --------------------------------------------------------------------- i18n
 
 const STRINGS = {
@@ -64,6 +91,8 @@ const STRINGS = {
     sourcePdf: 'Open the official PDF this record came from',
     sourceGenerated: 'generated',
     sourceMissing: 'The source document for this record could not be identified. Ask your BLO for the ASDDO list for your booth.',
+    staleBoothNote: 'This booth’s list is dated {date} — before the latest ASDDO release (11 August 2026). Newer additions or corrections may not appear here. Confirm the current list on the official CEO portal:',
+    staleBoothLink: 'ceo.karnataka.gov.in/asddo.html',
     rollEntryHeading: 'Your entry on the electoral roll',
     clearNoDetails: 'This build indexes only whether the number exists, not the roll entry itself.',
 
@@ -178,6 +207,8 @@ const STRINGS = {
     sourcePdf: 'ಈ ದಾಖಲೆ ಬಂದ ಅಧಿಕೃತ PDF ತೆರೆಯಿರಿ',
     sourceGenerated: 'ದಾಖಲೆ ದಿನಾಂಕ',
     sourceMissing: 'ಈ ದಾಖಲೆಯ ಮೂಲ ಕಡತವನ್ನು ಗುರುತಿಸಲಾಗಲಿಲ್ಲ. ನಿಮ್ಮ ಮತಗಟ್ಟೆಯ ASDDO ಪಟ್ಟಿಯನ್ನು BLO ಅವರಿಂದ ಕೇಳಿ.',
+    staleBoothNote: 'ಈ ಮತಗಟ್ಟೆಯ ಪಟ್ಟಿಯ ದಿನಾಂಕ {date} — ಇದು ಇತ್ತೀಚಿನ ASDDO ಬಿಡುಗಡೆಗಿಂತ (ಆಗಸ್ಟ್ 11, 2026) ಹಿಂದಿನದು. ಹೊಸ ಸೇರ್ಪಡೆಗಳು ಅಥವಾ ತಿದ್ದುಪಡಿಗಳು ಇಲ್ಲಿ ಕಾಣಿಸದಿರಬಹುದು. ಅಧಿಕೃತ CEO ಪೋರ್ಟಲ್‌ನಲ್ಲಿ ಪ್ರಸ್ತುತ ಪಟ್ಟಿಯನ್ನು ಖಚಿತಪಡಿಸಿಕೊಳ್ಳಿ:',
+    staleBoothLink: 'ceo.karnataka.gov.in/asddo.html',
     rollEntryHeading: 'ಮತದಾರರ ಪಟ್ಟಿಯಲ್ಲಿ ನಿಮ್ಮ ದಾಖಲೆ',
     clearNoDetails: 'ಈ ಆವೃತ್ತಿಯಲ್ಲಿ ಸಂಖ್ಯೆ ಇದೆಯೇ ಎಂಬುದನ್ನು ಮಾತ್ರ ಸೂಚಿಸಲಾಗಿದೆ, ಪಟ್ಟಿಯ ದಾಖಲೆಯ ವಿವರಗಳಲ್ಲ.',
 
@@ -796,6 +827,26 @@ function renderDeleted(host, data) {
     } else {
       box.appendChild(el('p', 'source-detail', t('sourceMissing')));
     }
+
+    // Booth lists generated before the latest release are preserved from an
+    // earlier build (source unshared/removed, or the booth failed to re-fetch).
+    // The record is real, but flag that it predates the latest release and point
+    // the visitor at the official portal for the current list.
+    if (isStaleBooth(record.generatedOn)) {
+      const stale = el('div', 'stale-note');
+      const p = el('p');
+      p.appendChild(el('span', 'stale-icon', '⚠️ '));
+      p.appendChild(document.createTextNode(
+        fill(t('staleBoothNote'), { date: record.generatedOn }) + ' '));
+      const link = el('a', 'stale-link', t('staleBoothLink'));
+      link.href = 'https://ceo.karnataka.gov.in/asddo.html';
+      link.target = '_blank';
+      link.rel = 'noopener noreferrer';
+      p.appendChild(link);
+      stale.appendChild(p);
+      box.appendChild(stale);
+    }
+
     card.appendChild(box);
   }
 

@@ -1,19 +1,20 @@
 {
-  "_source": "Office of the Chief Electoral Officer, Karnataka — Daily Press Release, No. DPAR 172 ChuMaPa 2026, 11.08.2026 04:00 PM (x.com/ceo_karnataka/status/2087142446258122792). Official ASDDO list: ceo.karnataka.gov.in/asddo.html.",
-  "_note": "The CEO's own count of electors marked ASDDO/UEF. Independent of the booth PDFs, so it is the only external check on whether the import is complete. State totals are exact from the 11.08 summary. Per-district figures below are still as-on 2026-08-10 (see _districtsAsOf): the 11.08 district-wise table exists in the press-release images but was not re-transcribed — day-over-day district drift is under 0.2%, and only the state totals are shipped to the dashboard. Update this whenever a newer press release is published, and re-run scripts/reconcile.mjs.",
-  "asOf": "2026-08-11",
-  "_districtsAsOf": "2026-08-10",
-  "pressRelease": "https://x.com/ceo_karnataka/status/2087142446258122792",
-  "pressReleaseDate": "2026-08-11",
+  "_source": "Office of the Chief Electoral Officer, Karnataka — press conference by CEO on SIR-2026, 12.08.2026. Statewide ASDDO totals corroborated across ThePrint, Siasat, The Hans India, Bhatkallys and NewKerala (all report 1.11 crore / 20.03% of the electorate). Official ASDDO list: ceo.karnataka.gov.in/asddo.html.",
+  "_note": "The CEO's own count of electors marked ASDDO/UEF. Independent of the booth PDFs, so it is the only external check on whether the import is complete. State totals are the 12.08 figures (11,104,705 = 20.03% of the unchanged 55,432,314 electorate — the ratio is exact, which is why the electorate is carried forward). Per-district figures: the 10 largest districts below were re-transcribed from the 12.08 press coverage (_districtsAsOf 2026-08-12); the remaining 24 are still as-on 2026-08-10 (_districtsAsOf24 2026-08-10) — the 12.08 district-wise table exists in the press-release images but only the 10 named districts were published in text. Day-over-day district drift is under 0.2%, and only the state totals are shipped to the dashboard. Update this whenever a newer press release is published, and re-run scripts/reconcile.mjs.",
+  "asOf": "2026-08-12",
+  "_districtsAsOf": "2026-08-12",
+  "_districtsAsOf24": "2026-08-10",
+  "pressRelease": "https://ceo.karnataka.gov.in/asddo.html",
+  "pressReleaseDate": "2026-08-12",
   "state": {
     "electors": 55432314,
-    "asddo": 10880774,
+    "asddo": 11104705,
     "categories": {
-      "absent": 1552372,
-      "shifted": 6574404,
-      "death": 1636500,
-      "duplicate": 700987,
-      "others": 416511
+      "absent": 1630012,
+      "shifted": 6664943,
+      "death": 1630872,
+      "duplicate": 689904,
+      "others": 488974
     }
   },
   "districts": {
@@ -30,7 +31,7 @@
     "CHIKKABALLAPUR": 121179,
     "RAMANAGARAM": 110911,
     "SHIMOGA": 189345,
-    "BELGAUM": 514504,
+    "BELGAUM": 507983,
     "KOPPAL": 149167,
     "BANGALORE RURAL": 117331,
     "VIJAYANAGARA": 148737,
@@ -39,17 +40,17 @@
     "DAVANGERE": 201580,
     "KODAGU": 63127,
     "BAGALKOT": 237520,
-    "BIJAPUR": 298862,
+    "BIJAPUR": 301264,
     "BIDAR": 243470,
-    "DHARWAD": 272635,
+    "DHARWAD": 281242,
     "YADGIR": 188599,
     "BELLARY": 223559,
-    "RAICHUR": 321622,
-    "MYSORE": 559935,
-    "GULBARGA": 525092,
-    "BANGALORE URBAN": 1749520,
-    "B.B.M.P(NORTH)": 1066349,
-    "B.B.M.P(CENTRAL)": 876333,
-    "B.B.M.P(SOUTH)": 1078265
+    "RAICHUR": 321107,
+    "MYSORE": 572509,
+    "GULBARGA": 535403,
+    "BANGALORE URBAN": 1813010,
+    "B.B.M.P(NORTH)": 1107027,
+    "B.B.M.P(CENTRAL)": 915035,
+    "B.B.M.P(SOUTH)": 1107678
   }
 }

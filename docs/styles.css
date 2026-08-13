@@ -450,6 +450,18 @@ main { padding-bottom: 56px; }
 .source-link { display: inline-block; font-size: 0.95rem; color: var(--series-seq); font-weight: 700; }
 .source-detail { margin: 5px 0 0; font-size: 0.82rem; color: var(--ink-2); }
 
+/* Booth list predates the latest release — amber staleness caveat under the
+   source link. The record is real; this only says its date is older than the
+   latest ASDDO release and points at the official portal for the current list. */
+.stale-note {
+  margin-top: 12px; padding: 10px 12px; border-radius: 8px;
+  background: var(--caution-wash); border: 1px solid var(--warning);
+  font-size: 0.85rem; line-height: 1.45; color: var(--ink-2);
+}
+.stale-note p { margin: 0; }
+.stale-note .stale-icon { white-space: nowrap; }
+.stale-note .stale-link { color: var(--series-seq); font-weight: 700; white-space: nowrap; }
+
 /* BLO phone number — a real link, so it dials on a phone. */
 .record .blo-tel { color: var(--series-seq); text-decoration: none; font-weight: 600; white-space: nowrap; }
 .record .blo-tel:hover { text-decoration: underline; }
