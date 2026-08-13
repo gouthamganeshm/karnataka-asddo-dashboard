@@ -360,3 +360,15 @@ if (problems.length) {
   process.exit(1);
 }
 log(`  safety check OK: every preserved district's record count is unchanged from the live build.`);
+
+// Which districts collapsed on fetch this run, for update-force-pull.mjs to fold
+// into seed/force-pull.json — the standing "retry this automatically next time"
+// list, so a Drive-throttling collapse gets force-retried on its own instead of
+// silently waiting for a human to notice and pass --district.
+await writeJson(resolve(CACHE, 'merge-report.json'), {
+  refreshed: [...refreshedDistricts].sort(),
+  demoted: [...demotedSet].sort(),
+  demotedDetail: [...demotedSet].map((n) => ({
+    district: n, fresh: freshDistrictTotals.get(n) ?? 0, live: liveTotalByDistrict.get(n) ?? 0
+  }))
+}, true);

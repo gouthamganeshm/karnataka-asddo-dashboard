@@ -140,7 +140,12 @@ jobs:
       - uses: actions/upload-artifact@v4
         with:
           name: manifest
-          path: cache/manifest.json
+          # change-report.json travels with it so the build job's self-healing
+          # step (update-force-pull.mjs) can see which districts plan-incremental
+          # preserved as short THIS run, same as the manifest it planned against.
+          path: |
+            cache/manifest.json
+            cache/change-report.json
           retention-days: 1
 
   extract:
@@ -337,6 +342,14 @@ jobs:
             echo "::warning::docs/data is over 900 MB; GitHub Pages caps a published site at 1 GB."
           fi
 
+      # Self-healing: fold this run's short/collapsed districts (if any) into the
+      # standing retry list, and drop anything this run proved healthy again. Every
+      # future run — scheduled or manual — auto-forces whatever's still on the
+      # list, so a Drive-throttling failure gets retried automatically instead of
+      # silently waiting on a human to notice and pass --district.
+      - name: Update the self-healing force-pull list
+        run: node scripts/update-force-pull.mjs
+
       - name: Commit the rebuilt data
         run: |
           git config user.name  "github-actions[bot]"
@@ -344,7 +357,7 @@ jobs:
           # Refresh the baseline the next run diffs against, so a booth that moved
           # (even if its parsed rows didn't change) is not re-pulled every run.
           gzip -9c cache/manifest.json > seed/manifest.json.gz
-          git add docs/data seed/manifest.json.gz
+          git add docs/data seed/manifest.json.gz seed/force-pull.json
           if git diff --cached --quiet; then
             echo "No change to publish."
             exit 0
