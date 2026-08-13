@@ -30,8 +30,12 @@ on:
         type: boolean
   # Source PDFs are regenerated daily; weekly keeps the site honest without
   # hammering Drive. Delete this block to make imports manual only.
-  schedule:
-    - cron: '20 2 * * 0'
+  #
+  # PAUSED 2026-08-13: cron disabled while validating the self-healing
+  # force-pull mechanism and the Drive-throttle retry fix. Un-comment the
+  # `schedule:`/`cron:` lines below to resume the weekly automatic import.
+  # schedule:
+  #   - cron: '20 2 * * 0'
 
 permissions:
   contents: write
