@@ -1,9 +1,26 @@
 {
-  "DAVANGERE": { "reason": "collapsed on fetch (Drive throttling, 2026-08-13 full-refresh run)", "attempts": 1, "since": "2026-08-13", "lastSeen": "2026-08-13" },
-  "DHARWAD": { "reason": "collapsed on fetch (Drive throttling, 2026-08-13 full-refresh run)", "attempts": 1, "since": "2026-08-13", "lastSeen": "2026-08-13" },
-  "TUMKUR": { "reason": "collapsed on fetch (Drive throttling, 2026-08-13 full-refresh run)", "attempts": 1, "since": "2026-08-13", "lastSeen": "2026-08-13" },
-  "KOLAR": { "reason": "collapsed on fetch (Drive throttling, 2026-08-13 full-refresh run)", "attempts": 1, "since": "2026-08-13", "lastSeen": "2026-08-13" },
-  "MANDYA": { "reason": "collapsed on fetch (Drive throttling, 2026-08-13 full-refresh run)", "attempts": 1, "since": "2026-08-13", "lastSeen": "2026-08-13" },
-  "CHAMARAJNAGAR": { "reason": "partially stale after 2026-08-13 full-refresh (2/983 booths still pre-release; seed baseline still shows it short, so plan-incremental would otherwise keep preserving it)", "attempts": 1, "since": "2026-08-13", "lastSeen": "2026-08-13" },
-  "VIJAYANAGARA": { "reason": "partially stale after 2026-08-13 full-refresh (258/1234 booths still pre-release; seed baseline still shows it short, so plan-incremental would otherwise keep preserving it)", "attempts": 1, "since": "2026-08-13", "lastSeen": "2026-08-13" }
+  "DAVANGERE": {
+    "reason": "short crawl (0/7 constituencies), forced through",
+    "attempts": 2,
+    "since": "2026-08-13",
+    "lastSeen": "2026-08-13"
+  },
+  "DHARWAD": {
+    "reason": "collapsed on fetch (181189/286080 = 63% of live)",
+    "attempts": 2,
+    "since": "2026-08-13",
+    "lastSeen": "2026-08-13"
+  },
+  "CHAMARAJNAGAR": {
+    "reason": "short crawl (3/4 constituencies), forced through",
+    "attempts": 2,
+    "since": "2026-08-13",
+    "lastSeen": "2026-08-13"
+  },
+  "VIJAYANAGARA": {
+    "reason": "short crawl (1/5 constituencies), forced through",
+    "attempts": 2,
+    "since": "2026-08-13",
+    "lastSeen": "2026-08-13"
+  }
 }

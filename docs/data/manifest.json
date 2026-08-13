@@ -1,6 +1,6 @@
 {
-  "dataVersion": "msr4x51i",
-  "importedAt": "2026-08-13T06:26:06.918Z",
+  "dataVersion": "msrgwxpd",
+  "importedAt": "2026-08-13T12:01:52.801Z",
   "source": "https://ceo.karnataka.gov.in/asddo.html",
   "hash": "SHA-256",
   "shardDepth": 4,
@@ -1218,11 +1218,11 @@
   "hasRoll": false,
   "hasSearch": true,
   "counts": {
-    "records": 10887575,
+    "records": 10872702,
     "districts": 34,
     "districtsInSource": 34,
     "constituencies": 224,
-    "booths": 58915,
+    "booths": 58950,
     "buckets": 65536
   },
   "districtsMissing": [],
@@ -1248,16 +1248,19 @@
       "HASSAN",
       "HAVERI",
       "KODAGU",
+      "KOLAR",
       "KOPPAL",
+      "MANDYA",
       "MYSORE",
       "RAICHUR",
       "RAMANAGARAM",
       "SHIMOGA",
+      "TUMKUR",
       "UDUPI",
       "UTTARA KANNADA",
       "VIJAYANAGARA",
       "YADGIR"
     ],
-    "at": "2026-08-13T06:26:06.918Z"
+    "at": "2026-08-13T12:01:52.801Z"
   }
 }
