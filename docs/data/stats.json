@@ -1,19 +1,19 @@
 {
-  "dataVersion": "msrgwxpd",
-  "total": 10872702,
+  "dataVersion": "msrmgszk",
+  "total": 10891977,
   "byCategory": {
-    "absent": 1555279,
-    "shifted": 6569756,
-    "death": 1632344,
-    "duplicate": 697260,
-    "others": 418063
+    "absent": 1559275,
+    "shifted": 6580029,
+    "death": 1635042,
+    "duplicate": 699224,
+    "others": 418407
   },
   "ageBands": {
-    "18-29": 1406034,
-    "30-44": 4206922,
-    "45-59": 2832339,
-    "60-79": 1901598,
-    "80+": 525701,
+    "18-29": 1408290,
+    "30-44": 4213736,
+    "45-59": 2837489,
+    "60-79": 1905499,
+    "80+": 526855,
     "unknown": 108
   },
   "generatedOn": [
@@ -27,6 +27,7 @@
     "10/08/2026",
     "11/08/2026",
     "12/08/2026",
+    "13/08/2026",
     "24/07/2026",
     "26/07/2026",
     "27/07/2026",
@@ -125,14 +126,14 @@
     },
     {
       "name": "BIJAPUR",
-      "total": 298416,
+      "total": 298263,
       "constituencies": 8,
       "booths": 2092,
-      "absent": 60520,
-      "shifted": 152390,
-      "death": 54658,
-      "duplicate": 30302,
-      "others": 546
+      "absent": 60349,
+      "shifted": 152355,
+      "death": 54661,
+      "duplicate": 30354,
+      "others": 544
     },
     {
       "name": "DHARWAD",
@@ -190,6 +191,17 @@
       "others": 8976
     },
     {
+      "name": "DAVANGERE",
+      "total": 201261,
+      "constituencies": 7,
+      "booths": 1758,
+      "absent": 31942,
+      "shifted": 105150,
+      "death": 34619,
+      "duplicate": 28163,
+      "others": 1387
+    },
+    {
       "name": "SHIMOGA",
       "total": 189317,
       "constituencies": 7,
@@ -212,26 +224,15 @@
       "others": 3520
     },
     {
-      "name": "DAVANGERE",
-      "total": 180579,
-      "constituencies": 7,
-      "booths": 1689,
-      "absent": 26924,
-      "shifted": 94385,
-      "death": 31947,
-      "duplicate": 26299,
-      "others": 1024
-    },
-    {
       "name": "KOLAR",
-      "total": 172610,
+      "total": 171389,
       "constituencies": 6,
       "booths": 1537,
-      "absent": 38645,
-      "shifted": 87503,
-      "death": 28961,
-      "duplicate": 16218,
-      "others": 1283
+      "absent": 37806,
+      "shifted": 87080,
+      "death": 28979,
+      "duplicate": 16258,
+      "others": 1266
     },
     {
       "name": "MANDYA",
@@ -323,13 +324,13 @@
     },
     {
       "name": "BANGALORE RURAL",
-      "total": 117178,
+      "total": 117145,
       "constituencies": 4,
       "booths": 1141,
-      "absent": 13779,
-      "shifted": 65375,
-      "death": 25096,
-      "duplicate": 12139,
+      "absent": 13767,
+      "shifted": 65341,
+      "death": 25101,
+      "duplicate": 12147,
       "others": 789
     },
     {
@@ -811,13 +812,13 @@
       "no": 30,
       "name": "Bijapur City",
       "district": "BIJAPUR",
-      "total": 80606,
+      "total": 80443,
       "booths": 285,
-      "absent": 39522,
-      "shifted": 24668,
+      "absent": 39358,
+      "shifted": 24634,
       "death": 8058,
-      "duplicate": 8225,
-      "others": 133
+      "duplicate": 8262,
+      "others": 131
     },
     {
       "no": 215,
@@ -916,6 +917,18 @@
       "others": 525
     },
     {
+      "no": 106,
+      "name": "Davanagere North",
+      "district": "DAVANGERE",
+      "total": 59952,
+      "booths": 245,
+      "absent": 15556,
+      "shifted": 31374,
+      "death": 7547,
+      "duplicate": 4822,
+      "others": 653
+    },
+    {
       "no": 12,
       "name": "Belgaum Dakshin",
       "district": "BELGAUM",
@@ -952,6 +965,18 @@
       "others": 136
     },
     {
+      "no": 107,
+      "name": "Davanagere South",
+      "district": "DAVANGERE",
+      "total": 53659,
+      "booths": 284,
+      "absent": 10004,
+      "shifted": 29234,
+      "death": 6630,
+      "duplicate": 7330,
+      "others": 461
+    },
+    {
       "no": 43,
       "name": "Gulbarga Rural",
       "district": "GULBARGA",
@@ -986,18 +1011,6 @@
       "death": 8735,
       "duplicate": 4878,
       "others": 3408
-    },
-    {
-      "no": 107,
-      "name": "Davanagere South",
-      "district": "DAVANGERE",
-      "total": 51428,
-      "booths": 274,
-      "absent": 9272,
-      "shifted": 28315,
-      "death": 6356,
-      "duplicate": 7123,
-      "others": 362
     },
     {
       "no": 57,
@@ -1094,18 +1107,6 @@
       "death": 6521,
       "duplicate": 3411,
       "others": 312
-    },
-    {
-      "no": 106,
-      "name": "Davanagere North",
-      "district": "DAVANGERE",
-      "total": 44460,
-      "booths": 190,
-      "absent": 11399,
-      "shifted": 23480,
-      "death": 5395,
-      "duplicate": 3795,
-      "others": 391
     },
     {
       "no": 35,
@@ -1315,13 +1316,13 @@
       "no": 146,
       "name": "Kolar Gold Field",
       "district": "KOLAR",
-      "total": 37616,
+      "total": 37575,
       "booths": 221,
-      "absent": 9497,
-      "shifted": 18660,
-      "death": 5588,
-      "duplicate": 3473,
-      "others": 398
+      "absent": 9475,
+      "shifted": 18643,
+      "death": 5590,
+      "duplicate": 3471,
+      "others": 396
     },
     {
       "no": 99,
@@ -1375,13 +1376,13 @@
       "no": 26,
       "name": "Muddebihal",
       "district": "BIJAPUR",
-      "total": 36010,
+      "total": 36008,
       "booths": 246,
-      "absent": 2961,
-      "shifted": 19456,
-      "death": 8846,
-      "duplicate": 4721,
-      "others": 26
+      "absent": 2956,
+      "shifted": 19449,
+      "death": 8847,
+      "duplicate": 4731,
+      "others": 25
     },
     {
       "no": 66,
@@ -1406,18 +1407,6 @@
       "death": 7466,
       "duplicate": 2205,
       "others": 139
-    },
-    {
-      "no": 148,
-      "name": "Kolar",
-      "district": "KOLAR",
-      "total": 34870,
-      "booths": 275,
-      "absent": 9353,
-      "shifted": 16823,
-      "death": 5802,
-      "duplicate": 2798,
-      "others": 94
     },
     {
       "no": 67,
@@ -1478,6 +1467,18 @@
       "death": 6176,
       "duplicate": 2964,
       "others": 77
+    },
+    {
+      "no": 148,
+      "name": "Kolar",
+      "district": "KOLAR",
+      "total": 33812,
+      "booths": 275,
+      "absent": 8626,
+      "shifted": 16448,
+      "death": 5817,
+      "duplicate": 2835,
+      "others": 86
     },
     {
       "no": 42,
@@ -1555,25 +1556,25 @@
       "no": 181,
       "name": "Nelamangala",
       "district": "BANGALORE RURAL",
-      "total": 32163,
+      "total": 32157,
       "booths": 278,
-      "absent": 7139,
-      "shifted": 16325,
+      "absent": 7129,
+      "shifted": 16328,
       "death": 6109,
-      "duplicate": 2441,
+      "duplicate": 2442,
       "others": 149
     },
     {
       "no": 33,
       "name": "Sindgi",
       "district": "BIJAPUR",
-      "total": 32053,
+      "total": 32048,
       "booths": 267,
-      "absent": 2666,
-      "shifted": 20903,
+      "absent": 2661,
+      "shifted": 20901,
       "death": 5976,
-      "duplicate": 2425,
-      "others": 83
+      "duplicate": 2426,
+      "others": 84
     },
     {
       "no": 20,
@@ -1627,12 +1628,12 @@
       "no": 147,
       "name": "Bangarapet",
       "district": "KOLAR",
-      "total": 31948,
+      "total": 31923,
       "booths": 253,
-      "absent": 3649,
-      "shifted": 18022,
+      "absent": 3635,
+      "shifted": 18007,
       "death": 5766,
-      "duplicate": 4363,
+      "duplicate": 4367,
       "others": 148
     },
     {
@@ -1651,12 +1652,12 @@
       "no": 180,
       "name": "Doddaballapur",
       "district": "BANGALORE RURAL",
-      "total": 31262,
+      "total": 31257,
       "booths": 276,
-      "absent": 857,
-      "shifted": 19423,
-      "death": 6486,
-      "duplicate": 4255,
+      "absent": 858,
+      "shifted": 19415,
+      "death": 6487,
+      "duplicate": 4256,
       "others": 241
     },
     {
@@ -1855,24 +1856,24 @@
       "no": 145,
       "name": "Mulbagal",
       "district": "KOLAR",
-      "total": 28399,
+      "total": 28384,
       "booths": 264,
-      "absent": 4782,
-      "shifted": 15567,
+      "absent": 4768,
+      "shifted": 15565,
       "death": 4654,
-      "duplicate": 3003,
-      "others": 393
+      "duplicate": 3005,
+      "others": 392
     },
     {
       "no": 178,
       "name": "Hosakote",
       "district": "BANGALORE RURAL",
-      "total": 28345,
+      "total": 28323,
       "booths": 293,
-      "absent": 1477,
-      "shifted": 17325,
-      "death": 6333,
-      "duplicate": 2883,
+      "absent": 1475,
+      "shifted": 17297,
+      "death": 6336,
+      "duplicate": 2888,
       "others": 327
     },
     {
@@ -1965,10 +1966,10 @@
       "district": "BANGALORE RURAL",
       "total": 25408,
       "booths": 294,
-      "absent": 4306,
-      "shifted": 12302,
-      "death": 6168,
-      "duplicate": 2560,
+      "absent": 4305,
+      "shifted": 12301,
+      "death": 6169,
+      "duplicate": 2561,
       "others": 72
     },
     {
@@ -2059,12 +2060,12 @@
       "no": 29,
       "name": "Babaleshwar",
       "district": "BIJAPUR",
-      "total": 24289,
+      "total": 24306,
       "booths": 244,
-      "absent": 1487,
-      "shifted": 15166,
-      "death": 5264,
-      "duplicate": 2333,
+      "absent": 1490,
+      "shifted": 15174,
+      "death": 5266,
+      "duplicate": 2337,
       "others": 39
     },
     {
@@ -2239,12 +2240,12 @@
       "no": 144,
       "name": "Srinivasapur",
       "district": "KOLAR",
-      "total": 22141,
+      "total": 22113,
       "booths": 284,
-      "absent": 3786,
-      "shifted": 12108,
+      "absent": 3766,
+      "shifted": 12101,
       "death": 4423,
-      "duplicate": 1737,
+      "duplicate": 1736,
       "others": 87
     },
     {
@@ -2359,13 +2360,13 @@
       "no": 105,
       "name": "Harihar",
       "district": "DAVANGERE",
-      "total": 20761,
+      "total": 20910,
       "booths": 228,
-      "absent": 3477,
-      "shifted": 7259,
-      "death": 4753,
-      "duplicate": 5194,
-      "others": 78
+      "absent": 3483,
+      "shifted": 7289,
+      "death": 4778,
+      "duplicate": 5283,
+      "others": 77
     },
     {
       "no": 68,
@@ -2404,6 +2405,18 @@
       "others": 67
     },
     {
+      "no": 103,
+      "name": "Jagalur",
+      "district": "DAVANGERE",
+      "total": 19804,
+      "booths": 262,
+      "absent": 1068,
+      "shifted": 11584,
+      "death": 3709,
+      "duplicate": 3388,
+      "others": 55
+    },
+    {
       "no": 140,
       "name": "Bagepalli",
       "district": "CHIKKABALLAPUR",
@@ -2414,18 +2427,6 @@
       "death": 4745,
       "duplicate": 1719,
       "others": 0
-    },
-    {
-      "no": 103,
-      "name": "Jagalur",
-      "district": "DAVANGERE",
-      "total": 19576,
-      "booths": 260,
-      "absent": 1066,
-      "shifted": 11484,
-      "death": 3688,
-      "duplicate": 3284,
-      "others": 54
     },
     {
       "no": 136,
@@ -2596,16 +2597,28 @@
       "others": 49
     },
     {
+      "no": 109,
+      "name": "Channagiri",
+      "district": "DAVANGERE",
+      "total": 17977,
+      "booths": 254,
+      "absent": 622,
+      "shifted": 10191,
+      "death": 3646,
+      "duplicate": 3478,
+      "others": 40
+    },
+    {
       "no": 149,
       "name": "Malur",
       "district": "KOLAR",
-      "total": 17636,
+      "total": 17582,
       "booths": 240,
-      "absent": 7578,
-      "shifted": 6323,
-      "death": 2728,
+      "absent": 7536,
+      "shifted": 6316,
+      "death": 2729,
       "duplicate": 844,
-      "others": 163
+      "others": 157
     },
     {
       "no": 141,
@@ -2728,18 +2741,6 @@
       "others": 56
     },
     {
-      "no": 110,
-      "name": "Honnali",
-      "district": "DAVANGERE",
-      "total": 16586,
-      "booths": 245,
-      "absent": 1043,
-      "shifted": 9536,
-      "death": 4107,
-      "duplicate": 1837,
-      "others": 63
-    },
-    {
       "no": 102,
       "name": "Holalkere",
       "district": "CHITRADURGA",
@@ -2762,6 +2763,18 @@
       "death": 5391,
       "duplicate": 2765,
       "others": 3
+    },
+    {
+      "no": 110,
+      "name": "Honnali",
+      "district": "DAVANGERE",
+      "total": 16474,
+      "booths": 245,
+      "absent": 949,
+      "shifted": 9471,
+      "death": 4130,
+      "duplicate": 1865,
+      "others": 59
     },
     {
       "no": 194,
@@ -2834,18 +2847,6 @@
       "death": 4462,
       "duplicate": 1296,
       "others": 132
-    },
-    {
-      "no": 109,
-      "name": "Channagiri",
-      "district": "DAVANGERE",
-      "total": 15356,
-      "booths": 252,
-      "absent": 404,
-      "shifted": 8323,
-      "death": 3479,
-      "duplicate": 3117,
-      "others": 33
     },
     {
       "no": 191,
@@ -2995,13 +2996,13 @@
       "no": 108,
       "name": "Mayakonda",
       "district": "DAVANGERE",
-      "total": 12412,
+      "total": 12485,
       "booths": 240,
-      "absent": 263,
-      "shifted": 5988,
-      "death": 4169,
-      "duplicate": 1949,
-      "others": 43
+      "absent": 260,
+      "shifted": 6007,
+      "death": 4179,
+      "duplicate": 1997,
+      "others": 42
     },
     {
       "no": 135,
