@@ -16,6 +16,30 @@
       {
         "folderId": "1RVkIsSCFdkKe34wMhMfQHZQqaAu0MGxh",
         "why": "AC 89 Hagaribommanahalli (H.B. Halli), from vijayanagara.nic.in — not on asddo.html's own crawl path, so a page-only crawl finds only 2 of 5 constituencies. 254 booths, S10_89_* PDFs, dated 11-08-2026. Nested two folders deep (root -> 'hb halli' -> 'hb halli' -> files); collectPdfs's recursive walk handles that at MAX_DEPTH=5. Verified directly via listDriveFolder(), 2026-08-13."
+      },
+      {
+        "pdfUrl": "https://cdn.s3waas.gov.in/s3dd45045f8c68db9f54e70c67048d32e8/uploads/2026/08/17864460281255.pdf",
+        "acNo": 88,
+        "acName": "Hadagali",
+        "why": "AC 88 Hadagali, one consolidated PDF (27022 rows, 216 parts) rather than one file per booth. Filename is a raw CDN id with no AC number in it, so acNo/acName are given explicitly here; 2-extract.mjs still reads the true per-row AC/Part from each page's own 'AC: 88-Hadagali; Part: ...' header, same as Bellary's numeric-filename PDFs. User-provided link, 2026-08-13. Confirmed via parseBoothPdf() that every row is AC 88."
+      },
+      {
+        "pdfUrl": "https://cdn.s3waas.gov.in/s3dd45045f8c68db9f54e70c67048d32e8/uploads/2026/08/17864459968775.pdf",
+        "acNo": 96,
+        "acName": "Kudligi",
+        "why": "AC 96 Kudligi, consolidated PDF (21005 rows, 249 parts). Same shape and provenance as the Hadagali entry above. User-provided link, 2026-08-13. Confirmed via parseBoothPdf() that every row is AC 96."
+      },
+      {
+        "pdfUrl": "https://cdn.s3waas.gov.in/s3dd45045f8c68db9f54e70c67048d32e8/uploads/2026/08/17864460214078.pdf",
+        "acNo": 90,
+        "acName": "Vijayanagara",
+        "why": "AC 90 Vijayanagara, consolidated PDF (41705 rows, 259 parts). Same shape and provenance as the Hadagali entry above. User-provided link, 2026-08-13. Confirmed via parseBoothPdf() that every row is AC 90."
+      },
+      {
+        "pdfUrl": "https://cdn.s3waas.gov.in/s3dd45045f8c68db9f54e70c67048d32e8/uploads/2026/08/17864459889113.pdf",
+        "acNo": 104,
+        "acName": "Harapanahalli",
+        "why": "AC 104 Harapanahalli, consolidated PDF (29687 rows, 252 parts). Same shape and provenance as the Hadagali entry above. With all four added alongside the AC 89 folder, Vijayanagara resolves to its full 5/5 expected constituencies. User-provided link, 2026-08-13. Confirmed via parseBoothPdf() that every row is AC 104."
       }
     ],
     "MANDYA": [
@@ -30,6 +54,12 @@
       {
         "folderId": "11DusSl1gAfuJ2aALlAnSfEMO1xWhin05",
         "why": "AC 191 Nagamangala, from mandya.nic.in/en/asddo-list. 259 booths, S10_191_* PDFs, dated 11-08-2026. Verified directly via listDriveFolder(), 2026-08-13. With all three added, Mandya resolves to its full 7/7 expected constituencies."
+      }
+    ],
+    "DAVANGERE": [
+      {
+        "folderId": "1rcdSZAbFcmUVVFojAz4eV8DskczoitPl",
+        "why": "All 7 constituencies (AC 103, 105-110), 1,753 booth PDFs, S10_<ac>_* naming, dated 11-08-2026 — user-provided current link, 2026-08-13. Davangere had been genuinely empty at the source since at least 2026-08-13 (0/7, per _finding below); this folder resolves it to 7/7. Verified directly via listDriveFolder() recursive walk."
       }
     ],
     "CHAMARAJNAGAR": [
@@ -49,5 +79,5 @@
       }
     ]
   },
-  "_finding": "Belgaum was investigated across three folders and none adds coverage. Its 47.7% shortfall tracks the age of its own lists, not a crawl gap: median generation date 31/07 against a CEO count current to 08/08. The same holds for Bidar (28/07, -37.2%) and Davangere (30/07, -10.5%), while every district publishing from 02/08 onward reconciles within a few percent. Those districts need to republish; there is nothing to find."
+  "_finding": "Belgaum was investigated across three folders and none adds coverage. Its 47.7% shortfall tracks the age of its own lists, not a crawl gap: median generation date 31/07 against a CEO count current to 08/08. The same holds for Bidar (28/07, -37.2%), while every district publishing from 02/08 onward reconciles within a few percent. Those districts need to republish; there is nothing to find. Davangere was similarly stale/empty through 2026-08-13 but is now resolved — see the DAVANGERE entry above."
 }

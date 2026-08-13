@@ -44,6 +44,16 @@ const SOURCE = 'https://ceo.karnataka.gov.in/asddo.html';
 // links only one. See seed/extra-sources.json.
 const EXTRA = (await readJson(resolve(ROOT, 'seed', 'extra-sources.json'), { districts: {} }))?.districts ?? {};
 const MANIFEST = resolve(CACHE, 'manifest.json');
+// Some published folders name themselves after the constituency with no AC
+// number at all ("Gundlupet AC_ASDDO 11.08.2026"), and their booth PDFs are
+// equally bare ("PART 1.pdf") — neither parseBoothName nor acFromTrail's
+// digit-prefix match can recover an AC number from either. Karnataka's 224
+// constituency names are each unique statewide, so the published dictionary
+// doubles as a safe last-resort lookup from name to number.
+const AC_NAME_TO_NO = new Map(
+  ((await readJson(resolve(ROOT, 'docs', 'data', 'manifest.json'), { dicts: { acs: [] } }))?.dicts?.acs ?? [])
+    .map(([no, name]) => [name.toLowerCase().replace(/[^a-z]/g, ''), no])
+);
 const MAX_DEPTH = 5;
 
 const args = process.argv.slice(2);
@@ -268,23 +278,34 @@ function acFromTrail(trail, acNo) {
     if (/^\d{1,2}[-_./]\d{4}\b/.test(entry)) continue;
 
     const m = /^(\d{1,3})\s*[-.]?\s*(?:AC[\s-]*)?(.+)$/i.exec(entry);
-    if (!m) continue;
+    if (m) {
+      const no = +m[1];
+      // Karnataka has 224 assembly constituencies; anything outside that is not one.
+      if (no < 1 || no > 224) continue;
+      if (acNo != null && no !== acNo) continue;
 
-    const no = +m[1];
-    // Karnataka has 224 assembly constituencies; anything outside that is not one.
-    if (no < 1 || no > 224) continue;
-    if (acNo != null && no !== acNo) continue;
+      // The trail can end at an archive ("104 HRP ASSDO List.zip"), so drop any
+      // extension before it becomes a constituency name.
+      const label = m[2]
+        .replace(/\.(zip|rar|7z|pdf)$/i, '')
+        .replace(/\bASDD?O?\b.*$/i, '')
+        .replace(/[\s._-]+$/, '')
+        .trim();
+      // "07-2026" leaves no letters behind; a constituency name has some.
+      if (!/[A-Za-z]{3}/.test(label)) continue;
+      return { no, name: label };
+    }
 
-    // The trail can end at an archive ("104 HRP ASSDO List.zip"), so drop any
-    // extension before it becomes a constituency name.
-    const label = m[2]
-      .replace(/\.(zip|rar|7z|pdf)$/i, '')
+    // No leading AC number ("Gundlupet AC_ASDDO 11.08.2026") — match the name
+    // itself against AC_NAME_TO_NO. Safe because no two of the 224 share a name.
+    const label = entry
+      .replace(/\bAC\b/gi, ' ')
       .replace(/\bASDD?O?\b.*$/i, '')
       .replace(/[\s._-]+$/, '')
       .trim();
-    // "07-2026" leaves no letters behind; a constituency name has some.
     if (!/[A-Za-z]{3}/.test(label)) continue;
-    return { no, name: label };
+    const named = AC_NAME_TO_NO.get(label.toLowerCase().replace(/[^a-z]/g, ''));
+    if (named != null && (acNo == null || named === acNo)) return { no: named, name: label };
   }
   return null;
 }
@@ -352,9 +373,15 @@ async function fallbackWithExtras() {
     const seen = new Set();
     const found = [];
     for (const e of extra) {
-      if (!e.folderId) continue;
-      progress(`  ${district.name}: walking extra folder ${e.folderId} (live, via Drive)…`);
-      found.push(...await collectPdfs(e.folderId, [], 0, seen));
+      if (e.folderId) {
+        progress(`  ${district.name}: walking extra folder ${e.folderId} (live, via Drive)…`);
+        found.push(...await collectPdfs(e.folderId, [], 0, seen));
+      } else if (e.pdfUrl) {
+        found.push({
+          id: null, url: e.pdfUrl, name: decodeURIComponent(e.pdfUrl.split('/').pop()), trail: [],
+          acNo: e.acNo ?? null, acName: e.acName ?? null
+        });
+      }
     }
     progress('');
     if (found.length) {
@@ -377,12 +404,17 @@ function groupIntoAcs(files) {
   for (const file of files) {
     const parsed = parseBoothName(file.name);
     const fromTrail = acFromTrail(file.trail, parsed.acNo);
-    const acNo = parsed.acNo ?? fromTrail?.no ?? null;
+    // A caller can already know the AC a file belongs to — a consolidated
+    // AC-wide PDF from a direct link (seed/extra-sources.json's pdfUrl) has
+    // no S10_<ac>_ prefix and no numbered folder trail to recover it from, so
+    // it's supplied up front instead. Only trust it over the parsed/trail
+    // guess, never override an explicit one.
+    const acNo = file.acNo ?? parsed.acNo ?? fromTrail?.no ?? null;
     const key = acNo != null && parsed.partNo != null
       ? `${acNo}/${parsed.partNo}`
       : `name:${file.name}`;
 
-    const candidate = { ...file, ...parsed, acNo, acName: fromTrail?.name ?? null };
+    const candidate = { ...file, ...parsed, acNo, acName: file.acName ?? fromTrail?.name ?? null };
     const existing = best.get(key);
     if (!existing || candidate.stamp > existing.stamp) best.set(key, candidate);
   }
@@ -484,15 +516,31 @@ for (const district of districts) {
   // A district can publish across several folders; the state page links one.
   const extra = EXTRA[district.name] ?? [];
   for (const e of extra) if (e.folderId && !roots.includes(e.folderId)) roots.push(e.folderId);
-  if (extra.length) log(`  ${district.name}: +${extra.length} extra source folder(s) from seed/extra-sources.json`);
+  const extraPdfUrls = extra.filter((e) => e.pdfUrl);
+  if (extra.length) log(`  ${district.name}: +${extra.length} extra source(s) from seed/extra-sources.json`);
 
   progress(`  ${district.name}: walking ${roots.length} Drive folder(s)…`);
   const found = [];
   const seen = new Set();
   for (const root of roots) found.push(...await collectPdfs(root, [], 0, seen));
 
+  // A consolidated AC-wide PDF hand-linked in extra-sources.json — its own
+  // filename carries no AC number (a raw CDN id), so the AC comes from the
+  // entry itself rather than from parsing. Added before the plain directPdfs
+  // pass below so its acNo-bearing copy wins if the district page also links
+  // the same URL raw (Vijayanagara's own site does) — same timestamp, so the
+  // first one added is the one groupIntoAcs's tie-break keeps.
+  const extraPdfUrlSet = new Set();
+  for (const e of extraPdfUrls) {
+    found.push({
+      id: null, url: e.pdfUrl, name: decodeURIComponent(e.pdfUrl.split('/').pop()), trail: [],
+      acNo: e.acNo ?? null, acName: e.acName ?? null
+    });
+    extraPdfUrlSet.add(e.pdfUrl);
+  }
   // PDFs served by the district site itself, not Drive.
   for (const url of directPdfs) {
+    if (extraPdfUrlSet.has(url)) continue;
     found.push({ id: null, url, name: decodeURIComponent(url.split('/').pop()), trail: [] });
   }
   for (const url of directZips) {
