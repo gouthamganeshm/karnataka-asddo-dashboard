@@ -1,6 +1,6 @@
 {
-  "dataVersion": "mspso7ua",
-  "importedAt": "2026-08-12T07:55:29.074Z",
+  "dataVersion": "msr4x51i",
+  "importedAt": "2026-08-13T06:26:06.918Z",
   "source": "https://ceo.karnataka.gov.in/asddo.html",
   "hash": "SHA-256",
   "shardDepth": 4,
@@ -1218,11 +1218,11 @@
   "hasRoll": false,
   "hasSearch": true,
   "counts": {
-    "records": 10886227,
+    "records": 10887575,
     "districts": 34,
     "districtsInSource": 34,
     "constituencies": 224,
-    "booths": 58913,
+    "booths": 58915,
     "buckets": 65536
   },
   "districtsMissing": [],
@@ -1238,6 +1238,7 @@
       "BELLARY",
       "BIDAR",
       "BIJAPUR",
+      "CHAMARAJNAGAR",
       "CHIKKABALLAPUR",
       "CHIKKMAGALUR",
       "CHITRADURGA",
@@ -1254,8 +1255,9 @@
       "SHIMOGA",
       "UDUPI",
       "UTTARA KANNADA",
+      "VIJAYANAGARA",
       "YADGIR"
     ],
-    "at": "2026-08-12T07:55:29.074Z"
+    "at": "2026-08-13T06:26:06.918Z"
   }
 }
