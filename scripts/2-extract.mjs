@@ -20,7 +20,7 @@ import { createWriteStream } from 'node:fs';
 import { appendFile, mkdir, readFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
 import {
-  CACHE, driveDownloadUrl, fmtBytes, get, log, pool, progress, readJson, writeJson
+  CACHE, driveDownloadUrl, fmtBytes, get, log, pool, progress, readJson, sleep, writeJson
 } from './lib/common.mjs';
 import { looksScanned, parseBoothPdf } from './lib/pdf.mjs';
 import { openArchiveBuffer } from './lib/archive.mjs';
@@ -77,6 +77,30 @@ const report = {
 // Record + log exactly which booth file failed to fetch and why, so the failures
 // can be analysed separately: "not-pdf" means Drive returned an HTML page (rate
 // limit / permission), "fetch-error" means the request itself failed (404/timeout).
+/* A Drive throttle response is a normal HTTP 200 with an HTML page instead of
+ * the PDF — not a bad status, not a network error — so get()'s own retry
+ * (which only fires on those two) never sees it, and one throttled instant
+ * permanently failed the booth for the whole run. #34 (2026-08-13): DAVANGERE,
+ * DHARWAD, TUMKUR, KOLAR and MANDYA came back ~0% fetched on a run whose
+ * matrix ran all 34 districts at once — a burst, not a sustained per-file
+ * problem, going by every other district succeeding normally. Retry the
+ * fetch-and-validate a few times with backoff before giving up, same as a
+ * transient HTTP error already gets. */
+async function fetchPdfWithRetry(url, tries = 3) {
+  let reason;
+  for (let attempt = 1; attempt <= tries; attempt++) {
+    try {
+      const buf = await get(url);
+      if (buf.subarray(0, 4).toString('latin1') === '%PDF') return buf;
+      reason = 'not-pdf (Drive rate limit / permission — returned HTML)';
+    } catch (err) {
+      reason = `fetch-error: ${(err?.message ?? '').slice(0, 100)}`;
+    }
+    if (attempt < tries) await sleep(2000 * attempt);
+  }
+  throw Object.assign(new Error(reason), { reason });
+}
+
 function recordFail(district, ac, file, reason) {
   report.failed++;
   const rec = {
@@ -129,11 +153,11 @@ for (const district of manifest.districts) {
         if (!entry) throw new Error(`no entry ${file.entry}`);
         buf = entry.read();
       } else {
-        buf = await get(file.url ?? driveDownloadUrl(file.id));
+        buf = await fetchPdfWithRetry(file.url ?? driveDownloadUrl(file.id));
         report.bytes += buf.length;
       }
     } catch (err) {
-      recordFail(district, ac, file, `fetch-error: ${(err?.message ?? '').slice(0, 100)}`);
+      recordFail(district, ac, file, err.reason ?? `fetch-error: ${(err?.message ?? '').slice(0, 100)}`);
       return;
     }
     if (buf.subarray(0, 4).toString('latin1') !== '%PDF') {
