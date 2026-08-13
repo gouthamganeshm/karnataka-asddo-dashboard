@@ -1,0 +1,73 @@
+# Keep seed/manifest.json.gz's Drive/NIC folder & file links current, without
+# any of the heavy PDF fetching Import ASDDO data does. Cheap and safe to run
+# often — touches only listing pages and Drive folder listings, never docs/data.
+#
+# Why this exists as its own job: ceo.karnataka.gov.in answers a GitHub runner
+# inconsistently (works some runs, "fetch failed" on others — not a permanent
+# block, going by 2026-08-13's runs). scripts/1-discover.mjs's fallbackWithExtras()
+# already makes a failed run non-fatal by walking every seed/extra-sources.json
+# folder live via Drive (which IS reliably reachable) and merging what it finds —
+# but that only helps districts a human has already curated an override for. This
+# job's real value is when the CEO page DOES answer: every successful run
+# refreshes the whole seed baseline, so an Import ASDDO data run that has to fall
+# back is falling back to something as fresh as possible, and a district whose
+# Drive folder moved (not just throttled) gets self-corrected without anyone
+# needing to notice and add an extra-sources.json entry by hand.
+
+name: Refresh source links
+
+on:
+  workflow_dispatch: {}
+  # PAUSED 2026-08-13: no schedule yet, alongside Import ASDDO data's cron —
+  # both paused while validating the day's pipeline changes (self-healing
+  # force-pull, Drive-throttle retry, this fallback-with-extras mechanism).
+  # Uncomment to resume automatically once confirmed working:
+  # schedule:
+  #   - cron: '0 */6 * * *'
+
+permissions:
+  contents: write
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: '20' }
+      # Same reason as Import ASDDO data's discover job: a booth list can be
+      # shipped as a .rar inside a .zip, which needs unar (not zlib) to read —
+      # discovery opens archives to enumerate the PDFs inside, same as extract.
+      - name: Install a RAR extractor
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq unar
+
+      - name: Crawl source page + Drive folders
+        run: node scripts/1-discover.mjs
+
+      - name: Commit the refreshed seed manifest if links changed
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          gzip -9c cache/manifest.json > seed/manifest.json.gz
+          git add seed/manifest.json.gz
+          if git diff --cached --quiet; then
+            echo "No change to seed manifest — links are already current."
+            exit 0
+          fi
+          git commit -m "Refresh seed manifest: source links as of $(date -u +%Y-%m-%d)"
+          # Import ASDDO data's own data commits only touch docs/data + this
+          # same file; a manifest-only commit here can still race a concurrent
+          # import run's own manifest refresh, so rebase-and-retry the same way.
+          for attempt in 1 2 3 4 5; do
+            if git push; then
+              echo "pushed on attempt $attempt"
+              exit 0
+            fi
+            echo "push rejected (attempt $attempt) — rebasing onto origin/main"
+            git fetch origin main
+            git rebase origin/main || { git rebase --abort; echo "rebase conflict"; exit 1; }
+            sleep 3
+          done
+          echo "push still failing after 5 attempts"
+          exit 1

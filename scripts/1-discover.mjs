@@ -27,6 +27,8 @@
    assumed district -> AC -> PDFs and silently returned zero files for five
    districts while dropping ten more for not being on Drive at all. */
 
+import { readFile } from 'node:fs/promises';
+import { gunzipSync } from 'node:zlib';
 import { resolve } from 'node:path';
 import {
   CACHE, ROOT, decodeEntities, driveDownloadUrl, get, getNamed, getText, listDriveFolder, log,
@@ -293,6 +295,83 @@ function acFromTrail(trail, acNo) {
  * Districts that publish a folder per day hold the same booth many times over;
  * the file name's generation timestamp decides which survives.
  */
+/** DD/MM/YYYY[_...] -> epoch ms, for comparing two already-finalized files'
+ * generatedOn strings (groupIntoAcs has file.stamp for this while it's still
+ * mid-crawl, but a finalized ac.files[] entry only keeps generatedOn). */
+function dateStampOf(generatedOn) {
+  const m = /^(\d{1,2})\/(\d{1,2})\/(\d{4})/.exec(generatedOn || '');
+  if (!m) return 0;
+  return Date.parse(`${m[3]}-${m[2].padStart(2, '0')}-${m[1].padStart(2, '0')}T00:00:00Z`) || 0;
+}
+
+/** Merge freshly Drive-crawled files into an existing (seed-baseline) district's
+ * already-grouped acs, deduping by (acNo, partNo) with the newest generatedOn
+ * winning — same semantics as groupIntoAcs, applied across two already-grouped
+ * sets instead of one raw file list. */
+function mergeFilesIntoDistrict(district, extraFiles) {
+  district.acs = district.acs ?? [];
+  const acByNo = new Map(district.acs.map((ac) => [ac.no, ac]));
+  for (const eac of groupIntoAcs(extraFiles)) {
+    let ac = acByNo.get(eac.no);
+    if (!ac) { ac = { no: eac.no, name: eac.name, files: [] }; acByNo.set(eac.no, ac); district.acs.push(ac); }
+    const indexByKey = new Map(ac.files.map((f, i) => [`${f.acNo}/${f.partNo}`, i]));
+    for (const nf of eac.files) {
+      const key = `${nf.acNo}/${nf.partNo}`;
+      const i = indexByKey.get(key);
+      if (i === undefined) { ac.files.push(nf); indexByKey.set(key, ac.files.length - 1); }
+      else if (dateStampOf(nf.generatedOn) > dateStampOf(ac.files[i].generatedOn)) ac.files[i] = nf;
+    }
+  }
+  district.acs.sort((a, b) => (a.no ?? 0) - (b.no ?? 0));
+}
+
+/* When ceo.karnataka.gov.in itself can't be reached (the common case on a
+ * GitHub runner — see the catch block below), fall back to the committed
+ * seed manifest as before, but don't stop there: Google Drive IS reachable
+ * from the runner (2-extract.mjs proves this every run), so every folder a
+ * human has already vetted into seed/extra-sources.json can still be walked
+ * live and merged in. Without this, an extra-sources.json fix (like the KOLAR
+ * AC145/AC146 folder corrections) would sit inert forever on a runner that
+ * never manages a live CEO-page crawl — which, empirically, is every run so
+ * far. This turns "add a corrected folder to extra-sources.json" into a fix
+ * that actually takes effect, not just documentation of a known problem. */
+async function fallbackWithExtras() {
+  let seed;
+  try {
+    seed = JSON.parse(gunzipSync(await readFile(resolve(ROOT, 'seed', 'manifest.json.gz'))).toString());
+  } catch (e) {
+    log(`  No seed/manifest.json.gz to fall back to either (${e.message}).`);
+    process.exit(1);
+  }
+  log(`  Loaded seed baseline: ${seed.districts?.length ?? 0} districts, discovered ${seed.discoveredAt}.`);
+
+  let healed = 0, healedFiles = 0;
+  for (const district of seed.districts ?? []) {
+    const extra = EXTRA[district.name] ?? [];
+    if (!extra.length) continue;
+    const seen = new Set();
+    const found = [];
+    for (const e of extra) {
+      if (!e.folderId) continue;
+      progress(`  ${district.name}: walking extra folder ${e.folderId} (live, via Drive)…`);
+      found.push(...await collectPdfs(e.folderId, [], 0, seen));
+    }
+    progress('');
+    if (found.length) {
+      mergeFilesIntoDistrict(district, found);
+      healed++;
+      healedFiles += found.length;
+      log(`  ${district.name}: merged ${found.length} file(s) from seed/extra-sources.json's folder(s), live.`);
+    } else {
+      log(`  ${district.name}: extra-sources.json folder(s) yielded 0 files this attempt (still unreachable, or genuinely empty).`);
+    }
+  }
+  log(`  Healed ${healed} district(s), ${healedFiles} file(s) total, via extra-sources.json without a live CEO-page crawl.`);
+  await writeJson(MANIFEST, seed, true);
+  log(`  Wrote fallback+extras manifest to ${MANIFEST}`);
+  process.exit(0);
+}
+
 function groupIntoAcs(files) {
   const best = new Map();
   for (const file of files) {
@@ -356,6 +435,11 @@ try {
   log('  Running this locally instead? Then the host really is unreachable from');
   log('  here: check connectivity, or refresh the seed from a machine that can');
   log('  reach it.');
+  log('');
+  log('  Falling back to the seed baseline, but Drive itself is still reachable —');
+  log('  walking every seed/extra-sources.json folder live before giving up.');
+  await fallbackWithExtras();
+  // fallbackWithExtras() always exits; this is unreachable, kept for clarity.
   process.exit(1);
 }
 

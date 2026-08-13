@@ -6,6 +6,10 @@
       {
         "folderId": "1CotCLXuCsI12S3z8PxkNvyH5l0nPQdXy",
         "why": "Correct 145-Mulbagal folder (264 booths, S10_145_* PDFs, dated 12-08-2026). The KOLAR NIC page links a stale/empty Mulbagal folder (1TLCtL2W6BJkmpeS-CWvQEp67SHwKrHX-, 0 files), so a page-only crawl drops AC 145 entirely. Folder verified accessible with 264 booths."
+      },
+      {
+        "folderId": "1W7vzBqrLK9SFyv1TfbOG866Qt32QVpQ3",
+        "why": "Replacement 146-KGF folder (50 booths, S10_146_* PDFs, dated 12-08-2026). The stale cached manifest's AC146 file ids 404 as of 2026-08-13 (run 31675834446) — the district moved/recreated the folder, not a Drive throttle: get() exhausted all 4 retries with a real fetch-error, not the not-pdf/HTML throttle signature. Folder verified accessible with 50 files via WebFetch (this environment and CI cannot reach Drive/ceo.karnataka.gov.in directly to re-discover it live)."
       }
     ],
     "BELGAUM": [
