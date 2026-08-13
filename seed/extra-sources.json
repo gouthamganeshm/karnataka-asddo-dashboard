@@ -12,6 +12,32 @@
         "why": "Replacement 146-KGF folder (50 booths, S10_146_* PDFs, dated 12-08-2026). The stale cached manifest's AC146 file ids 404 as of 2026-08-13 (run 31675834446) — the district moved/recreated the folder, not a Drive throttle: get() exhausted all 4 retries with a real fetch-error, not the not-pdf/HTML throttle signature. Folder verified accessible with 50 files via WebFetch (this environment and CI cannot reach Drive/ceo.karnataka.gov.in directly to re-discover it live)."
       }
     ],
+    "VIJAYANAGARA": [
+      {
+        "folderId": "1RVkIsSCFdkKe34wMhMfQHZQqaAu0MGxh",
+        "why": "AC 89 Hagaribommanahalli (H.B. Halli), from vijayanagara.nic.in — not on asddo.html's own crawl path, so a page-only crawl finds only 2 of 5 constituencies. 254 booths, S10_89_* PDFs, dated 11-08-2026. Nested two folders deep (root -> 'hb halli' -> 'hb halli' -> files); collectPdfs's recursive walk handles that at MAX_DEPTH=5. Verified directly via listDriveFolder(), 2026-08-13."
+      }
+    ],
+    "MANDYA": [
+      {
+        "folderId": "1SqAEvI4dcnmN53SGaHI9C6K1fGeX2jwo",
+        "why": "AC 187 Maddur, from mandya.nic.in/en/asddo-list — one of 3 of Mandya's 7 constituencies missing from the normal crawl. 255 booths, S10_187_* PDFs, dated 11-08-2026. Verified directly via listDriveFolder(), 2026-08-13."
+      },
+      {
+        "folderId": "1lP0LI9rrn6bQmkaOLEhuMTtlUO47cpCI",
+        "why": "AC 190 Srirangapatna, from mandya.nic.in/en/asddo-list. 249 booths, S10_190_* PDFs, dated 11-08-2026. Verified directly via listDriveFolder(), 2026-08-13."
+      },
+      {
+        "folderId": "11DusSl1gAfuJ2aALlAnSfEMO1xWhin05",
+        "why": "AC 191 Nagamangala, from mandya.nic.in/en/asddo-list. 259 booths, S10_191_* PDFs, dated 11-08-2026. Verified directly via listDriveFolder(), 2026-08-13. With all three added, Mandya resolves to its full 7/7 expected constituencies."
+      }
+    ],
+    "CHAMARAJNAGAR": [
+      {
+        "folderId": "1M2HWDz_n6qm80rqe9rtGK6i8B9rJnutI",
+        "why": "All 4 constituencies (Chamarajanagar, Gundlupet, Hanur, Kollegal) as one AC-wide consolidated list each, dated 11-08-2026 — user-provided current link, 2026-08-13. Chamarajnagar was already at 4/4 in the live crawl that day, so this is redundant with the normal crawl path today, but kept as a second, independently-found source in case the primary path breaks again (matches the KOLAR/BELGAUM precedent of listing a folder that costs one walk even when it currently adds 0)."
+      }
+    ],
     "BELGAUM": [
       {
         "folderId": "10K0yxneCdkH1BqXg2Drit2q9OF9QNFlg",
