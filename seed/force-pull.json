@@ -1,20 +1,14 @@
 {
   "DHARWAD": {
     "reason": "collapsed on fetch (181189/286080 = 63% of live)",
-    "attempts": 5,
+    "attempts": 6,
     "since": "2026-08-13",
     "lastSeen": "2026-08-14"
   },
   "VIJAYANAGARA": {
     "reason": "short crawl (1/5 constituencies), forced through",
-    "attempts": 5,
+    "attempts": 6,
     "since": "2026-08-13",
-    "lastSeen": "2026-08-14"
-  },
-  "BIJAPUR": {
-    "reason": "collapsed on fetch (161136/298263 = 54% of live)",
-    "attempts": 1,
-    "since": "2026-08-14",
     "lastSeen": "2026-08-14"
   }
 }

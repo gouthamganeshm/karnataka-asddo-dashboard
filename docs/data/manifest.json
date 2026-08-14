@@ -1,6 +1,6 @@
 {
-  "dataVersion": "mst8gp87",
-  "importedAt": "2026-08-14T17:40:50.743Z",
+  "dataVersion": "mstej888",
+  "importedAt": "2026-08-14T20:30:46.376Z",
   "source": "https://ceo.karnataka.gov.in/asddo.html",
   "hash": "SHA-256",
   "shardDepth": 4,
@@ -1219,7 +1219,7 @@
   "hasRoll": false,
   "hasSearch": true,
   "counts": {
-    "records": 10881603,
+    "records": 10881466,
     "districts": 34,
     "districtsInSource": 34,
     "constituencies": 224,
@@ -1238,6 +1238,7 @@
       "BELGAUM",
       "BELLARY",
       "BIDAR",
+      "BIJAPUR",
       "CHAMARAJNAGAR",
       "CHIKKABALLAPUR",
       "CHIKKMAGALUR",
@@ -1262,6 +1263,6 @@
       "VIJAYANAGARA",
       "YADGIR"
     ],
-    "at": "2026-08-14T17:40:50.743Z"
+    "at": "2026-08-14T20:30:46.376Z"
   }
 }

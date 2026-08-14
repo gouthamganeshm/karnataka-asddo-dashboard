@@ -1,18 +1,18 @@
 {
-  "dataVersion": "mst8gp87",
-  "total": 10881603,
+  "dataVersion": "mstej888",
+  "total": 10881466,
   "byCategory": {
-    "absent": 1553327,
-    "shifted": 6578110,
-    "death": 1635262,
-    "duplicate": 699650,
-    "others": 415254
+    "absent": 1553175,
+    "shifted": 6578051,
+    "death": 1635276,
+    "duplicate": 699711,
+    "others": 415253
   },
   "ageBands": {
-    "18-29": 1406219,
-    "30-44": 4209207,
-    "45-59": 2834791,
-    "60-79": 1904462,
+    "18-29": 1406171,
+    "30-44": 4209136,
+    "45-59": 2834775,
+    "60-79": 1904460,
     "80+": 526816,
     "unknown": 108
   },
@@ -127,14 +127,14 @@
     },
     {
       "name": "BIJAPUR",
-      "total": 298263,
+      "total": 298126,
       "constituencies": 8,
       "booths": 2092,
-      "absent": 60349,
-      "shifted": 152355,
-      "death": 54661,
-      "duplicate": 30354,
-      "others": 544
+      "absent": 60197,
+      "shifted": 152296,
+      "death": 54675,
+      "duplicate": 30415,
+      "others": 543
     },
     {
       "name": "DHARWAD",
@@ -813,12 +813,12 @@
       "no": 30,
       "name": "Bijapur City",
       "district": "BIJAPUR",
-      "total": 80443,
+      "total": 80394,
       "booths": 285,
-      "absent": 39358,
-      "shifted": 24634,
-      "death": 8058,
-      "duplicate": 8262,
+      "absent": 39321,
+      "shifted": 24616,
+      "death": 8059,
+      "duplicate": 8267,
       "others": 131
     },
     {
@@ -1209,12 +1209,12 @@
       "no": 31,
       "name": "Nagthan",
       "district": "BIJAPUR",
-      "total": 41000,
+      "total": 40858,
       "booths": 299,
-      "absent": 8670,
-      "shifted": 22740,
-      "death": 6578,
-      "duplicate": 2942,
+      "absent": 8586,
+      "shifted": 22664,
+      "death": 6579,
+      "duplicate": 2959,
       "others": 70
     },
     {
@@ -1377,13 +1377,13 @@
       "no": 26,
       "name": "Muddebihal",
       "district": "BIJAPUR",
-      "total": 36008,
+      "total": 35998,
       "booths": 246,
-      "absent": 2956,
-      "shifted": 19449,
-      "death": 8847,
-      "duplicate": 4731,
-      "others": 25
+      "absent": 2951,
+      "shifted": 19441,
+      "death": 8849,
+      "duplicate": 4733,
+      "others": 24
     },
     {
       "no": 21,
@@ -1566,18 +1566,6 @@
       "others": 149
     },
     {
-      "no": 33,
-      "name": "Sindgi",
-      "district": "BIJAPUR",
-      "total": 32048,
-      "booths": 267,
-      "absent": 2661,
-      "shifted": 20901,
-      "death": 5976,
-      "duplicate": 2426,
-      "others": 84
-    },
-    {
       "no": 20,
       "name": "Terdal",
       "district": "BAGALKOT",
@@ -1588,6 +1576,18 @@
       "death": 5979,
       "duplicate": 3578,
       "others": 117
+    },
+    {
+      "no": 33,
+      "name": "Sindgi",
+      "district": "BIJAPUR",
+      "total": 32042,
+      "booths": 267,
+      "absent": 2656,
+      "shifted": 20898,
+      "death": 5976,
+      "duplicate": 2428,
+      "others": 84
     },
     {
       "no": 214,
@@ -1713,12 +1713,12 @@
       "no": 27,
       "name": "Devara Hippargi",
       "district": "BIJAPUR",
-      "total": 30479,
+      "total": 30528,
       "booths": 252,
-      "absent": 835,
-      "shifted": 18651,
-      "death": 7938,
-      "duplicate": 2983,
+      "absent": 838,
+      "shifted": 18676,
+      "death": 7943,
+      "duplicate": 2999,
       "others": 72
     },
     {
@@ -1833,12 +1833,12 @@
       "no": 32,
       "name": "Indi",
       "district": "BIJAPUR",
-      "total": 28912,
+      "total": 28931,
       "booths": 268,
-      "absent": 2865,
-      "shifted": 17750,
+      "absent": 2867,
+      "shifted": 17763,
       "death": 5958,
-      "duplicate": 2258,
+      "duplicate": 2262,
       "others": 81
     },
     {
@@ -1977,12 +1977,12 @@
       "no": 28,
       "name": "Basavana Bagevadi",
       "district": "BIJAPUR",
-      "total": 25067,
+      "total": 25070,
       "booths": 231,
-      "absent": 1514,
-      "shifted": 13056,
-      "death": 6040,
-      "duplicate": 4415,
+      "absent": 1494,
+      "shifted": 13063,
+      "death": 6041,
+      "duplicate": 4430,
       "others": 42
     },
     {
@@ -2061,11 +2061,11 @@
       "no": 29,
       "name": "Babaleshwar",
       "district": "BIJAPUR",
-      "total": 24306,
+      "total": 24305,
       "booths": 244,
-      "absent": 1490,
-      "shifted": 15174,
-      "death": 5266,
+      "absent": 1484,
+      "shifted": 15175,
+      "death": 5270,
       "duplicate": 2337,
       "others": 39
     },
