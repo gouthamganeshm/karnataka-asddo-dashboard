@@ -1,25 +1,19 @@
 {
-  "DAVANGERE": {
-    "reason": "short crawl (0/7 constituencies), forced through",
-    "attempts": 2,
-    "since": "2026-08-13",
-    "lastSeen": "2026-08-13"
-  },
   "DHARWAD": {
     "reason": "collapsed on fetch (181189/286080 = 63% of live)",
-    "attempts": 2,
+    "attempts": 4,
     "since": "2026-08-13",
     "lastSeen": "2026-08-13"
   },
   "CHAMARAJNAGAR": {
     "reason": "short crawl (3/4 constituencies), forced through",
-    "attempts": 2,
+    "attempts": 4,
     "since": "2026-08-13",
     "lastSeen": "2026-08-13"
   },
   "VIJAYANAGARA": {
     "reason": "short crawl (1/5 constituencies), forced through",
-    "attempts": 2,
+    "attempts": 4,
     "since": "2026-08-13",
     "lastSeen": "2026-08-13"
   }
