@@ -1,19 +1,19 @@
 {
-  "dataVersion": "msrqel9k",
-  "total": 10891977,
+  "dataVersion": "mst8gp87",
+  "total": 10881603,
   "byCategory": {
-    "absent": 1559275,
-    "shifted": 6580029,
-    "death": 1635042,
-    "duplicate": 699224,
-    "others": 418407
+    "absent": 1553327,
+    "shifted": 6578110,
+    "death": 1635262,
+    "duplicate": 699650,
+    "others": 415254
   },
   "ageBands": {
-    "18-29": 1408290,
-    "30-44": 4213736,
-    "45-59": 2837489,
-    "60-79": 1905499,
-    "80+": 526855,
+    "18-29": 1406219,
+    "30-44": 4209207,
+    "45-59": 2834791,
+    "60-79": 1904462,
+    "80+": 526816,
     "unknown": 108
   },
   "generatedOn": [
@@ -28,6 +28,7 @@
     "11/08/2026",
     "12/08/2026",
     "13/08/2026",
+    "14/08/2026",
     "24/07/2026",
     "26/07/2026",
     "27/07/2026",
@@ -38,14 +39,14 @@
   "districts": [
     {
       "name": "BANGALORE URBAN",
-      "total": 1743369,
+      "total": 1731963,
       "constituencies": 7,
       "booths": 3320,
-      "absent": 216766,
-      "shifted": 1298488,
-      "death": 104108,
-      "duplicate": 26284,
-      "others": 97723
+      "absent": 210908,
+      "shifted": 1295762,
+      "death": 104200,
+      "duplicate": 26476,
+      "others": 94617
     },
     {
       "name": "B.B.M.P(SOUTH)",
@@ -170,14 +171,14 @@
     },
     {
       "name": "BAGALKOT",
-      "total": 237652,
+      "total": 238327,
       "constituencies": 7,
       "booths": 1785,
-      "absent": 21298,
-      "shifted": 145217,
-      "death": 44224,
-      "duplicate": 25810,
-      "others": 1103
+      "absent": 21191,
+      "shifted": 145839,
+      "death": 44312,
+      "duplicate": 25914,
+      "others": 1071
     },
     {
       "name": "BELLARY",
@@ -203,14 +204,14 @@
     },
     {
       "name": "SHIMOGA",
-      "total": 189317,
+      "total": 188996,
       "constituencies": 7,
       "booths": 1793,
-      "absent": 23775,
-      "shifted": 99563,
-      "death": 46618,
-      "duplicate": 19336,
-      "others": 25
+      "absent": 23540,
+      "shifted": 99440,
+      "death": 46611,
+      "duplicate": 19397,
+      "others": 8
     },
     {
       "name": "YADGIR",
@@ -236,14 +237,14 @@
     },
     {
       "name": "MANDYA",
-      "total": 167462,
+      "total": 167451,
       "constituencies": 7,
       "booths": 1822,
-      "absent": 24114,
-      "shifted": 85994,
-      "death": 42496,
-      "duplicate": 14374,
-      "others": 484
+      "absent": 24109,
+      "shifted": 85962,
+      "death": 42507,
+      "duplicate": 14388,
+      "others": 485
     },
     {
       "name": "HASSAN",
@@ -379,14 +380,14 @@
     },
     {
       "name": "CHAMARAJNAGAR",
-      "total": 86441,
+      "total": 87130,
       "constituencies": 4,
       "booths": 983,
-      "absent": 9315,
-      "shifted": 37143,
-      "death": 31402,
-      "duplicate": 8198,
-      "others": 383
+      "absent": 9572,
+      "shifted": 37483,
+      "death": 31438,
+      "duplicate": 8253,
+      "others": 384
     },
     {
       "name": "UDUPI",
@@ -416,25 +417,25 @@
       "no": 176,
       "name": "Bangalore South",
       "district": "BANGALORE URBAN",
-      "total": 370393,
+      "total": 367917,
       "booths": 598,
-      "absent": 36312,
-      "shifted": 273872,
-      "death": 20417,
-      "duplicate": 4736,
-      "others": 35056
+      "absent": 36074,
+      "shifted": 272712,
+      "death": 20416,
+      "duplicate": 4753,
+      "others": 33962
     },
     {
       "no": 174,
       "name": "Mahadevapura",
       "district": "BANGALORE URBAN",
-      "total": 298593,
+      "total": 296256,
       "booths": 527,
-      "absent": 50018,
-      "shifted": 222632,
-      "death": 16913,
-      "duplicate": 4308,
-      "others": 4722
+      "absent": 46808,
+      "shifted": 223773,
+      "death": 16965,
+      "duplicate": 4370,
+      "others": 4340
     },
     {
       "no": 175,
@@ -476,61 +477,37 @@
       "no": 155,
       "name": "Dasarahalli",
       "district": "BANGALORE URBAN",
-      "total": 247960,
+      "total": 247343,
       "booths": 419,
-      "absent": 45887,
-      "shifted": 183475,
-      "death": 11940,
-      "duplicate": 1568,
-      "others": 5090
+      "absent": 45872,
+      "shifted": 182938,
+      "death": 11963,
+      "duplicate": 1581,
+      "others": 4989
     },
     {
       "no": 153,
       "name": "Yeshwanthapura",
       "district": "BANGALORE URBAN",
-      "total": 245120,
+      "total": 243282,
       "booths": 543,
-      "absent": 35720,
-      "shifted": 182284,
-      "death": 15780,
-      "duplicate": 4624,
-      "others": 6712
+      "absent": 35344,
+      "shifted": 181050,
+      "death": 15773,
+      "duplicate": 4637,
+      "others": 6478
     },
     {
       "no": 152,
       "name": "Byatarayanapura",
       "district": "BANGALORE URBAN",
-      "total": 230965,
+      "total": 229476,
       "booths": 441,
-      "absent": 20968,
-      "shifted": 167287,
-      "death": 16417,
-      "duplicate": 5259,
-      "others": 21034
-    },
-    {
-      "no": 177,
-      "name": "Anekal",
-      "district": "BANGALORE URBAN",
-      "total": 175359,
-      "booths": 381,
-      "absent": 10091,
-      "shifted": 141221,
-      "death": 9114,
-      "duplicate": 2984,
-      "others": 11949
-    },
-    {
-      "no": 150,
-      "name": "Yelahanka",
-      "district": "BANGALORE URBAN",
-      "total": 174979,
-      "booths": 411,
-      "absent": 17770,
-      "shifted": 127717,
-      "death": 13527,
-      "duplicate": 2805,
-      "others": 13160
+      "absent": 20723,
+      "shifted": 166571,
+      "death": 16440,
+      "duplicate": 5310,
+      "others": 20432
     },
     {
       "no": 160,
@@ -543,6 +520,30 @@
       "death": 11691,
       "duplicate": 1806,
       "others": 5858
+    },
+    {
+      "no": 177,
+      "name": "Anekal",
+      "district": "BANGALORE URBAN",
+      "total": 174162,
+      "booths": 381,
+      "absent": 8524,
+      "shifted": 141875,
+      "death": 9118,
+      "duplicate": 3007,
+      "others": 11638
+    },
+    {
+      "no": 150,
+      "name": "Yelahanka",
+      "district": "BANGALORE URBAN",
+      "total": 173527,
+      "booths": 411,
+      "absent": 17563,
+      "shifted": 126843,
+      "death": 13525,
+      "duplicate": 2818,
+      "others": 12778
     },
     {
       "no": 167,
@@ -944,13 +945,13 @@
       "no": 113,
       "name": "Shimoga",
       "district": "SHIMOGA",
-      "total": 56600,
+      "total": 56641,
       "booths": 288,
-      "absent": 11923,
-      "shifted": 29852,
-      "death": 9157,
-      "duplicate": 5661,
-      "others": 7
+      "absent": 11798,
+      "shifted": 29981,
+      "death": 9169,
+      "duplicate": 5687,
+      "others": 6
     },
     {
       "no": 40,
@@ -1100,13 +1101,13 @@
       "no": 24,
       "name": "Bagalkot",
       "district": "BAGALKOT",
-      "total": 45012,
+      "total": 44893,
       "booths": 319,
-      "absent": 5704,
-      "shifted": 29064,
-      "death": 6521,
-      "duplicate": 3411,
-      "others": 312
+      "absent": 5629,
+      "shifted": 29003,
+      "death": 6522,
+      "duplicate": 3431,
+      "others": 308
     },
     {
       "no": 35,
@@ -1205,18 +1206,6 @@
       "others": 48
     },
     {
-      "no": 112,
-      "name": "Bhadravathi",
-      "district": "SHIMOGA",
-      "total": 41012,
-      "booths": 253,
-      "absent": 2779,
-      "shifted": 28275,
-      "death": 6517,
-      "duplicate": 3441,
-      "others": 0
-    },
-    {
       "no": 31,
       "name": "Nagthan",
       "district": "BIJAPUR",
@@ -1227,6 +1216,18 @@
       "death": 6578,
       "duplicate": 2942,
       "others": 70
+    },
+    {
+      "no": 112,
+      "name": "Bhadravathi",
+      "district": "SHIMOGA",
+      "total": 40847,
+      "booths": 253,
+      "absent": 2769,
+      "shifted": 28108,
+      "death": 6520,
+      "duplicate": 3450,
+      "others": 0
     },
     {
       "no": 64,
@@ -1364,12 +1365,12 @@
       "no": 25,
       "name": "Hungund",
       "district": "BAGALKOT",
-      "total": 36278,
+      "total": 36219,
       "booths": 261,
-      "absent": 5255,
-      "shifted": 20888,
-      "death": 6350,
-      "duplicate": 3582,
+      "absent": 5177,
+      "shifted": 20884,
+      "death": 6357,
+      "duplicate": 3598,
       "others": 203
     },
     {
@@ -1385,6 +1386,18 @@
       "others": 25
     },
     {
+      "no": 21,
+      "name": "Jamkhandi",
+      "district": "BAGALKOT",
+      "total": 35933,
+      "booths": 232,
+      "absent": 2514,
+      "shifted": 23519,
+      "death": 7527,
+      "duplicate": 2231,
+      "others": 142
+    },
+    {
       "no": 66,
       "name": "Gadag",
       "district": "GADAG",
@@ -1395,18 +1408,6 @@
       "death": 8197,
       "duplicate": 2959,
       "others": 61
-    },
-    {
-      "no": 21,
-      "name": "Jamkhandi",
-      "district": "BAGALKOT",
-      "total": 34946,
-      "booths": 232,
-      "absent": 2353,
-      "shifted": 22783,
-      "death": 7466,
-      "duplicate": 2205,
-      "others": 139
     },
     {
       "no": 67,
@@ -1580,12 +1581,12 @@
       "no": 20,
       "name": "Terdal",
       "district": "BAGALKOT",
-      "total": 32045,
+      "total": 32043,
       "booths": 236,
-      "absent": 778,
-      "shifted": 21602,
+      "absent": 776,
+      "shifted": 21593,
       "death": 5979,
-      "duplicate": 3569,
+      "duplicate": 3578,
       "others": 117
     },
     {
@@ -1724,13 +1725,13 @@
       "no": 22,
       "name": "Bilgi",
       "district": "BAGALKOT",
-      "total": 29974,
+      "total": 29962,
       "booths": 265,
       "absent": 836,
-      "shifted": 19645,
-      "death": 5608,
-      "duplicate": 3771,
-      "others": 114
+      "shifted": 19636,
+      "death": 5616,
+      "duplicate": 3791,
+      "others": 83
     },
     {
       "no": 65,
@@ -1745,18 +1746,6 @@
       "others": 52
     },
     {
-      "no": 19,
-      "name": "Mudhol",
-      "district": "BAGALKOT",
-      "total": 29756,
-      "booths": 212,
-      "absent": 3965,
-      "shifted": 15183,
-      "death": 5008,
-      "duplicate": 5510,
-      "others": 90
-    },
-    {
       "no": 104,
       "name": "Harapanahalli",
       "district": "VIJAYANAGARA",
@@ -1769,16 +1758,16 @@
       "others": 154
     },
     {
-      "no": 23,
-      "name": "Badami",
+      "no": 19,
+      "name": "Mudhol",
       "district": "BAGALKOT",
-      "total": 29641,
-      "booths": 260,
-      "absent": 2407,
-      "shifted": 16052,
-      "death": 7292,
-      "duplicate": 3762,
-      "others": 128
+      "total": 29701,
+      "booths": 212,
+      "absent": 3904,
+      "shifted": 15184,
+      "death": 5010,
+      "duplicate": 5513,
+      "others": 90
     },
     {
       "no": 5,
@@ -1791,6 +1780,18 @@
       "death": 6938,
       "duplicate": 6170,
       "others": 151
+    },
+    {
+      "no": 23,
+      "name": "Badami",
+      "district": "BAGALKOT",
+      "total": 29576,
+      "booths": 260,
+      "absent": 2355,
+      "shifted": 16020,
+      "death": 7301,
+      "duplicate": 3772,
+      "others": 128
     },
     {
       "no": 100,
@@ -2000,13 +2001,13 @@
       "no": 222,
       "name": "Kollegal",
       "district": "CHAMARAJNAGAR",
-      "total": 24959,
+      "total": 24951,
       "booths": 241,
-      "absent": 2378,
-      "shifted": 10440,
-      "death": 10332,
-      "duplicate": 1790,
-      "others": 19
+      "absent": 2337,
+      "shifted": 10476,
+      "death": 10326,
+      "duplicate": 1794,
+      "others": 18
     },
     {
       "no": 84,
@@ -2144,13 +2145,13 @@
       "no": 115,
       "name": "Shikaripura",
       "district": "SHIMOGA",
-      "total": 23136,
+      "total": 23011,
       "booths": 235,
-      "absent": 2472,
-      "shifted": 10977,
-      "death": 6892,
-      "duplicate": 2779,
-      "others": 16
+      "absent": 2448,
+      "shifted": 10932,
+      "death": 6864,
+      "duplicate": 2765,
+      "others": 2
     },
     {
       "no": 87,
@@ -2261,15 +2262,27 @@
       "others": 32
     },
     {
+      "no": 223,
+      "name": "Chamarajanagar",
+      "district": "CHAMARAJNAGAR",
+      "total": 21993,
+      "booths": 239,
+      "absent": 2862,
+      "shifted": 9242,
+      "death": 8053,
+      "duplicate": 1764,
+      "others": 72
+    },
+    {
       "no": 221,
       "name": "Hanur",
       "district": "CHAMARAJNAGAR",
-      "total": 21692,
+      "total": 21803,
       "booths": 254,
-      "absent": 611,
-      "shifted": 11593,
-      "death": 6523,
-      "duplicate": 2928,
+      "absent": 612,
+      "shifted": 11678,
+      "death": 6535,
+      "duplicate": 2941,
       "others": 37
     },
     {
@@ -2297,28 +2310,16 @@
       "others": 75
     },
     {
-      "no": 223,
-      "name": "Chamarajanagar",
-      "district": "CHAMARAJNAGAR",
-      "total": 21500,
-      "booths": 239,
-      "absent": 2567,
-      "shifted": 9082,
-      "death": 8038,
-      "duplicate": 1740,
-      "others": 73
-    },
-    {
       "no": 190,
       "name": "Shrirangapattana",
       "district": "MANDYA",
-      "total": 21370,
+      "total": 21366,
       "booths": 249,
-      "absent": 1438,
-      "shifted": 11784,
-      "death": 5574,
-      "duplicate": 2528,
-      "others": 46
+      "absent": 1435,
+      "shifted": 11761,
+      "death": 5582,
+      "duplicate": 2541,
+      "others": 47
     },
     {
       "no": 3,
@@ -2456,12 +2457,12 @@
       "no": 117,
       "name": "Sagar",
       "district": "SHIMOGA",
-      "total": 19129,
+      "total": 19074,
       "booths": 271,
-      "absent": 3378,
-      "shifted": 7474,
-      "death": 6286,
-      "duplicate": 1991,
+      "absent": 3329,
+      "shifted": 7460,
+      "death": 6289,
+      "duplicate": 1996,
       "others": 0
     },
     {
@@ -2540,25 +2541,25 @@
       "no": 111,
       "name": "Shimoga Rural",
       "district": "SHIMOGA",
-      "total": 18596,
+      "total": 18592,
       "booths": 249,
-      "absent": 1367,
-      "shifted": 9061,
-      "death": 5723,
-      "duplicate": 2444,
-      "others": 1
+      "absent": 1360,
+      "shifted": 9052,
+      "death": 5725,
+      "duplicate": 2455,
+      "others": 0
     },
     {
       "no": 224,
       "name": "Gundlupet",
       "district": "CHAMARAJNAGAR",
-      "total": 18290,
+      "total": 18383,
       "booths": 249,
-      "absent": 3759,
-      "shifted": 6028,
-      "death": 6509,
-      "duplicate": 1740,
-      "others": 254
+      "absent": 3761,
+      "shifted": 6087,
+      "death": 6524,
+      "duplicate": 1754,
+      "others": 257
     },
     {
       "no": 79,
@@ -2792,13 +2793,13 @@
       "no": 116,
       "name": "Sorab",
       "district": "SHIMOGA",
-      "total": 16211,
+      "total": 16206,
       "booths": 239,
-      "absent": 1106,
-      "shifted": 7823,
+      "absent": 1100,
+      "shifted": 7813,
       "death": 5758,
-      "duplicate": 1523,
-      "others": 1
+      "duplicate": 1535,
+      "others": 0
     },
     {
       "no": 81,
@@ -2852,12 +2853,12 @@
       "no": 191,
       "name": "Nagamangala",
       "district": "MANDYA",
-      "total": 15323,
+      "total": 15316,
       "booths": 259,
-      "absent": 806,
-      "shifted": 9167,
-      "death": 3779,
-      "duplicate": 1443,
+      "absent": 804,
+      "shifted": 9158,
+      "death": 3782,
+      "duplicate": 1444,
       "others": 128
     },
     {
@@ -2900,12 +2901,12 @@
       "no": 114,
       "name": "Tirthahalli",
       "district": "SHIMOGA",
-      "total": 14633,
+      "total": 14625,
       "booths": 258,
-      "absent": 750,
-      "shifted": 6101,
-      "death": 6285,
-      "duplicate": 1497,
+      "absent": 736,
+      "shifted": 6094,
+      "death": 6286,
+      "duplicate": 1509,
       "others": 0
     },
     {
@@ -3106,13 +3107,13 @@
       "no": 176,
       "name": "Bangalore South",
       "district": "BANGALORE URBAN",
-      "total": 370393
+      "total": 367917
     },
     {
       "no": 174,
       "name": "Mahadevapura",
       "district": "BANGALORE URBAN",
-      "total": 298593
+      "total": 296256
     },
     {
       "no": 175,
@@ -3136,37 +3137,37 @@
       "no": 155,
       "name": "Dasarahalli",
       "district": "BANGALORE URBAN",
-      "total": 247960
+      "total": 247343
     },
     {
       "no": 153,
       "name": "Yeshwanthapura",
       "district": "BANGALORE URBAN",
-      "total": 245120
+      "total": 243282
     },
     {
       "no": 152,
       "name": "Byatarayanapura",
       "district": "BANGALORE URBAN",
-      "total": 230965
-    },
-    {
-      "no": 177,
-      "name": "Anekal",
-      "district": "BANGALORE URBAN",
-      "total": 175359
-    },
-    {
-      "no": 150,
-      "name": "Yelahanka",
-      "district": "BANGALORE URBAN",
-      "total": 174979
+      "total": 229476
     },
     {
       "no": 160,
       "name": "Sarvagnanagar",
       "district": "B.B.M.P(NORTH)",
       "total": 174304
+    },
+    {
+      "no": 177,
+      "name": "Anekal",
+      "district": "BANGALORE URBAN",
+      "total": 174162
+    },
+    {
+      "no": 150,
+      "name": "Yelahanka",
+      "district": "BANGALORE URBAN",
+      "total": 173527
     },
     {
       "no": 167,
