@@ -77,6 +77,24 @@
         "folderId": "1KjWCg906zZlAS21qw9kk3ofxSJPAkX7y",
         "why": "Third Belagavi folder, one directory per constituency with July dates in the names (\"09-Gokak ASDDO List 21.07.26\", \"18-Ramdurg ASDD List as on 24.07.2026\"), 2,828 documents. Crawled and merged: contributed 0 new booths. With all three folders walked Belgaum still resolves to 3,464 booth PDFs, unchanged — the folders share the same underlying Drive objects rather than holding different booths."
       }
+    ],
+    "BAGALKOT": [
+      {
+        "folderId": "12JFg5AcyAgURiAO41rnaGfHRNBSo_5no",
+        "why": "User-provided current Drive folder link, 2026-08-14. Added as an extra source so the crawler can merge the updated Bagalkot tree if the main source page is stale or incomplete."
+      }
+    ],
+    "BIJAPUR": [
+      {
+        "folderId": "1qEfEgryMxGCfow6EsxtxLzXtDKZ3qnQP",
+        "why": "User-provided current Drive folder link, 2026-08-14. Added as an extra source so the crawler can merge the updated Bijapur tree if the main source page is stale or incomplete."
+      }
+    ],
+    "SHIMOGA": [
+      {
+        "folderId": "1lkd68BJJOJwlXdkwrATDO-SzhJBMs_Fi",
+        "why": "User-provided current Drive folder link, 2026-08-14. Added as an extra source so the crawler can merge the updated Shimoga tree if the main source page is stale or incomplete."
+      }
     ]
   },
   "_finding": "Belgaum was investigated across three folders and none adds coverage. Its 47.7% shortfall tracks the age of its own lists, not a crawl gap: median generation date 31/07 against a CEO count current to 08/08. The same holds for Bidar (28/07, -37.2%), while every district publishing from 02/08 onward reconciles within a few percent. Those districts need to republish; there is nothing to find. Davangere was similarly stale/empty through 2026-08-13 but is now resolved — see the DAVANGERE entry above."
