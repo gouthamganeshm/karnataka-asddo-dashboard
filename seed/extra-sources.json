@@ -18,13 +18,13 @@
         "why": "AC 89 Hagaribommanahalli (H.B. Halli), from vijayanagara.nic.in — not on asddo.html's own crawl path, so a page-only crawl finds only 2 of 5 constituencies. 254 booths, S10_89_* PDFs, dated 11-08-2026. Nested two folders deep (root -> 'hb halli' -> 'hb halli' -> files); collectPdfs's recursive walk handles that at MAX_DEPTH=5. Verified directly via listDriveFolder(), 2026-08-13."
       },
       {
-        "pdfUrl": "https://cdn.s3waas.gov.in/s3dd45045f8c68db9f54e70c67048d32e8/uploads/2026/08/17864460281255.pdf",
+        "pdfUrl": "https://cdn.s3waas.gov.in/s3dd45045f8c68db9f54e70c67048d32e8/uploads/2026/08/17867101788826.pdf",
         "acNo": 88,
         "acName": "Hadagali",
         "why": "AC 88 Hadagali, one consolidated PDF (27022 rows, 216 parts) rather than one file per booth. Filename is a raw CDN id with no AC number in it, so acNo/acName are given explicitly here; 2-extract.mjs still reads the true per-row AC/Part from each page's own 'AC: 88-Hadagali; Part: ...' header, same as Bellary's numeric-filename PDFs. User-provided link, 2026-08-13. Confirmed via parseBoothPdf() that every row is AC 88."
       },
       {
-        "pdfUrl": "https://cdn.s3waas.gov.in/s3dd45045f8c68db9f54e70c67048d32e8/uploads/2026/08/17864459968775.pdf",
+        "pdfUrl": "https://cdn.s3waas.gov.in/s3dd45045f8c68db9f54e70c67048d32e8/uploads/2026/08/17867101456473.pdf",
         "acNo": 96,
         "acName": "Kudligi",
         "why": "AC 96 Kudligi, consolidated PDF (21005 rows, 249 parts). Same shape and provenance as the Hadagali entry above. User-provided link, 2026-08-13. Confirmed via parseBoothPdf() that every row is AC 96."
