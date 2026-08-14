@@ -16,7 +16,7 @@ const EPIC_RE = /^[A-Z]{3}[0-9]{7}$/;
 // record dated before this shows a staleness disclaimer: the data is real but
 // predates the latest release, and the visitor is told to confirm on the
 // official portal. Purely a display decision — nothing about the data changes.
-const FRESH_SINCE = new Date(Date.UTC(2026, 7, 11)); // 11 Aug 2026 (month is 0-based)
+const FRESH_SINCE = new Date(Date.UTC(2026, 7, 14)); // 14 Aug 2026 (month is 0-based)
 
 // generatedOn is stored as DD/MM/YYYY (some older rows use DD-MM-YYYY). Returns a
 // Date, or null when the string is missing/unparseable (an unknown date is never
@@ -91,7 +91,7 @@ const STRINGS = {
     sourcePdf: 'Open the official PDF this record came from',
     sourceGenerated: 'generated',
     sourceMissing: 'The source document for this record could not be identified. Ask your BLO for the ASDDO list for your booth.',
-    staleBoothNote: 'This booth’s list is dated {date} — before the latest ASDDO release (11 August 2026). Newer additions or corrections may not appear here. Confirm the current list on the official CEO portal:',
+    staleBoothNote: 'This booth’s list is dated {date} — before the latest ASDDO release (14 August 2026). Newer additions or corrections may not appear here. Confirm the current list on the official CEO portal:',
     staleBoothLink: 'ceo.karnataka.gov.in/asddo.html',
     rollEntryHeading: 'Your entry on the electoral roll',
     clearNoDetails: 'This build indexes only whether the number exists, not the roll entry itself.',
@@ -207,7 +207,7 @@ const STRINGS = {
     sourcePdf: 'ಈ ದಾಖಲೆ ಬಂದ ಅಧಿಕೃತ PDF ತೆರೆಯಿರಿ',
     sourceGenerated: 'ದಾಖಲೆ ದಿನಾಂಕ',
     sourceMissing: 'ಈ ದಾಖಲೆಯ ಮೂಲ ಕಡತವನ್ನು ಗುರುತಿಸಲಾಗಲಿಲ್ಲ. ನಿಮ್ಮ ಮತಗಟ್ಟೆಯ ASDDO ಪಟ್ಟಿಯನ್ನು BLO ಅವರಿಂದ ಕೇಳಿ.',
-    staleBoothNote: 'ಈ ಮತಗಟ್ಟೆಯ ಪಟ್ಟಿಯ ದಿನಾಂಕ {date} — ಇದು ಇತ್ತೀಚಿನ ASDDO ಬಿಡುಗಡೆಗಿಂತ (ಆಗಸ್ಟ್ 11, 2026) ಹಿಂದಿನದು. ಹೊಸ ಸೇರ್ಪಡೆಗಳು ಅಥವಾ ತಿದ್ದುಪಡಿಗಳು ಇಲ್ಲಿ ಕಾಣಿಸದಿರಬಹುದು. ಅಧಿಕೃತ CEO ಪೋರ್ಟಲ್‌ನಲ್ಲಿ ಪ್ರಸ್ತುತ ಪಟ್ಟಿಯನ್ನು ಖಚಿತಪಡಿಸಿಕೊಳ್ಳಿ:',
+    staleBoothNote: 'ಈ ಮತಗಟ್ಟೆಯ ಪಟ್ಟಿಯ ದಿನಾಂಕ {date} — ಇದು ಇತ್ತೀಚಿನ ASDDO ಬಿಡುಗಡೆಗಿಂತ (ಆಗಸ್ಟ್ 14, 2026) ಹಿಂದಿನದು. ಹೊಸ ಸೇರ್ಪಡೆಗಳು ಅಥವಾ ತಿದ್ದುಪಡಿಗಳು ಇಲ್ಲಿ ಕಾಣಿಸದಿರಬಹುದು. ಅಧಿಕೃತ CEO ಪೋರ್ಟಲ್‌ನಲ್ಲಿ ಪ್ರಸ್ತುತ ಪಟ್ಟಿಯನ್ನು ಖಚಿತಪಡಿಸಿಕೊಳ್ಳಿ:',
     staleBoothLink: 'ceo.karnataka.gov.in/asddo.html',
     rollEntryHeading: 'ಮತದಾರರ ಪಟ್ಟಿಯಲ್ಲಿ ನಿಮ್ಮ ದಾಖಲೆ',
     clearNoDetails: 'ಈ ಆವೃತ್ತಿಯಲ್ಲಿ ಸಂಖ್ಯೆ ಇದೆಯೇ ಎಂಬುದನ್ನು ಮಾತ್ರ ಸೂಚಿಸಲಾಗಿದೆ, ಪಟ್ಟಿಯ ದಾಖಲೆಯ ವಿವರಗಳಲ್ಲ.',

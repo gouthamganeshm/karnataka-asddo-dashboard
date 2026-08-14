@@ -1,11 +1,11 @@
 {
   "_source": "Office of the Chief Electoral Officer, Karnataka — Daily Press Release No. DPAR 172 ChuMaPa 2026, 13.08.2026 04:00 PM (x.com/ceo_karnataka/status/2087865369394373054). Official ASDDO list: ceo.karnataka.gov.in/asddo.html.",
   "_note": "The CEO's own count of electors marked ASDDO/UEF. Independent of the booth PDFs, so it is the only external check on whether the import is complete. State totals are the 13.08 figures (10,857,142 = 19.59% of the unchanged 55,432,314 electorate — a genuine DECREASE from 12.08's 11,104,705/20.03%, consistent with the release's own note that electors can get an incorrect ASDDO marking rolled back via their BLO/ERO through 17.08.2026; category sum checks exactly against the reported total). Per-district figures are unchanged from the 12.08 update (still _districtsAsOf 2026-08-12 for the 10 largest, 2026-08-10 for the rest) — this release's district-wise breakdown is in an attached report image not transcribed here. Update this whenever a newer press release is published, and re-run scripts/reconcile.mjs.",
-  "asOf": "2026-08-13",
-  "_districtsAsOf": "2026-08-12",
-  "_districtsAsOf24": "2026-08-10",
-  "pressRelease": "https://x.com/ceo_karnataka/status/2087865369394373054",
-  "pressReleaseDate": "2026-08-13",
+  "asOf": "2026-08-14",
+  "_districtsAsOf": "2026-08-14",
+  "_districtsAsOf24": "2026-08-14",
+  "pressRelease": "https://x.com/ceo_karnataka/status/2088225888085422195",
+  "pressReleaseDate": "2026-08-14",
   "state": {
     "electors": 55432314,
     "asddo": 10857142,
