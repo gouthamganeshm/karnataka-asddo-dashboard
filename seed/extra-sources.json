@@ -30,6 +30,12 @@
         "why": "AC 96 Kudligi, consolidated PDF (21005 rows, 249 parts). Same shape and provenance as the Hadagali entry above. User-provided link, 2026-08-13. Confirmed via parseBoothPdf() that every row is AC 96."
       },
       {
+        "pdfUrl": "https://cdn.s3waas.gov.in/s3dd45045f8c68db9f54e70c67048d32e8/uploads/2026/08/17864459968775.pdf",
+        "acNo": 96,
+        "acName": "Kudligi",
+        "why": "Older AC 96 Kudligi upload — vijayanagara.nic.in still links this one directly alongside the newer 17867101456473.pdf above, so the raw crawl picks it up as a second, un-tagged file and, without an acNo here, it fell into an orphan 'AC ?' bucket (inflating the district to 6 apparent constituencies instead of 5). Tagged so it merges into AC 96 alongside the newer copy instead. Found 2026-08-15."
+      },
+      {
         "pdfUrl": "https://cdn.s3waas.gov.in/s3dd45045f8c68db9f54e70c67048d32e8/uploads/2026/08/17864460214078.pdf",
         "acNo": 90,
         "acName": "Vijayanagara",
