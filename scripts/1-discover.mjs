@@ -538,10 +538,15 @@ for (const district of districts) {
     });
     extraPdfUrlSet.add(e.pdfUrl);
   }
-  // PDFs served by the district site itself, not Drive.
+  // PDFs served by the district site itself, not Drive. collectPdfs applies
+  // isNotBoothList to folder-walked files; a direct link deserves the same
+  // check, or a guideline/notice PDF sitting next to the booth lists gets
+  // fetched and counted as if it were one.
   for (const url of directPdfs) {
     if (extraPdfUrlSet.has(url)) continue;
-    found.push({ id: null, url, name: decodeURIComponent(url.split('/').pop()), trail: [] });
+    const name = decodeURIComponent(url.split('/').pop());
+    if (isNotBoothList(name)) continue;
+    found.push({ id: null, url, name, trail: [] });
   }
   for (const url of directZips) {
     found.push(...await expandArchive({ url, name: decodeURIComponent(url.split('/').pop()) }, []));
