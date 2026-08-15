@@ -379,7 +379,7 @@ async function fallbackWithExtras() {
       } else if (e.pdfUrl) {
         found.push({
           id: null, url: e.pdfUrl, name: decodeURIComponent(e.pdfUrl.split('/').pop()), trail: [],
-          acNo: e.acNo ?? null, acName: e.acName ?? null
+          acNo: e.acNo ?? null, acName: e.acName ?? null, verified: true
         });
       }
     }
@@ -437,7 +437,12 @@ function groupIntoAcs(files) {
       acNo: file.acNo,
       partNo: file.partNo,
       partName: file.partName,
-      generatedOn: file.generatedOn ?? ''
+      generatedOn: file.generatedOn ?? '',
+      // A hand-verified consolidated AC-wide PDF (seed/extra-sources.json's
+      // pdfUrl, confirmed via parseBoothPdf to really hold that AC's rows) —
+      // so plan-incremental.mjs's short-crawl guard can trust it even as a
+      // single file, instead of reading "few files" as "incomplete crawl".
+      ...(file.verified ? { verified: true } : {})
     });
   }
   return [...acs.values()].sort((a, b) => (a.no ?? 0) - (b.no ?? 0));
@@ -534,7 +539,7 @@ for (const district of districts) {
   for (const e of extraPdfUrls) {
     found.push({
       id: null, url: e.pdfUrl, name: decodeURIComponent(e.pdfUrl.split('/').pop()), trail: [],
-      acNo: e.acNo ?? null, acName: e.acName ?? null
+      acNo: e.acNo ?? null, acName: e.acName ?? null, verified: true
     });
     extraPdfUrlSet.add(e.pdfUrl);
   }
