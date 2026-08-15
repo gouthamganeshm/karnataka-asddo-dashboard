@@ -1,6 +1,6 @@
 {
-  "dataVersion": "mstw1vpq",
-  "importedAt": "2026-08-15T04:41:10.094Z",
+  "dataVersion": "msudwxjw",
+  "importedAt": "2026-08-15T13:01:12.284Z",
   "source": "https://ceo.karnataka.gov.in/asddo.html",
   "hash": "SHA-256",
   "shardDepth": 4,
@@ -1198,7 +1198,8 @@
       "Untraceable/Abs ent",
       "Untraceable/Abs",
       "Already enrolled \u0000",
-      "Permanentl y Shifted"
+      "Permanentl y Shifted",
+      "Untraceable/Ab sent"
     ],
     "relations": [
       "Father",
@@ -1219,11 +1220,11 @@
   "hasRoll": false,
   "hasSearch": true,
   "counts": {
-    "records": 10881466,
+    "records": 10846878,
     "districts": 34,
     "districtsInSource": 34,
     "constituencies": 224,
-    "booths": 59019,
+    "booths": 59027,
     "buckets": 65536
   },
   "districtsMissing": [],
@@ -1245,6 +1246,7 @@
       "CHITRADURGA",
       "DAKSHINA KANNADA",
       "DAVANGERE",
+      "DHARWAD",
       "GADAG",
       "GULBARGA",
       "HASSAN",
@@ -1263,6 +1265,6 @@
       "VIJAYANAGARA",
       "YADGIR"
     ],
-    "at": "2026-08-15T04:41:10.094Z"
+    "at": "2026-08-15T13:01:12.285Z"
   }
 }

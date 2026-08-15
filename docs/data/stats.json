@@ -1,19 +1,19 @@
 {
-  "dataVersion": "mstw1vpq",
-  "total": 10881466,
+  "dataVersion": "msudwxjw",
+  "total": 10846878,
   "byCategory": {
-    "absent": 1553175,
-    "shifted": 6578051,
-    "death": 1635276,
-    "duplicate": 699711,
-    "others": 415253
+    "absent": 1540260,
+    "shifted": 6563323,
+    "death": 1636625,
+    "duplicate": 702178,
+    "others": 404492
   },
   "ageBands": {
-    "18-29": 1406171,
-    "30-44": 4209136,
-    "45-59": 2834775,
-    "60-79": 1904460,
-    "80+": 526816,
+    "18-29": 1397682,
+    "30-44": 4196245,
+    "45-59": 2826063,
+    "60-79": 1900140,
+    "80+": 526640,
     "unknown": 108
   },
   "generatedOn": [
@@ -29,6 +29,7 @@
     "12/08/2026",
     "13/08/2026",
     "14/08/2026",
+    "15/08/2026",
     "24/07/2026",
     "26/07/2026",
     "27/07/2026",
@@ -50,58 +51,58 @@
     },
     {
       "name": "B.B.M.P(SOUTH)",
-      "total": 1070483,
+      "total": 1067214,
       "constituencies": 7,
-      "booths": 1890,
-      "absent": 268587,
-      "shifted": 622359,
-      "death": 69034,
-      "duplicate": 10666,
-      "others": 99837
+      "booths": 1895,
+      "absent": 268443,
+      "shifted": 622542,
+      "death": 69320,
+      "duplicate": 10791,
+      "others": 96118
     },
     {
       "name": "B.B.M.P(NORTH)",
-      "total": 1067206,
+      "total": 1062600,
       "constituencies": 7,
       "booths": 2085,
-      "absent": 112480,
-      "shifted": 791912,
-      "death": 80382,
-      "duplicate": 15448,
-      "others": 66984
+      "absent": 111937,
+      "shifted": 788929,
+      "death": 80487,
+      "duplicate": 15544,
+      "others": 65703
     },
     {
       "name": "B.B.M.P(CENTRAL)",
-      "total": 878497,
+      "total": 869733,
       "constituencies": 7,
       "booths": 1672,
-      "absent": 150980,
-      "shifted": 587849,
-      "death": 64360,
-      "duplicate": 9807,
-      "others": 65501
+      "absent": 148609,
+      "shifted": 584209,
+      "death": 64435,
+      "duplicate": 9931,
+      "others": 62549
     },
     {
       "name": "MYSORE",
-      "total": 559146,
+      "total": 558579,
       "constituencies": 11,
       "booths": 2915,
-      "absent": 137650,
-      "shifted": 245473,
-      "death": 113763,
-      "duplicate": 43204,
-      "others": 19056
+      "absent": 136403,
+      "shifted": 246339,
+      "death": 113882,
+      "duplicate": 43533,
+      "others": 18422
     },
     {
       "name": "GULBARGA",
-      "total": 526179,
+      "total": 524872,
       "constituencies": 9,
       "booths": 2400,
-      "absent": 48348,
-      "shifted": 349758,
-      "death": 71633,
-      "duplicate": 33028,
-      "others": 23412
+      "absent": 48098,
+      "shifted": 349108,
+      "death": 71641,
+      "duplicate": 33085,
+      "others": 22940
     },
     {
       "name": "BELGAUM",
@@ -127,47 +128,47 @@
     },
     {
       "name": "BIJAPUR",
-      "total": 298126,
+      "total": 298115,
       "constituencies": 8,
       "booths": 2092,
-      "absent": 60197,
-      "shifted": 152296,
-      "death": 54675,
-      "duplicate": 30415,
+      "absent": 60195,
+      "shifted": 152284,
+      "death": 54676,
+      "duplicate": 30417,
       "others": 543
     },
     {
       "name": "DHARWAD",
-      "total": 286080,
+      "total": 270592,
       "constituencies": 7,
-      "booths": 1662,
-      "absent": 70350,
-      "shifted": 136007,
-      "death": 51930,
-      "duplicate": 25668,
-      "others": 2125
+      "booths": 1665,
+      "absent": 63278,
+      "shifted": 126840,
+      "death": 52670,
+      "duplicate": 26915,
+      "others": 889
     },
     {
       "name": "BIDAR",
-      "total": 243236,
+      "total": 242530,
       "constituencies": 6,
       "booths": 1528,
-      "absent": 21579,
-      "shifted": 162486,
-      "death": 31914,
-      "duplicate": 17035,
-      "others": 10222
+      "absent": 21241,
+      "shifted": 162242,
+      "death": 31946,
+      "duplicate": 17056,
+      "others": 10045
     },
     {
       "name": "TUMKUR",
-      "total": 238928,
+      "total": 238751,
       "constituencies": 11,
       "booths": 2627,
-      "absent": 33805,
-      "shifted": 135442,
-      "death": 49063,
-      "duplicate": 18634,
-      "others": 1984
+      "absent": 33741,
+      "shifted": 135338,
+      "death": 49050,
+      "duplicate": 18658,
+      "others": 1964
     },
     {
       "name": "BAGALKOT",
@@ -182,14 +183,14 @@
     },
     {
       "name": "BELLARY",
-      "total": 223427,
+      "total": 223528,
       "constituencies": 5,
       "booths": 1227,
-      "absent": 50178,
-      "shifted": 101896,
-      "death": 41126,
-      "duplicate": 21251,
-      "others": 8976
+      "absent": 50126,
+      "shifted": 102025,
+      "death": 41144,
+      "duplicate": 21336,
+      "others": 8897
     },
     {
       "name": "DAVANGERE",
@@ -215,14 +216,14 @@
     },
     {
       "name": "YADGIR",
-      "total": 188572,
+      "total": 188615,
       "constituencies": 4,
       "booths": 1134,
-      "absent": 17294,
-      "shifted": 116303,
-      "death": 29030,
-      "duplicate": 22425,
-      "others": 3520
+      "absent": 17260,
+      "shifted": 116363,
+      "death": 29037,
+      "duplicate": 22454,
+      "others": 3501
     },
     {
       "name": "KOLAR",
@@ -237,13 +238,13 @@
     },
     {
       "name": "MANDYA",
-      "total": 167451,
+      "total": 167301,
       "constituencies": 7,
       "booths": 1822,
-      "absent": 24109,
-      "shifted": 85962,
-      "death": 42507,
-      "duplicate": 14388,
+      "absent": 23922,
+      "shifted": 85974,
+      "death": 42515,
+      "duplicate": 14405,
       "others": 485
     },
     {
@@ -259,14 +260,14 @@
     },
     {
       "name": "DAKSHINA KANNADA",
-      "total": 157858,
+      "total": 156575,
       "constituencies": 8,
       "booths": 1876,
-      "absent": 11431,
-      "shifted": 83161,
-      "death": 45235,
-      "duplicate": 15304,
-      "others": 2727
+      "absent": 11175,
+      "shifted": 82520,
+      "death": 45047,
+      "duplicate": 15214,
+      "others": 2619
     },
     {
       "name": "KOPPAL",
@@ -281,57 +282,57 @@
     },
     {
       "name": "VIJAYANAGARA",
-      "total": 148234,
+      "total": 148398,
       "constituencies": 5,
       "booths": 1234,
-      "absent": 21665,
-      "shifted": 69175,
-      "death": 38257,
-      "duplicate": 18709,
+      "absent": 21670,
+      "shifted": 69273,
+      "death": 38289,
+      "duplicate": 18738,
       "others": 428
     },
     {
       "name": "CHITRADURGA",
-      "total": 141772,
+      "total": 141918,
       "constituencies": 6,
       "booths": 1661,
-      "absent": 18685,
-      "shifted": 70090,
-      "death": 30765,
-      "duplicate": 21230,
-      "others": 1002
+      "absent": 18577,
+      "shifted": 70216,
+      "death": 30782,
+      "duplicate": 21342,
+      "others": 1001
     },
     {
       "name": "CHIKKABALLAPUR",
-      "total": 121259,
+      "total": 123252,
       "constituencies": 5,
       "booths": 1291,
-      "absent": 7285,
-      "shifted": 75660,
-      "death": 28690,
-      "duplicate": 9617,
-      "others": 7
+      "absent": 7558,
+      "shifted": 77277,
+      "death": 28736,
+      "duplicate": 9678,
+      "others": 3
     },
     {
       "name": "GADAG",
-      "total": 120802,
+      "total": 120839,
       "constituencies": 4,
       "booths": 966,
-      "absent": 5396,
-      "shifted": 71294,
-      "death": 30264,
-      "duplicate": 13458,
+      "absent": 5374,
+      "shifted": 71315,
+      "death": 30266,
+      "duplicate": 13494,
       "others": 390
     },
     {
       "name": "BANGALORE RURAL",
-      "total": 117145,
+      "total": 117064,
       "constituencies": 4,
       "booths": 1141,
-      "absent": 13767,
-      "shifted": 65341,
-      "death": 25101,
-      "duplicate": 12147,
+      "absent": 13737,
+      "shifted": 65278,
+      "death": 25106,
+      "duplicate": 12154,
       "others": 789
     },
     {
@@ -347,14 +348,14 @@
     },
     {
       "name": "RAMANAGARAM",
-      "total": 110882,
+      "total": 110720,
       "constituencies": 4,
       "booths": 1153,
-      "absent": 13425,
-      "shifted": 47306,
-      "death": 33749,
-      "duplicate": 15653,
-      "others": 749
+      "absent": 13268,
+      "shifted": 47227,
+      "death": 33778,
+      "duplicate": 15704,
+      "others": 743
     },
     {
       "name": "UTTARA KANNADA",
@@ -369,46 +370,46 @@
     },
     {
       "name": "CHIKKMAGALUR",
-      "total": 96989,
+      "total": 96861,
       "constituencies": 5,
       "booths": 1227,
-      "absent": 10991,
-      "shifted": 48443,
-      "death": 25890,
-      "duplicate": 11146,
-      "others": 519
+      "absent": 10932,
+      "shifted": 48344,
+      "death": 25877,
+      "duplicate": 11192,
+      "others": 516
     },
     {
       "name": "CHAMARAJNAGAR",
-      "total": 87130,
+      "total": 87031,
       "constituencies": 4,
       "booths": 983,
-      "absent": 9572,
-      "shifted": 37483,
-      "death": 31438,
+      "absent": 9519,
+      "shifted": 37482,
+      "death": 31441,
       "duplicate": 8253,
-      "others": 384
+      "others": 336
     },
     {
       "name": "UDUPI",
-      "total": 63613,
+      "total": 63418,
       "constituencies": 5,
       "booths": 1112,
-      "absent": 4367,
-      "shifted": 29512,
-      "death": 21222,
-      "duplicate": 8320,
-      "others": 192
+      "absent": 4252,
+      "shifted": 29400,
+      "death": 21232,
+      "duplicate": 8344,
+      "others": 190
     },
     {
       "name": "KODAGU",
-      "total": 63073,
+      "total": 62994,
       "constituencies": 2,
       "booths": 551,
-      "absent": 9718,
-      "shifted": 33558,
-      "death": 13704,
-      "duplicate": 5976,
+      "absent": 9629,
+      "shifted": 33513,
+      "death": 13724,
+      "duplicate": 6011,
       "others": 117
     }
   ],
@@ -441,37 +442,37 @@
       "no": 175,
       "name": "Bommanahalli",
       "district": "B.B.M.P(SOUTH)",
-      "total": 268843,
+      "total": 267563,
       "booths": 390,
-      "absent": 100434,
-      "shifted": 134782,
-      "death": 9723,
-      "duplicate": 1586,
-      "others": 22318
+      "absent": 100558,
+      "shifted": 134279,
+      "death": 9735,
+      "duplicate": 1604,
+      "others": 21387
     },
     {
       "no": 151,
       "name": "K.R. Pura",
       "district": "B.B.M.P(NORTH)",
-      "total": 262379,
+      "total": 262109,
       "booths": 508,
-      "absent": 50797,
-      "shifted": 175801,
-      "death": 16225,
-      "duplicate": 3805,
-      "others": 15751
+      "absent": 50617,
+      "shifted": 175759,
+      "death": 16231,
+      "duplicate": 3810,
+      "others": 15692
     },
     {
       "no": 154,
       "name": "Rajarajeshwarinagar",
       "district": "B.B.M.P(CENTRAL)",
-      "total": 249873,
+      "total": 248204,
       "booths": 437,
-      "absent": 41548,
-      "shifted": 191655,
-      "death": 10441,
-      "duplicate": 1408,
-      "others": 4821
+      "absent": 40987,
+      "shifted": 190589,
+      "death": 10476,
+      "duplicate": 1435,
+      "others": 4717
     },
     {
       "no": 155,
@@ -510,18 +511,6 @@
       "others": 20432
     },
     {
-      "no": 160,
-      "name": "Sarvagnanagar",
-      "district": "B.B.M.P(NORTH)",
-      "total": 174304,
-      "booths": 337,
-      "absent": 10329,
-      "shifted": 144620,
-      "death": 11691,
-      "duplicate": 1806,
-      "others": 5858
-    },
-    {
       "no": 177,
       "name": "Anekal",
       "district": "BANGALORE URBAN",
@@ -546,268 +535,280 @@
       "others": 12778
     },
     {
+      "no": 160,
+      "name": "Sarvagnanagar",
+      "district": "B.B.M.P(NORTH)",
+      "total": 172892,
+      "booths": 337,
+      "absent": 10228,
+      "shifted": 143447,
+      "death": 11702,
+      "duplicate": 1815,
+      "others": 5700
+    },
+    {
       "no": 167,
       "name": "Vijayanagar",
       "district": "B.B.M.P(SOUTH)",
-      "total": 165080,
-      "booths": 281,
-      "absent": 28852,
-      "shifted": 108305,
-      "death": 11865,
-      "duplicate": 1459,
-      "others": 14599
+      "total": 165638,
+      "booths": 284,
+      "absent": 28821,
+      "shifted": 109369,
+      "death": 11992,
+      "duplicate": 1488,
+      "others": 13968
     },
     {
       "no": 166,
       "name": "Govindarajanagar",
       "district": "B.B.M.P(SOUTH)",
-      "total": 149706,
-      "booths": 267,
-      "absent": 43721,
-      "shifted": 80922,
-      "death": 10853,
-      "duplicate": 1574,
-      "others": 12636
+      "total": 150448,
+      "booths": 269,
+      "absent": 44165,
+      "shifted": 81221,
+      "death": 10933,
+      "duplicate": 1588,
+      "others": 12541
     },
     {
       "no": 172,
       "name": "B.T.M Layout",
       "district": "B.B.M.P(SOUTH)",
-      "total": 147054,
+      "total": 146453,
       "booths": 243,
-      "absent": 14975,
-      "shifted": 106685,
-      "death": 8888,
-      "duplicate": 1635,
-      "others": 14871
+      "absent": 14892,
+      "shifted": 106416,
+      "death": 8900,
+      "duplicate": 1660,
+      "others": 14585
     },
     {
       "no": 161,
       "name": "C.V. RamannNagar",
       "district": "B.B.M.P(NORTH)",
-      "total": 141710,
+      "total": 141038,
       "booths": 244,
-      "absent": 22176,
-      "shifted": 100192,
-      "death": 7393,
-      "duplicate": 1933,
-      "others": 10016
+      "absent": 22055,
+      "shifted": 99796,
+      "death": 7442,
+      "duplicate": 1952,
+      "others": 9793
     },
     {
       "no": 156,
       "name": "Mahalakshmi Layout",
       "district": "B.B.M.P(NORTH)",
-      "total": 135972,
+      "total": 135655,
       "booths": 276,
-      "absent": 4209,
-      "shifted": 106132,
-      "death": 12325,
-      "duplicate": 1510,
-      "others": 11796
+      "absent": 4200,
+      "shifted": 105853,
+      "death": 12344,
+      "duplicate": 1521,
+      "others": 11737
     },
     {
       "no": 158,
       "name": "Hebbal",
       "district": "B.B.M.P(NORTH)",
-      "total": 131948,
+      "total": 131262,
       "booths": 285,
-      "absent": 330,
-      "shifted": 115212,
-      "death": 11287,
-      "duplicate": 3132,
-      "others": 1987
+      "absent": 300,
+      "shifted": 114603,
+      "death": 11304,
+      "duplicate": 3162,
+      "others": 1893
     },
     {
       "no": 171,
       "name": "Padmanabanagar",
       "district": "B.B.M.P(SOUTH)",
-      "total": 129001,
+      "total": 128102,
       "booths": 279,
-      "absent": 24810,
-      "shifted": 77311,
-      "death": 11679,
-      "duplicate": 1516,
-      "others": 13685
-    },
-    {
-      "no": 164,
-      "name": "Gandhinagar",
-      "district": "B.B.M.P(CENTRAL)",
-      "total": 115344,
-      "booths": 220,
-      "absent": 14946,
-      "shifted": 82862,
-      "death": 8823,
-      "duplicate": 968,
-      "others": 7745
+      "absent": 24333,
+      "shifted": 77282,
+      "death": 11701,
+      "duplicate": 1522,
+      "others": 13264
     },
     {
       "no": 170,
       "name": "Basavanagudi",
       "district": "B.B.M.P(SOUTH)",
-      "total": 115094,
+      "total": 114361,
       "booths": 220,
-      "absent": 42852,
-      "shifted": 55844,
-      "death": 8443,
-      "duplicate": 1404,
-      "others": 6551
+      "absent": 42835,
+      "shifted": 55751,
+      "death": 8456,
+      "duplicate": 1420,
+      "others": 5899
     },
     {
-      "no": 159,
-      "name": "Pulakeshinagar",
-      "district": "B.B.M.P(NORTH)",
-      "total": 111079,
-      "booths": 228,
-      "absent": 17960,
-      "shifted": 64876,
-      "death": 8520,
-      "duplicate": 2092,
-      "others": 17631
-    },
-    {
-      "no": 168,
-      "name": "Chamrajapet",
+      "no": 164,
+      "name": "Gandhinagar",
       "district": "B.B.M.P(CENTRAL)",
-      "total": 111017,
-      "booths": 216,
-      "absent": 29522,
-      "shifted": 55597,
-      "death": 11863,
-      "duplicate": 2493,
-      "others": 11542
+      "total": 113794,
+      "booths": 220,
+      "absent": 14443,
+      "shifted": 82201,
+      "death": 8824,
+      "duplicate": 995,
+      "others": 7331
     },
     {
       "no": 163,
       "name": "Shantinagar",
       "district": "B.B.M.P(CENTRAL)",
-      "total": 111005,
+      "total": 110384,
       "booths": 193,
-      "absent": 14674,
-      "shifted": 73950,
-      "death": 8277,
-      "duplicate": 1073,
-      "others": 13031
+      "absent": 14554,
+      "shifted": 73971,
+      "death": 8299,
+      "duplicate": 1084,
+      "others": 12476
+    },
+    {
+      "no": 159,
+      "name": "Pulakeshinagar",
+      "district": "B.B.M.P(NORTH)",
+      "total": 110243,
+      "booths": 228,
+      "absent": 17903,
+      "shifted": 64674,
+      "death": 8526,
+      "duplicate": 2107,
+      "others": 17033
     },
     {
       "no": 157,
       "name": "Malleshwaram",
       "district": "B.B.M.P(NORTH)",
-      "total": 109814,
+      "total": 109401,
       "booths": 207,
-      "absent": 6679,
-      "shifted": 85079,
-      "death": 12941,
-      "duplicate": 1170,
-      "others": 3945
+      "absent": 6634,
+      "shifted": 84797,
+      "death": 12938,
+      "duplicate": 1177,
+      "others": 3855
+    },
+    {
+      "no": 168,
+      "name": "Chamrajapet",
+      "district": "B.B.M.P(CENTRAL)",
+      "total": 108611,
+      "booths": 216,
+      "absent": 28825,
+      "shifted": 54796,
+      "death": 11832,
+      "duplicate": 2506,
+      "others": 10652
     },
     {
       "no": 45,
       "name": "Gulbarga Uttar",
       "district": "GULBARGA",
-      "total": 106903,
+      "total": 106125,
       "booths": 302,
-      "absent": 18172,
-      "shifted": 65635,
-      "death": 8033,
-      "duplicate": 5107,
-      "others": 9956
+      "absent": 18007,
+      "shifted": 65290,
+      "death": 8040,
+      "duplicate": 5156,
+      "others": 9632
     },
     {
       "no": 169,
       "name": "Chickpet",
       "district": "B.B.M.P(CENTRAL)",
-      "total": 106069,
+      "total": 104989,
       "booths": 221,
-      "absent": 35066,
-      "shifted": 39309,
-      "death": 8337,
-      "duplicate": 1440,
-      "others": 21917
+      "absent": 34773,
+      "shifted": 39193,
+      "death": 8359,
+      "duplicate": 1471,
+      "others": 21193
     },
     {
       "no": 44,
       "name": "Gulbarga Dakshin",
       "district": "GULBARGA",
-      "total": 103075,
+      "total": 102546,
       "booths": 264,
-      "absent": 7994,
-      "shifted": 74428,
-      "death": 9466,
-      "duplicate": 2460,
-      "others": 8727
+      "absent": 7909,
+      "shifted": 74123,
+      "death": 9467,
+      "duplicate": 2468,
+      "others": 8579
     },
     {
       "no": 165,
       "name": "Rajajinagar",
       "district": "B.B.M.P(CENTRAL)",
-      "total": 102510,
+      "total": 101856,
       "booths": 194,
-      "absent": 7666,
-      "shifted": 84114,
-      "death": 8314,
-      "duplicate": 581,
-      "others": 1835
+      "absent": 7543,
+      "shifted": 83654,
+      "death": 8333,
+      "duplicate": 590,
+      "others": 1736
     },
     {
       "no": 218,
       "name": "Narasimharaja",
       "district": "MYSORE",
-      "total": 100884,
+      "total": 100259,
       "booths": 283,
-      "absent": 40307,
-      "shifted": 30930,
-      "death": 9658,
-      "duplicate": 5002,
-      "others": 14987
+      "absent": 40095,
+      "shifted": 30893,
+      "death": 9682,
+      "duplicate": 5072,
+      "others": 14517
     },
     {
       "no": 173,
       "name": "Jayanagar",
       "district": "B.B.M.P(SOUTH)",
-      "total": 95705,
+      "total": 94649,
       "booths": 210,
-      "absent": 12943,
-      "shifted": 58510,
-      "death": 7583,
-      "duplicate": 1492,
-      "others": 15177
+      "absent": 12839,
+      "shifted": 58224,
+      "death": 7603,
+      "duplicate": 1509,
+      "others": 14474
     },
     {
       "no": 216,
       "name": "Krishnaraja",
       "district": "MYSORE",
-      "total": 85699,
+      "total": 86572,
       "booths": 265,
-      "absent": 17233,
-      "shifted": 47201,
-      "death": 15049,
-      "duplicate": 5244,
-      "others": 972
+      "absent": 17584,
+      "shifted": 47607,
+      "death": 15090,
+      "duplicate": 5317,
+      "others": 974
     },
     {
       "no": 217,
       "name": "Chamaraja",
       "district": "MYSORE",
-      "total": 84888,
+      "total": 85690,
       "booths": 248,
-      "absent": 30435,
-      "shifted": 37025,
-      "death": 12052,
-      "duplicate": 3584,
-      "others": 1792
+      "absent": 30540,
+      "shifted": 37680,
+      "death": 12085,
+      "duplicate": 3620,
+      "others": 1765
     },
     {
       "no": 162,
       "name": "Shivajinagar",
       "district": "B.B.M.P(CENTRAL)",
-      "total": 82679,
+      "total": 81895,
       "booths": 191,
-      "absent": 7558,
-      "shifted": 60362,
-      "death": 8305,
-      "duplicate": 1844,
-      "others": 4610
+      "absent": 7484,
+      "shifted": 59805,
+      "death": 8312,
+      "duplicate": 1850,
+      "others": 4444
     },
     {
       "no": 30,
@@ -825,25 +826,25 @@
       "no": 215,
       "name": "Chamundeshwari",
       "district": "MYSORE",
-      "total": 78505,
+      "total": 77089,
       "booths": 341,
-      "absent": 21100,
-      "shifted": 42766,
-      "death": 9901,
-      "duplicate": 4371,
-      "others": 367
+      "absent": 20142,
+      "shifted": 42280,
+      "death": 9909,
+      "duplicate": 4403,
+      "others": 355
     },
     {
       "no": 94,
       "name": "Bellary City",
       "district": "BELLARY",
-      "total": 76742,
+      "total": 76646,
       "booths": 261,
-      "absent": 29270,
-      "shifted": 24930,
+      "absent": 29136,
+      "shifted": 24972,
       "death": 12935,
-      "duplicate": 4278,
-      "others": 5329
+      "duplicate": 4302,
+      "others": 5301
     },
     {
       "no": 132,
@@ -873,37 +874,37 @@
       "no": 73,
       "name": "Hubli-Dharwad-Central",
       "district": "DHARWAD",
-      "total": 72305,
+      "total": 66732,
       "booths": 266,
-      "absent": 23126,
-      "shifted": 37227,
-      "death": 8716,
-      "duplicate": 2978,
-      "others": 258
+      "absent": 21111,
+      "shifted": 33297,
+      "death": 8943,
+      "duplicate": 3148,
+      "others": 233
     },
     {
       "no": 74,
       "name": "Hubli-Dharwad-West",
       "district": "DHARWAD",
-      "total": 71335,
+      "total": 65437,
       "booths": 271,
-      "absent": 11238,
-      "shifted": 45331,
-      "death": 8766,
-      "duplicate": 4779,
-      "others": 1221
+      "absent": 9366,
+      "shifted": 41612,
+      "death": 9006,
+      "duplicate": 5241,
+      "others": 212
     },
     {
       "no": 50,
       "name": "Bidar",
       "district": "BIDAR",
-      "total": 64841,
+      "total": 64713,
       "booths": 248,
-      "absent": 2742,
-      "shifted": 47428,
-      "death": 7008,
-      "duplicate": 3281,
-      "others": 4382
+      "absent": 2710,
+      "shifted": 47379,
+      "death": 7023,
+      "duplicate": 3279,
+      "others": 4322
     },
     {
       "no": 11,
@@ -993,25 +994,25 @@
       "no": 39,
       "name": "Gurmitkal",
       "district": "YADGIR",
-      "total": 51542,
+      "total": 51565,
       "booths": 284,
-      "absent": 1610,
-      "shifted": 34843,
-      "death": 8106,
-      "duplicate": 6399,
-      "others": 584
+      "absent": 1609,
+      "shifted": 34858,
+      "death": 8114,
+      "duplicate": 6401,
+      "others": 583
     },
     {
       "no": 93,
       "name": "Bellary",
       "district": "BELLARY",
-      "total": 51432,
+      "total": 51400,
       "booths": 236,
-      "absent": 9246,
-      "shifted": 25165,
-      "death": 8735,
-      "duplicate": 4878,
-      "others": 3408
+      "absent": 9223,
+      "shifted": 25187,
+      "death": 8741,
+      "duplicate": 4890,
+      "others": 3359
     },
     {
       "no": 57,
@@ -1026,18 +1027,6 @@
       "others": 94
     },
     {
-      "no": 72,
-      "name": "Hubli-Dharwad-East",
-      "district": "DHARWAD",
-      "total": 49502,
-      "booths": 216,
-      "absent": 27758,
-      "shifted": 7441,
-      "death": 9417,
-      "duplicate": 4879,
-      "others": 7
-    },
-    {
       "no": 46,
       "name": "Aland",
       "district": "GULBARGA",
@@ -1048,6 +1037,18 @@
       "death": 8751,
       "duplicate": 4152,
       "others": 384
+    },
+    {
+      "no": 72,
+      "name": "Hubli-Dharwad-East",
+      "district": "DHARWAD",
+      "total": 47484,
+      "booths": 218,
+      "absent": 25528,
+      "shifted": 7305,
+      "death": 9573,
+      "duplicate": 5078,
+      "others": 0
     },
     {
       "no": 196,
@@ -1065,25 +1066,25 @@
       "no": 37,
       "name": "Shahapur",
       "district": "YADGIR",
-      "total": 47013,
+      "total": 47149,
       "booths": 265,
-      "absent": 5300,
-      "shifted": 29899,
-      "death": 7029,
-      "duplicate": 4670,
+      "absent": 5365,
+      "shifted": 29961,
+      "death": 7025,
+      "duplicate": 4683,
       "others": 115
     },
     {
       "no": 38,
       "name": "Yadgir",
       "district": "YADGIR",
-      "total": 47009,
+      "total": 46952,
       "booths": 268,
-      "absent": 5080,
-      "shifted": 27278,
-      "death": 6403,
-      "duplicate": 5531,
-      "others": 2717
+      "absent": 5032,
+      "shifted": 27274,
+      "death": 6405,
+      "duplicate": 5542,
+      "others": 2699
     },
     {
       "no": 55,
@@ -1125,12 +1126,12 @@
       "no": 36,
       "name": "Shorapur",
       "district": "YADGIR",
-      "total": 43008,
+      "total": 42949,
       "booths": 317,
-      "absent": 5304,
-      "shifted": 24283,
-      "death": 7492,
-      "duplicate": 5825,
+      "absent": 5254,
+      "shifted": 24270,
+      "death": 7493,
+      "duplicate": 5828,
       "others": 104
     },
     {
@@ -1149,25 +1150,13 @@
       "no": 48,
       "name": "Humnabad",
       "district": "BIDAR",
-      "total": 42150,
+      "total": 42067,
       "booths": 255,
-      "absent": 3114,
-      "shifted": 27236,
-      "death": 6145,
-      "duplicate": 4336,
-      "others": 1319
-    },
-    {
-      "no": 203,
-      "name": "Mangalore City South",
-      "district": "DAKSHINA KANNADA",
-      "total": 42123,
-      "booths": 249,
-      "absent": 6647,
-      "shifted": 19739,
-      "death": 9995,
-      "duplicate": 4250,
-      "others": 1492
+      "absent": 3085,
+      "shifted": 27195,
+      "death": 6151,
+      "duplicate": 4341,
+      "others": 1295
     },
     {
       "no": 90,
@@ -1204,6 +1193,18 @@
       "death": 9143,
       "duplicate": 6127,
       "others": 48
+    },
+    {
+      "no": 203,
+      "name": "Mangalore City South",
+      "district": "DAKSHINA KANNADA",
+      "total": 40890,
+      "booths": 249,
+      "absent": 6448,
+      "shifted": 19135,
+      "death": 9791,
+      "duplicate": 4120,
+      "others": 1396
     },
     {
       "no": 31,
@@ -1254,6 +1255,18 @@
       "others": 2828
     },
     {
+      "no": 95,
+      "name": "Sandur",
+      "district": "BELLARY",
+      "total": 39468,
+      "booths": 259,
+      "absent": 5149,
+      "shifted": 22282,
+      "death": 6837,
+      "duplicate": 5158,
+      "others": 42
+    },
+    {
       "no": 9,
       "name": "Gokak",
       "district": "BELGAUM",
@@ -1264,18 +1277,6 @@
       "death": 10924,
       "duplicate": 5052,
       "others": 71
-    },
-    {
-      "no": 95,
-      "name": "Sandur",
-      "district": "BELLARY",
-      "total": 39441,
-      "booths": 259,
-      "absent": 5158,
-      "shifted": 22260,
-      "death": 6833,
-      "duplicate": 5147,
-      "others": 43
     },
     {
       "no": 8,
@@ -1293,25 +1294,37 @@
       "no": 49,
       "name": "Bidar South",
       "district": "BIDAR",
-      "total": 38361,
+      "total": 38261,
       "booths": 229,
-      "absent": 3193,
-      "shifted": 23366,
-      "death": 5583,
-      "duplicate": 2767,
-      "others": 3452
+      "absent": 3126,
+      "shifted": 23410,
+      "death": 5584,
+      "duplicate": 2778,
+      "others": 3363
     },
     {
       "no": 189,
       "name": "Mandya",
       "district": "MANDYA",
-      "total": 37795,
+      "total": 37681,
       "booths": 263,
-      "absent": 14099,
-      "shifted": 16225,
-      "death": 5118,
-      "duplicate": 2312,
-      "others": 41
+      "absent": 13989,
+      "shifted": 16210,
+      "death": 5120,
+      "duplicate": 2320,
+      "others": 42
+    },
+    {
+      "no": 99,
+      "name": "Chitradurga",
+      "district": "CHITRADURGA",
+      "total": 37622,
+      "booths": 288,
+      "absent": 7482,
+      "shifted": 18693,
+      "death": 5697,
+      "duplicate": 4973,
+      "others": 777
     },
     {
       "no": 146,
@@ -1326,40 +1339,28 @@
       "others": 396
     },
     {
-      "no": 99,
-      "name": "Chitradurga",
-      "district": "CHITRADURGA",
-      "total": 37338,
-      "booths": 288,
-      "absent": 7415,
-      "shifted": 18548,
-      "death": 5685,
-      "duplicate": 4908,
-      "others": 782
-    },
-    {
       "no": 186,
       "name": "Malavalli",
       "district": "MANDYA",
-      "total": 36703,
+      "total": 36660,
       "booths": 272,
-      "absent": 2757,
-      "shifted": 18913,
-      "death": 11397,
-      "duplicate": 3466,
+      "absent": 2723,
+      "shifted": 18909,
+      "death": 11398,
+      "duplicate": 3460,
       "others": 170
     },
     {
       "no": 143,
       "name": "Chintamani",
       "district": "CHIKKABALLAPUR",
-      "total": 36658,
+      "total": 36631,
       "booths": 271,
-      "absent": 1162,
-      "shifted": 26594,
-      "death": 6579,
-      "duplicate": 2323,
-      "others": 0
+      "absent": 1156,
+      "shifted": 26552,
+      "death": 6588,
+      "duplicate": 2333,
+      "others": 2
     },
     {
       "no": 25,
@@ -1413,60 +1414,36 @@
       "no": 67,
       "name": "Ron",
       "district": "GADAG",
-      "total": 34651,
+      "total": 34644,
       "booths": 269,
-      "absent": 1101,
-      "shifted": 20015,
-      "death": 8529,
-      "duplicate": 4910,
-      "others": 96
+      "absent": 1081,
+      "shifted": 20009,
+      "death": 8533,
+      "duplicate": 4926,
+      "others": 95
     },
     {
       "no": 125,
       "name": "Chickamagalur",
       "district": "CHIKKMAGALUR",
-      "total": 34420,
+      "total": 34330,
       "booths": 261,
-      "absent": 4887,
-      "shifted": 18900,
-      "death": 6916,
-      "duplicate": 3350,
-      "others": 367
-    },
-    {
-      "no": 71,
-      "name": "Dharwad",
-      "district": "DHARWAD",
-      "total": 34335,
-      "booths": 233,
-      "absent": 5278,
-      "shifted": 18979,
-      "death": 5409,
-      "duplicate": 4285,
-      "others": 384
+      "absent": 4851,
+      "shifted": 18833,
+      "death": 6915,
+      "duplicate": 3369,
+      "others": 362
     },
     {
       "no": 212,
       "name": "Hunsur",
       "district": "MYSORE",
-      "total": 34236,
+      "total": 34310,
       "booths": 274,
-      "absent": 4588,
-      "shifted": 13087,
-      "death": 11958,
-      "duplicate": 4526,
-      "others": 77
-    },
-    {
-      "no": 209,
-      "name": "Virajpet",
-      "district": "KODAGU",
-      "total": 33841,
-      "booths": 276,
-      "absent": 5260,
-      "shifted": 19364,
-      "death": 6176,
-      "duplicate": 2964,
+      "absent": 4567,
+      "shifted": 13150,
+      "death": 11961,
+      "duplicate": 4555,
       "others": 77
     },
     {
@@ -1494,16 +1471,28 @@
       "others": 334
     },
     {
+      "no": 209,
+      "name": "Virajpet",
+      "district": "KODAGU",
+      "total": 33737,
+      "booths": 276,
+      "absent": 5211,
+      "shifted": 19296,
+      "death": 6181,
+      "duplicate": 2972,
+      "others": 77
+    },
+    {
       "no": 47,
       "name": "Basavakalyan",
       "district": "BIDAR",
-      "total": 33735,
+      "total": 33650,
       "booths": 278,
-      "absent": 3788,
-      "shifted": 21617,
-      "death": 4242,
-      "duplicate": 3229,
-      "others": 859
+      "absent": 3777,
+      "shifted": 21546,
+      "death": 4241,
+      "duplicate": 3230,
+      "others": 856
     },
     {
       "no": 60,
@@ -1533,37 +1522,61 @@
       "no": 213,
       "name": "Heggadadevankote",
       "district": "MYSORE",
-      "total": 33016,
+      "total": 32852,
       "booths": 282,
-      "absent": 3699,
-      "shifted": 13273,
-      "death": 11469,
-      "duplicate": 4518,
-      "others": 57
+      "absent": 3559,
+      "shifted": 13295,
+      "death": 11427,
+      "duplicate": 4512,
+      "others": 59
     },
     {
-      "no": 52,
-      "name": "Aurad",
-      "district": "BIDAR",
-      "total": 32178,
-      "booths": 255,
-      "absent": 4133,
-      "shifted": 23078,
-      "death": 3939,
-      "duplicate": 925,
-      "others": 103
+      "no": 71,
+      "name": "Dharwad",
+      "district": "DHARWAD",
+      "total": 32497,
+      "booths": 234,
+      "absent": 4707,
+      "shifted": 17558,
+      "death": 5530,
+      "duplicate": 4418,
+      "others": 284
+    },
+    {
+      "no": 92,
+      "name": "Siraguppa",
+      "district": "BELLARY",
+      "total": 32142,
+      "booths": 229,
+      "absent": 4409,
+      "shifted": 17637,
+      "death": 6723,
+      "duplicate": 3312,
+      "others": 61
     },
     {
       "no": 181,
       "name": "Nelamangala",
       "district": "BANGALORE RURAL",
-      "total": 32157,
+      "total": 32125,
       "booths": 278,
-      "absent": 7129,
-      "shifted": 16328,
-      "death": 6109,
-      "duplicate": 2442,
-      "others": 149
+      "absent": 7117,
+      "shifted": 16306,
+      "death": 6113,
+      "duplicate": 2441,
+      "others": 148
+    },
+    {
+      "no": 214,
+      "name": "Nanjangud",
+      "district": "MYSORE",
+      "total": 32056,
+      "booths": 246,
+      "absent": 7621,
+      "shifted": 11969,
+      "death": 9142,
+      "duplicate": 2758,
+      "others": 566
     },
     {
       "no": 20,
@@ -1590,42 +1603,6 @@
       "others": 84
     },
     {
-      "no": 214,
-      "name": "Nanjangud",
-      "district": "MYSORE",
-      "total": 31991,
-      "booths": 246,
-      "absent": 7738,
-      "shifted": 11820,
-      "death": 9113,
-      "duplicate": 2734,
-      "others": 586
-    },
-    {
-      "no": 92,
-      "name": "Siraguppa",
-      "district": "BELLARY",
-      "total": 31978,
-      "booths": 229,
-      "absent": 4270,
-      "shifted": 17625,
-      "death": 6721,
-      "duplicate": 3301,
-      "others": 61
-    },
-    {
-      "no": 51,
-      "name": "Bhalki",
-      "district": "BIDAR",
-      "total": 31971,
-      "booths": 263,
-      "absent": 4609,
-      "shifted": 19761,
-      "death": 4997,
-      "duplicate": 2497,
-      "others": 107
-    },
-    {
       "no": 147,
       "name": "Bangarapet",
       "district": "KOLAR",
@@ -1638,39 +1615,63 @@
       "others": 148
     },
     {
-      "no": 184,
-      "name": "Kanakapura",
-      "district": "RAMANAGARAM",
-      "total": 31323,
-      "booths": 297,
-      "absent": 4738,
-      "shifted": 12575,
-      "death": 9003,
-      "duplicate": 4779,
-      "others": 228
+      "no": 51,
+      "name": "Bhalki",
+      "district": "BIDAR",
+      "total": 31921,
+      "booths": 263,
+      "absent": 4553,
+      "shifted": 19751,
+      "death": 5007,
+      "duplicate": 2503,
+      "others": 107
+    },
+    {
+      "no": 52,
+      "name": "Aurad",
+      "district": "BIDAR",
+      "total": 31918,
+      "booths": 255,
+      "absent": 3990,
+      "shifted": 22961,
+      "death": 3940,
+      "duplicate": 925,
+      "others": 102
     },
     {
       "no": 180,
       "name": "Doddaballapur",
       "district": "BANGALORE RURAL",
-      "total": 31257,
+      "total": 31241,
       "booths": 276,
-      "absent": 858,
-      "shifted": 19415,
-      "death": 6487,
-      "duplicate": 4256,
+      "absent": 857,
+      "shifted": 19397,
+      "death": 6486,
+      "duplicate": 4260,
       "others": 241
+    },
+    {
+      "no": 184,
+      "name": "Kanakapura",
+      "district": "RAMANAGARAM",
+      "total": 31241,
+      "booths": 297,
+      "absent": 4662,
+      "shifted": 12543,
+      "death": 9018,
+      "duplicate": 4792,
+      "others": 226
     },
     {
       "no": 220,
       "name": "T. Narasipur",
       "district": "MYSORE",
-      "total": 31140,
+      "total": 31148,
       "booths": 228,
-      "absent": 1978,
-      "shifted": 14517,
-      "death": 11132,
-      "duplicate": 3471,
+      "absent": 1964,
+      "shifted": 14524,
+      "death": 11142,
+      "duplicate": 3476,
       "others": 42
     },
     {
@@ -1701,13 +1702,13 @@
       "no": 202,
       "name": "Mangalore City North",
       "district": "DAKSHINA KANNADA",
-      "total": 30673,
+      "total": 30605,
       "booths": 254,
-      "absent": 1540,
-      "shifted": 18208,
-      "death": 8427,
-      "duplicate": 1625,
-      "others": 873
+      "absent": 1510,
+      "shifted": 18181,
+      "death": 8423,
+      "duplicate": 1627,
+      "others": 864
     },
     {
       "no": 27,
@@ -1737,13 +1738,13 @@
       "no": 65,
       "name": "Shirahatti",
       "district": "GADAG",
-      "total": 29778,
+      "total": 29822,
       "booths": 252,
-      "absent": 820,
-      "shifted": 18147,
-      "death": 7243,
-      "duplicate": 3516,
-      "others": 52
+      "absent": 818,
+      "shifted": 18174,
+      "death": 7241,
+      "duplicate": 3536,
+      "others": 53
     },
     {
       "no": 104,
@@ -1797,37 +1798,37 @@
       "no": 100,
       "name": "Hiriyur",
       "district": "CHITRADURGA",
-      "total": 29568,
+      "total": 29540,
       "booths": 287,
-      "absent": 3590,
-      "shifted": 15072,
-      "death": 6752,
-      "duplicate": 4096,
-      "others": 58
+      "absent": 3557,
+      "shifted": 15063,
+      "death": 6750,
+      "duplicate": 4113,
+      "others": 57
     },
     {
       "no": 208,
       "name": "Madikeri",
       "district": "KODAGU",
-      "total": 29232,
+      "total": 29257,
       "booths": 275,
-      "absent": 4458,
-      "shifted": 14194,
-      "death": 7528,
-      "duplicate": 3012,
+      "absent": 4418,
+      "shifted": 14217,
+      "death": 7543,
+      "duplicate": 3039,
       "others": 40
     },
     {
       "no": 219,
       "name": "Varuna",
       "district": "MYSORE",
-      "total": 29140,
+      "total": 29197,
       "booths": 261,
-      "absent": 2159,
-      "shifted": 14924,
-      "death": 8027,
-      "duplicate": 4001,
-      "others": 29
+      "absent": 2142,
+      "shifted": 14983,
+      "death": 8029,
+      "duplicate": 4009,
+      "others": 34
     },
     {
       "no": 32,
@@ -1869,60 +1870,60 @@
       "no": 178,
       "name": "Hosakote",
       "district": "BANGALORE RURAL",
-      "total": 28323,
+      "total": 28311,
       "booths": 293,
-      "absent": 1475,
-      "shifted": 17297,
-      "death": 6336,
-      "duplicate": 2888,
-      "others": 327
+      "absent": 1469,
+      "shifted": 17284,
+      "death": 6338,
+      "duplicate": 2892,
+      "others": 328
     },
     {
       "no": 183,
       "name": "Ramanagaram",
       "district": "RAMANAGARAM",
-      "total": 28146,
+      "total": 28119,
       "booths": 279,
-      "absent": 4365,
-      "shifted": 11427,
-      "death": 8344,
-      "duplicate": 3880,
-      "others": 130
+      "absent": 4344,
+      "shifted": 11407,
+      "death": 8347,
+      "duplicate": 3895,
+      "others": 126
     },
     {
       "no": 182,
       "name": "Magadi",
       "district": "RAMANAGARAM",
-      "total": 27938,
+      "total": 27895,
       "booths": 301,
-      "absent": 2117,
-      "shifted": 13475,
-      "death": 9079,
-      "duplicate": 3065,
-      "others": 202
+      "absent": 2092,
+      "shifted": 13445,
+      "death": 9082,
+      "duplicate": 3072,
+      "others": 204
     },
     {
       "no": 88,
       "name": "Hadagali",
       "district": "VIJAYANAGARA",
-      "total": 27012,
+      "total": 27031,
       "booths": 218,
-      "absent": 2624,
-      "shifted": 12895,
-      "death": 7853,
-      "duplicate": 3609,
+      "absent": 2614,
+      "shifted": 12897,
+      "death": 7866,
+      "duplicate": 3623,
       "others": 31
     },
     {
       "no": 211,
       "name": "Krishnarajanagara",
       "district": "MYSORE",
-      "total": 26798,
+      "total": 26575,
       "booths": 252,
-      "absent": 7543,
-      "shifted": 8589,
-      "death": 8225,
-      "duplicate": 2412,
+      "absent": 7321,
+      "shifted": 8577,
+      "death": 8230,
+      "duplicate": 2418,
       "others": 29
     },
     {
@@ -1950,28 +1951,28 @@
       "others": 24
     },
     {
-      "no": 98,
-      "name": "Challakere",
-      "district": "CHITRADURGA",
-      "total": 25409,
-      "booths": 260,
-      "absent": 4321,
-      "shifted": 10527,
-      "death": 5942,
-      "duplicate": 4562,
-      "others": 57
-    },
-    {
       "no": 179,
       "name": "Devanahalli",
       "district": "BANGALORE RURAL",
-      "total": 25408,
+      "total": 25387,
       "booths": 294,
-      "absent": 4305,
-      "shifted": 12301,
+      "absent": 4294,
+      "shifted": 12291,
       "death": 6169,
       "duplicate": 2561,
       "others": 72
+    },
+    {
+      "no": 98,
+      "name": "Challakere",
+      "district": "CHITRADURGA",
+      "total": 25290,
+      "booths": 260,
+      "absent": 4223,
+      "shifted": 10506,
+      "death": 5938,
+      "duplicate": 4562,
+      "others": 61
     },
     {
       "no": 28,
@@ -2037,13 +2038,13 @@
       "no": 142,
       "name": "Sidlaghatta",
       "district": "CHIKKABALLAPUR",
-      "total": 24556,
+      "total": 24696,
       "booths": 244,
-      "absent": 3066,
-      "shifted": 13717,
-      "death": 5573,
-      "duplicate": 2194,
-      "others": 6
+      "absent": 3198,
+      "shifted": 13729,
+      "death": 5576,
+      "duplicate": 2193,
+      "others": 0
     },
     {
       "no": 77,
@@ -2058,15 +2059,27 @@
       "others": 27
     },
     {
+      "no": 139,
+      "name": "Gauribidanur",
+      "district": "CHIKKABALLAPUR",
+      "total": 24334,
+      "booths": 259,
+      "absent": 895,
+      "shifted": 14585,
+      "death": 6734,
+      "duplicate": 2120,
+      "others": 0
+    },
+    {
       "no": 29,
       "name": "Babaleshwar",
       "district": "BIJAPUR",
-      "total": 24305,
+      "total": 24294,
       "booths": 244,
-      "absent": 1484,
-      "shifted": 15175,
-      "death": 5270,
-      "duplicate": 2337,
+      "absent": 1482,
+      "shifted": 15163,
+      "death": 5271,
+      "duplicate": 2339,
       "others": 39
     },
     {
@@ -2085,25 +2098,25 @@
       "no": 91,
       "name": "Kampli",
       "district": "BELLARY",
-      "total": 23834,
+      "total": 23872,
       "booths": 242,
-      "absent": 2234,
-      "shifted": 11916,
-      "death": 5902,
-      "duplicate": 3647,
-      "others": 135
+      "absent": 2209,
+      "shifted": 11947,
+      "death": 5908,
+      "duplicate": 3674,
+      "others": 134
     },
     {
       "no": 192,
       "name": "Krishnarajpet",
       "district": "MANDYA",
-      "total": 23707,
+      "total": 23662,
       "booths": 261,
-      "absent": 3477,
-      "shifted": 9632,
-      "death": 8732,
-      "duplicate": 1787,
-      "others": 79
+      "absent": 3431,
+      "shifted": 9629,
+      "death": 8734,
+      "duplicate": 1790,
+      "others": 78
     },
     {
       "no": 61,
@@ -2121,13 +2134,13 @@
       "no": 185,
       "name": "Channapatna",
       "district": "RAMANAGARAM",
-      "total": 23475,
+      "total": 23465,
       "booths": 276,
-      "absent": 2205,
-      "shifted": 9829,
-      "death": 7323,
-      "duplicate": 3929,
-      "others": 189
+      "absent": 2170,
+      "shifted": 9832,
+      "death": 7331,
+      "duplicate": 3945,
+      "others": 187
     },
     {
       "no": 18,
@@ -2166,30 +2179,6 @@
       "others": 36
     },
     {
-      "no": 139,
-      "name": "Gauribidanur",
-      "district": "CHIKKABALLAPUR",
-      "total": 22917,
-      "booths": 259,
-      "absent": 765,
-      "shifted": 13356,
-      "death": 6716,
-      "duplicate": 2080,
-      "others": 0
-    },
-    {
-      "no": 210,
-      "name": "Piriyapatna",
-      "district": "MYSORE",
-      "total": 22849,
-      "booths": 235,
-      "absent": 870,
-      "shifted": 11341,
-      "death": 7179,
-      "duplicate": 3341,
-      "others": 118
-    },
-    {
       "no": 198,
       "name": "Arakalgud",
       "district": "HASSAN",
@@ -2200,6 +2189,18 @@
       "death": 10587,
       "duplicate": 2272,
       "others": 51
+    },
+    {
+      "no": 210,
+      "name": "Piriyapatna",
+      "district": "MYSORE",
+      "total": 22831,
+      "booths": 235,
+      "absent": 868,
+      "shifted": 11381,
+      "death": 7185,
+      "duplicate": 3393,
+      "others": 4
     },
     {
       "no": 7,
@@ -2217,13 +2218,13 @@
       "no": 69,
       "name": "Navalgund",
       "district": "DHARWAD",
-      "total": 22601,
+      "total": 22615,
       "booths": 234,
-      "absent": 911,
-      "shifted": 11725,
-      "death": 7147,
-      "duplicate": 2755,
-      "others": 63
+      "absent": 868,
+      "shifted": 11697,
+      "death": 7169,
+      "duplicate": 2871,
+      "others": 10
     },
     {
       "no": 14,
@@ -2289,11 +2290,11 @@
       "no": 187,
       "name": "Maddur",
       "district": "MANDYA",
-      "total": 21587,
+      "total": 21572,
       "booths": 254,
-      "absent": 785,
-      "shifted": 14375,
-      "death": 4924,
+      "absent": 783,
+      "shifted": 14361,
+      "death": 4925,
       "duplicate": 1493,
       "others": 10
     },
@@ -2322,6 +2323,18 @@
       "others": 47
     },
     {
+      "no": 96,
+      "name": "Kudligi",
+      "district": "VIJAYANAGARA",
+      "total": 21180,
+      "booths": 250,
+      "absent": 646,
+      "shifted": 11291,
+      "death": 6244,
+      "duplicate": 2937,
+      "others": 62
+    },
+    {
       "no": 3,
       "name": "Athani",
       "district": "BELGAUM",
@@ -2344,18 +2357,6 @@
       "death": 5840,
       "duplicate": 3152,
       "others": 180
-    },
-    {
-      "no": 96,
-      "name": "Kudligi",
-      "district": "VIJAYANAGARA",
-      "total": 21035,
-      "booths": 250,
-      "absent": 631,
-      "shifted": 11195,
-      "death": 6225,
-      "duplicate": 2922,
-      "others": 62
     },
     {
       "no": 105,
@@ -2382,6 +2383,18 @@
       "others": 181
     },
     {
+      "no": 140,
+      "name": "Bagepalli",
+      "district": "CHIKKABALLAPUR",
+      "total": 20027,
+      "booths": 265,
+      "absent": 1119,
+      "shifted": 12429,
+      "death": 4752,
+      "duplicate": 1727,
+      "others": 0
+    },
+    {
       "no": 76,
       "name": "Haliyal",
       "district": "UTTARA KANNADA",
@@ -2392,18 +2405,6 @@
       "death": 6767,
       "duplicate": 1454,
       "others": 22
-    },
-    {
-      "no": 126,
-      "name": "Tarikere",
-      "district": "CHIKKMAGALUR",
-      "total": 19834,
-      "booths": 229,
-      "absent": 1336,
-      "shifted": 9937,
-      "death": 6222,
-      "duplicate": 2272,
-      "others": 67
     },
     {
       "no": 103,
@@ -2418,16 +2419,16 @@
       "others": 55
     },
     {
-      "no": 140,
-      "name": "Bagepalli",
-      "district": "CHIKKABALLAPUR",
-      "total": 19594,
-      "booths": 265,
-      "absent": 1105,
-      "shifted": 12025,
-      "death": 4745,
-      "duplicate": 1719,
-      "others": 0
+      "no": 126,
+      "name": "Tarikere",
+      "district": "CHIKKMAGALUR",
+      "total": 19804,
+      "booths": 229,
+      "absent": 1333,
+      "shifted": 9920,
+      "death": 6210,
+      "duplicate": 2273,
+      "others": 68
     },
     {
       "no": 136,
@@ -2445,13 +2446,13 @@
       "no": 133,
       "name": "Tumkur Rural",
       "district": "TUMKUR",
-      "total": 19339,
+      "total": 19302,
       "booths": 223,
-      "absent": 1586,
-      "shifted": 10590,
-      "death": 4470,
-      "duplicate": 2469,
-      "others": 224
+      "absent": 1577,
+      "shifted": 10553,
+      "death": 4473,
+      "duplicate": 2481,
+      "others": 218
     },
     {
       "no": 117,
@@ -2466,16 +2467,28 @@
       "others": 0
     },
     {
-      "no": 131,
-      "name": "Kunigal",
-      "district": "TUMKUR",
-      "total": 18988,
-      "booths": 263,
-      "absent": 1566,
-      "shifted": 10980,
-      "death": 4221,
-      "duplicate": 2101,
-      "others": 120
+      "no": 97,
+      "name": "Molakalmuru",
+      "district": "CHITRADURGA",
+      "total": 19018,
+      "booths": 285,
+      "absent": 709,
+      "shifted": 10326,
+      "death": 3836,
+      "duplicate": 4115,
+      "others": 32
+    },
+    {
+      "no": 70,
+      "name": "Kundgol",
+      "district": "DHARWAD",
+      "total": 19003,
+      "booths": 214,
+      "absent": 407,
+      "shifted": 8380,
+      "death": 7466,
+      "duplicate": 2727,
+      "others": 23
     },
     {
       "no": 195,
@@ -2490,40 +2503,28 @@
       "others": 67
     },
     {
-      "no": 97,
-      "name": "Molakalmuru",
-      "district": "CHITRADURGA",
-      "total": 18976,
-      "booths": 285,
-      "absent": 710,
-      "shifted": 10314,
-      "death": 3829,
-      "duplicate": 4092,
-      "others": 31
-    },
-    {
-      "no": 70,
-      "name": "Kundgol",
-      "district": "DHARWAD",
-      "total": 18756,
-      "booths": 214,
-      "absent": 405,
-      "shifted": 8176,
-      "death": 7488,
-      "duplicate": 2664,
-      "others": 23
+      "no": 131,
+      "name": "Kunigal",
+      "district": "TUMKUR",
+      "total": 18868,
+      "booths": 263,
+      "absent": 1546,
+      "shifted": 10901,
+      "death": 4200,
+      "duplicate": 2103,
+      "others": 118
     },
     {
       "no": 127,
       "name": "Kadur",
       "district": "CHIKKMAGALUR",
-      "total": 18747,
+      "total": 18748,
       "booths": 253,
-      "absent": 3513,
-      "shifted": 5852,
+      "absent": 3499,
+      "shifted": 5849,
       "death": 5638,
-      "duplicate": 3712,
-      "others": 32
+      "duplicate": 3729,
+      "others": 33
     },
     {
       "no": 15,
@@ -2553,13 +2554,13 @@
       "no": 224,
       "name": "Gundlupet",
       "district": "CHAMARAJNAGAR",
-      "total": 18383,
+      "total": 18284,
       "booths": 249,
-      "absent": 3761,
-      "shifted": 6087,
-      "death": 6524,
+      "absent": 3708,
+      "shifted": 6086,
+      "death": 6527,
       "duplicate": 1754,
-      "others": 257
+      "others": 209
     },
     {
       "no": 79,
@@ -2586,18 +2587,6 @@
       "others": 42
     },
     {
-      "no": 120,
-      "name": "Udupi",
-      "district": "UDUPI",
-      "total": 18031,
-      "booths": 226,
-      "absent": 2541,
-      "shifted": 8627,
-      "death": 5241,
-      "duplicate": 1573,
-      "others": 49
-    },
-    {
       "no": 109,
       "name": "Channagiri",
       "district": "DAVANGERE",
@@ -2608,6 +2597,18 @@
       "death": 3646,
       "duplicate": 3478,
       "others": 40
+    },
+    {
+      "no": 120,
+      "name": "Udupi",
+      "district": "UDUPI",
+      "total": 17851,
+      "booths": 226,
+      "absent": 2433,
+      "shifted": 8541,
+      "death": 5249,
+      "duplicate": 1579,
+      "others": 49
     },
     {
       "no": 149,
@@ -2625,12 +2626,12 @@
       "no": 141,
       "name": "Chikkaballapur",
       "district": "CHIKKABALLAPUR",
-      "total": 17534,
+      "total": 17564,
       "booths": 252,
-      "absent": 1187,
-      "shifted": 9968,
-      "death": 5077,
-      "duplicate": 1301,
+      "absent": 1190,
+      "shifted": 9982,
+      "death": 5086,
+      "duplicate": 1305,
       "others": 1
     },
     {
@@ -2670,18 +2671,6 @@
       "others": 26
     },
     {
-      "no": 75,
-      "name": "Kalaghatgi",
-      "district": "DHARWAD",
-      "total": 17246,
-      "booths": 228,
-      "absent": 1634,
-      "shifted": 7128,
-      "death": 4987,
-      "duplicate": 3328,
-      "others": 169
-    },
-    {
       "no": 4,
       "name": "Kagwad",
       "district": "BELGAUM",
@@ -2697,13 +2686,25 @@
       "no": 204,
       "name": "Mangalore",
       "district": "DAKSHINA KANNADA",
-      "total": 16997,
+      "total": 16975,
       "booths": 210,
-      "absent": 169,
-      "shifted": 10591,
-      "death": 4160,
-      "duplicate": 2018,
-      "others": 59
+      "absent": 168,
+      "shifted": 10555,
+      "death": 4159,
+      "duplicate": 2033,
+      "others": 60
+    },
+    {
+      "no": 75,
+      "name": "Kalaghatgi",
+      "district": "DHARWAD",
+      "total": 16824,
+      "booths": 228,
+      "absent": 1291,
+      "shifted": 6991,
+      "death": 4983,
+      "duplicate": 3432,
+      "others": 127
     },
     {
       "no": 16,
@@ -2742,18 +2743,6 @@
       "others": 56
     },
     {
-      "no": 102,
-      "name": "Holalkere",
-      "district": "CHITRADURGA",
-      "total": 16535,
-      "booths": 299,
-      "absent": 1480,
-      "shifted": 9047,
-      "death": 4522,
-      "duplicate": 1445,
-      "others": 41
-    },
-    {
       "no": 82,
       "name": "Hangal",
       "district": "HAVERI",
@@ -2764,6 +2753,18 @@
       "death": 5391,
       "duplicate": 2765,
       "others": 3
+    },
+    {
+      "no": 102,
+      "name": "Holalkere",
+      "district": "CHITRADURGA",
+      "total": 16502,
+      "booths": 299,
+      "absent": 1437,
+      "shifted": 9046,
+      "death": 4526,
+      "duplicate": 1452,
+      "others": 41
     },
     {
       "no": 110,
@@ -2829,24 +2830,24 @@
       "no": 129,
       "name": "Tiptur",
       "district": "TUMKUR",
-      "total": 15560,
+      "total": 15524,
       "booths": 224,
-      "absent": 4386,
-      "shifted": 6534,
+      "absent": 4351,
+      "shifted": 6531,
       "death": 3542,
-      "duplicate": 1078,
+      "duplicate": 1080,
       "others": 20
     },
     {
       "no": 128,
       "name": "Chikknayakanhalli",
       "district": "TUMKUR",
-      "total": 15441,
+      "total": 15450,
       "booths": 260,
       "absent": 921,
-      "shifted": 8630,
-      "death": 4462,
-      "duplicate": 1296,
+      "shifted": 8636,
+      "death": 4463,
+      "duplicate": 1298,
       "others": 132
     },
     {
@@ -2865,24 +2866,24 @@
       "no": 201,
       "name": "Moodabidri",
       "district": "DAKSHINA KANNADA",
-      "total": 15314,
+      "total": 15299,
       "booths": 219,
-      "absent": 1020,
-      "shifted": 7465,
-      "death": 4972,
-      "duplicate": 1742,
-      "others": 115
+      "absent": 1009,
+      "shifted": 7461,
+      "death": 4974,
+      "duplicate": 1744,
+      "others": 111
     },
     {
       "no": 206,
       "name": "Puttur",
       "district": "DAKSHINA KANNADA",
-      "total": 14947,
+      "total": 14948,
       "booths": 221,
-      "absent": 537,
-      "shifted": 7508,
-      "death": 5280,
-      "duplicate": 1554,
+      "absent": 536,
+      "shifted": 7502,
+      "death": 5282,
+      "duplicate": 1560,
       "others": 68
     },
     {
@@ -2913,12 +2914,12 @@
       "no": 118,
       "name": "Baindur",
       "district": "UDUPI",
-      "total": 14248,
+      "total": 14254,
       "booths": 246,
-      "absent": 757,
-      "shifted": 6043,
-      "death": 4863,
-      "duplicate": 2559,
+      "absent": 755,
+      "shifted": 6041,
+      "death": 4868,
+      "duplicate": 2564,
       "others": 26
     },
     {
@@ -2949,48 +2950,48 @@
       "no": 124,
       "name": "Mudigere",
       "district": "CHIKKMAGALUR",
-      "total": 13868,
+      "total": 13869,
       "booths": 230,
-      "absent": 680,
-      "shifted": 8048,
+      "absent": 679,
+      "shifted": 8041,
       "death": 3980,
-      "duplicate": 1116,
+      "duplicate": 1125,
       "others": 44
     },
     {
       "no": 205,
       "name": "Bantwal",
       "district": "DAKSHINA KANNADA",
-      "total": 13399,
+      "total": 13429,
       "booths": 249,
-      "absent": 541,
-      "shifted": 7930,
-      "death": 3314,
-      "duplicate": 1541,
+      "absent": 537,
+      "shifted": 7944,
+      "death": 3327,
+      "duplicate": 1548,
       "others": 73
     },
     {
       "no": 130,
       "name": "Turuvekere",
       "district": "TUMKUR",
-      "total": 12844,
+      "total": 12851,
       "booths": 224,
       "absent": 318,
-      "shifted": 7232,
-      "death": 3917,
-      "duplicate": 1335,
-      "others": 42
+      "shifted": 7241,
+      "death": 3921,
+      "duplicate": 1341,
+      "others": 30
     },
     {
       "no": 200,
       "name": "Belthangady",
       "district": "DAKSHINA KANNADA",
-      "total": 12558,
+      "total": 12570,
       "booths": 241,
-      "absent": 598,
-      "shifted": 5707,
-      "death": 4848,
-      "duplicate": 1382,
+      "absent": 591,
+      "shifted": 5719,
+      "death": 4851,
+      "duplicate": 1386,
       "others": 23
     },
     {
@@ -3033,23 +3034,23 @@
       "no": 207,
       "name": "Sullia",
       "district": "DAKSHINA KANNADA",
-      "total": 11847,
+      "total": 11859,
       "booths": 233,
-      "absent": 379,
-      "shifted": 6013,
-      "death": 4239,
-      "duplicate": 1192,
+      "absent": 376,
+      "shifted": 6023,
+      "death": 4240,
+      "duplicate": 1196,
       "others": 24
     },
     {
       "no": 119,
       "name": "Kundapur",
       "district": "UDUPI",
-      "total": 11647,
+      "total": 11638,
       "booths": 222,
-      "absent": 316,
-      "shifted": 6790,
-      "death": 3673,
+      "absent": 314,
+      "shifted": 6782,
+      "death": 3674,
       "duplicate": 841,
       "others": 27
     },
@@ -3057,22 +3058,22 @@
       "no": 188,
       "name": "Melukote",
       "district": "MANDYA",
-      "total": 10977,
+      "total": 11044,
       "booths": 264,
-      "absent": 752,
-      "shifted": 5898,
-      "death": 2972,
-      "duplicate": 1345,
+      "absent": 757,
+      "shifted": 5946,
+      "death": 2974,
+      "duplicate": 1357,
       "others": 10
     },
     {
       "no": 123,
       "name": "Sringeri",
       "district": "CHIKKMAGALUR",
-      "total": 10120,
+      "total": 10110,
       "booths": 254,
-      "absent": 575,
-      "shifted": 5706,
+      "absent": 570,
+      "shifted": 5701,
       "death": 3134,
       "duplicate": 696,
       "others": 9
@@ -3081,23 +3082,23 @@
       "no": 121,
       "name": "Kaup",
       "district": "UDUPI",
-      "total": 10043,
+      "total": 10034,
       "booths": 209,
-      "absent": 450,
-      "shifted": 4511,
-      "death": 3685,
-      "duplicate": 1346,
-      "others": 51
+      "absent": 448,
+      "shifted": 4495,
+      "death": 3683,
+      "duplicate": 1359,
+      "others": 49
     },
     {
       "no": 122,
       "name": "Karkala",
       "district": "UDUPI",
-      "total": 9644,
+      "total": 9641,
       "booths": 209,
-      "absent": 303,
+      "absent": 302,
       "shifted": 3541,
-      "death": 3760,
+      "death": 3758,
       "duplicate": 2001,
       "others": 39
     }
@@ -3119,19 +3120,19 @@
       "no": 175,
       "name": "Bommanahalli",
       "district": "B.B.M.P(SOUTH)",
-      "total": 268843
+      "total": 267563
     },
     {
       "no": 151,
       "name": "K.R. Pura",
       "district": "B.B.M.P(NORTH)",
-      "total": 262379
+      "total": 262109
     },
     {
       "no": 154,
       "name": "Rajarajeshwarinagar",
       "district": "B.B.M.P(CENTRAL)",
-      "total": 249873
+      "total": 248204
     },
     {
       "no": 155,
@@ -3152,12 +3153,6 @@
       "total": 229476
     },
     {
-      "no": 160,
-      "name": "Sarvagnanagar",
-      "district": "B.B.M.P(NORTH)",
-      "total": 174304
-    },
-    {
       "no": 177,
       "name": "Anekal",
       "district": "BANGALORE URBAN",
@@ -3170,88 +3165,94 @@
       "total": 173527
     },
     {
+      "no": 160,
+      "name": "Sarvagnanagar",
+      "district": "B.B.M.P(NORTH)",
+      "total": 172892
+    },
+    {
       "no": 167,
       "name": "Vijayanagar",
       "district": "B.B.M.P(SOUTH)",
-      "total": 165080
+      "total": 165638
     },
     {
       "no": 166,
       "name": "Govindarajanagar",
       "district": "B.B.M.P(SOUTH)",
-      "total": 149706
+      "total": 150448
     },
     {
       "no": 172,
       "name": "B.T.M Layout",
       "district": "B.B.M.P(SOUTH)",
-      "total": 147054
+      "total": 146453
     },
     {
       "no": 161,
       "name": "C.V. RamannNagar",
       "district": "B.B.M.P(NORTH)",
-      "total": 141710
+      "total": 141038
     },
     {
       "no": 156,
       "name": "Mahalakshmi Layout",
       "district": "B.B.M.P(NORTH)",
-      "total": 135972
+      "total": 135655
     },
     {
       "no": 158,
       "name": "Hebbal",
       "district": "B.B.M.P(NORTH)",
-      "total": 131948
+      "total": 131262
     },
     {
       "no": 171,
       "name": "Padmanabanagar",
       "district": "B.B.M.P(SOUTH)",
-      "total": 129001
-    },
-    {
-      "no": 164,
-      "name": "Gandhinagar",
-      "district": "B.B.M.P(CENTRAL)",
-      "total": 115344
+      "total": 128102
     },
     {
       "no": 170,
       "name": "Basavanagudi",
       "district": "B.B.M.P(SOUTH)",
-      "total": 115094
+      "total": 114361
     },
     {
-      "no": 159,
-      "name": "Pulakeshinagar",
-      "district": "B.B.M.P(NORTH)",
-      "total": 111079
-    },
-    {
-      "no": 168,
-      "name": "Chamrajapet",
+      "no": 164,
+      "name": "Gandhinagar",
       "district": "B.B.M.P(CENTRAL)",
-      "total": 111017
+      "total": 113794
     },
     {
       "no": 163,
       "name": "Shantinagar",
       "district": "B.B.M.P(CENTRAL)",
-      "total": 111005
+      "total": 110384
+    },
+    {
+      "no": 159,
+      "name": "Pulakeshinagar",
+      "district": "B.B.M.P(NORTH)",
+      "total": 110243
     },
     {
       "no": 157,
       "name": "Malleshwaram",
       "district": "B.B.M.P(NORTH)",
-      "total": 109814
+      "total": 109401
+    },
+    {
+      "no": 168,
+      "name": "Chamrajapet",
+      "district": "B.B.M.P(CENTRAL)",
+      "total": 108611
     },
     {
       "no": 45,
       "name": "Gulbarga Uttar",
       "district": "GULBARGA",
-      "total": 106903
+      "total": 106125
     }
   ]
 }
