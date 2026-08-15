@@ -1,12 +1,12 @@
 {
-  "dataVersion": "msudwxjw",
+  "dataVersion": "msuualnl",
   "total": 10846878,
   "byCategory": {
     "absent": 1540260,
-    "shifted": 6563323,
-    "death": 1636625,
+    "shifted": 6563325,
+    "death": 1636624,
     "duplicate": 702178,
-    "others": 404492
+    "others": 404491
   },
   "ageBands": {
     "18-29": 1397682,
@@ -286,10 +286,10 @@
       "constituencies": 5,
       "booths": 1234,
       "absent": 21670,
-      "shifted": 69273,
-      "death": 38289,
+      "shifted": 69275,
+      "death": 38288,
       "duplicate": 18738,
-      "others": 428
+      "others": 427
     },
     {
       "name": "CHITRADURGA",
@@ -2329,10 +2329,10 @@
       "total": 21180,
       "booths": 250,
       "absent": 646,
-      "shifted": 11291,
-      "death": 6244,
+      "shifted": 11293,
+      "death": 6243,
       "duplicate": 2937,
-      "others": 62
+      "others": 61
     },
     {
       "no": 3,
