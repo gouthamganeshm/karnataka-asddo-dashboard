@@ -152,7 +152,10 @@ const STRINGS = {
     footerPressRelease: 'Latest CEO Karnataka press release ({date})',
     provenancePulled: 'Data pulled {datetime} from the CEO Karnataka ASDDO lists ({source}).',
     officialCompare: 'CEO Karnataka reports {official} electors marked ASDDO as on {asOf}. This site has processed {captured} of them ({pct}%) — the rest are in booth lists not yet published or not machine-readable. See the {link}.',
-    pressReleaseWord: 'latest press release'
+    pressReleaseWord: 'latest press release',
+    deadlineNoticeStrong: 'Correction window closes 17 August 2026.',
+    deadlineNotice: '{strong} If your ASDDO marking is wrong, your BLO/ERO can only roll it back until then — after that, it needs a Form 6 re-inclusion instead. Confirm with your BLO or on {link}.',
+    deadlineNoticeLink: 'ceo.karnataka.gov.in'
   },
 
   kn: {
@@ -268,7 +271,10 @@ const STRINGS = {
     footerPressRelease: 'ಇತ್ತೀಚಿನ ಕರ್ನಾಟಕ ಮುಖ್ಯ ಚುನಾವಣಾ ಅಧಿಕಾರಿ ಪತ್ರಿಕಾ ಪ್ರಕಟಣೆ ({date})',
     provenancePulled: '{datetime} ರಂದು ಕರ್ನಾಟಕ ಮುಖ್ಯ ಚುನಾವಣಾ ಅಧಿಕಾರಿಯ ASDDO ಪಟ್ಟಿಗಳಿಂದ ({source}) ಡೇಟಾ ಪಡೆಯಲಾಗಿದೆ.',
     officialCompare: 'ಕರ್ನಾಟಕ ಮುಖ್ಯ ಚುನಾವಣಾ ಅಧಿಕಾರಿಯ ಪ್ರಕಾರ {asOf} ರಂದು {official} ಮತದಾರರನ್ನು ASDDO ಎಂದು ಗುರುತಿಸಲಾಗಿದೆ. ಈ ತಾಣವು ಅವುಗಳಲ್ಲಿ {captured} ({pct}%) ಪ್ರಕ್ರಿಯೆಗೊಳಿಸಿದೆ — ಉಳಿದವು ಇನ್ನೂ ಪ್ರಕಟವಾಗದ ಅಥವಾ ಯಂತ್ರ-ಓದಬಹುದಾದ ಅಲ್ಲದ ಪಟ್ಟಿಗಳಲ್ಲಿವೆ. {link} ನೋಡಿ.',
-    pressReleaseWord: 'ಇತ್ತೀಚಿನ ಪತ್ರಿಕಾ ಪ್ರಕಟಣೆ'
+    pressReleaseWord: 'ಇತ್ತೀಚಿನ ಪತ್ರಿಕಾ ಪ್ರಕಟಣೆ',
+    deadlineNoticeStrong: 'ತಿದ್ದುಪಡಿ ಅವಧಿ ಆಗಸ್ಟ್ 17, 2026 ಕ್ಕೆ ಮುಗಿಯುತ್ತದೆ.',
+    deadlineNotice: '{strong} ನಿಮ್ಮ ASDDO ಗುರುತು ತಪ್ಪಾಗಿದ್ದರೆ, ನಿಮ್ಮ BLO/ERO ಅದನ್ನು ಅಲ್ಲಿಯವರೆಗೆ ಮಾತ್ರ ಹಿಂಪಡೆಯಬಹುದು — ನಂತರ ನಮೂನೆ 6 ಮೂಲಕ ಮರುಸೇರ್ಪಡೆ ಮಾಡಬೇಕಾಗುತ್ತದೆ. ನಿಮ್ಮ BLO ಬಳಿ ಅಥವಾ {link} ನಲ್ಲಿ ಖಚಿತಪಡಿಸಿಕೊಳ್ಳಿ.',
+    deadlineNoticeLink: 'ceo.karnataka.gov.in'
   }
 };
 
@@ -1292,6 +1298,26 @@ function applyLanguage() {
   }
   refreshSearchUI(); // re-localise the cascade placeholders, keeping choices
   if (lastResult) renderResult(lastResult); // keep the answer on screen
+  renderDeadlineBanner();
+}
+
+// CEO Karnataka's 15-08-2026 press release: a wrongly-marked ASDDO entry can
+// only be rolled back with the BLO/ERO until 17 August 2026 — after that it
+// needs a fresh Form 6 re-inclusion instead. The banner hides itself once
+// that window has passed, so no follow-up deploy is needed to remove it.
+const ASDDO_ROLLBACK_DEADLINE = new Date(Date.UTC(2026, 7, 17, 18, 30, 0)); // 17 Aug 2026, 23:59:59 IST
+
+function renderDeadlineBanner() {
+  const banner = $('#deadline-banner');
+  if (!banner) return;
+  if (Date.now() >= ASDDO_ROLLBACK_DEADLINE.getTime()) {
+    banner.hidden = true;
+    return;
+  }
+  const strong = el('strong', null, t('deadlineNoticeStrong'));
+  const link = extLink('https://ceo.karnataka.gov.in/asddo.html', t('deadlineNoticeLink'));
+  fillInto($('#deadline-banner-text'), t('deadlineNotice'), { strong, link });
+  banner.hidden = false;
 }
 
 // Fill a localised template into `host`, where a placeholder value may be a DOM

@@ -462,6 +462,18 @@ main { padding-bottom: 56px; }
 .stale-note .stale-icon { white-space: nowrap; }
 .stale-note .stale-link { color: var(--series-seq); font-weight: 700; white-space: nowrap; }
 
+/* Site-wide deadline banner — sits above the lookup panel while the ASDDO
+   rollback window with the BLO/ERO is still open. Same amber treatment as
+   .stale-note, but full-width and always visible (not tied to a record). */
+.deadline-banner {
+  margin: 0 0 18px; padding: 12px 16px; border-radius: 10px;
+  background: var(--caution-wash); border: 1px solid var(--warning);
+  font-size: 0.9rem; line-height: 1.5; color: var(--ink-2);
+}
+.deadline-banner p { margin: 0; }
+.deadline-banner strong { color: var(--ink); }
+.deadline-banner a { color: var(--series-seq); font-weight: 700; }
+
 /* BLO phone number — a real link, so it dials on a phone. */
 .record .blo-tel { color: var(--series-seq); text-decoration: none; font-weight: 600; white-space: nowrap; }
 .record .blo-tel:hover { text-decoration: underline; }
