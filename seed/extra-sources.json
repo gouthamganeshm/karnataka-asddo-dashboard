@@ -21,13 +21,13 @@
         "pdfUrl": "https://cdn.s3waas.gov.in/s3dd45045f8c68db9f54e70c67048d32e8/uploads/2026/08/17867101788826.pdf",
         "acNo": 88,
         "acName": "Hadagali",
-        "why": "AC 88 Hadagali, one consolidated PDF (27022 rows, 216 parts) rather than one file per booth. Filename is a raw CDN id with no AC number in it, so acNo/acName are given explicitly here; 2-extract.mjs still reads the true per-row AC/Part from each page's own 'AC: 88-Hadagali; Part: ...' header, same as Bellary's numeric-filename PDFs. User-provided link, 2026-08-13. Confirmed via parseBoothPdf() that every row is AC 88."
+        "why": "AC 88 Hadagali, one consolidated PDF rather than one file per booth. Filename is a raw CDN id with no AC number in it, so acNo/acName are given explicitly here; 2-extract.mjs still reads the true per-row AC/Part from each page's own 'AC: 88-Hadagali; Part: ...' header, same as Bellary's numeric-filename PDFs. This is a live-updating URL — Vijayanagara overwrites the same CDN path in place rather than publishing a new one, so the file itself, not this note, is the source of truth for its date: was 11-08-2026 when first added 2026-08-13, confirmed republished 14-08-2026 (27031 rows, 218 parts) as of 2026-08-15. Confirmed via parseBoothPdf() that every row is AC 88."
       },
       {
         "pdfUrl": "https://cdn.s3waas.gov.in/s3dd45045f8c68db9f54e70c67048d32e8/uploads/2026/08/17867101456473.pdf",
         "acNo": 96,
         "acName": "Kudligi",
-        "why": "AC 96 Kudligi, consolidated PDF (21005 rows, 249 parts). Same shape and provenance as the Hadagali entry above. User-provided link, 2026-08-13. Confirmed via parseBoothPdf() that every row is AC 96."
+        "why": "AC 96 Kudligi, consolidated PDF. Same shape and provenance as the Hadagali entry above, including being a live-updating URL: was 11-08-2026 when first added 2026-08-13, confirmed republished 14-08-2026 (21022 rows) as of 2026-08-15. Confirmed via parseBoothPdf() that every row is AC 96."
       },
       {
         "pdfUrl": "https://cdn.s3waas.gov.in/s3dd45045f8c68db9f54e70c67048d32e8/uploads/2026/08/17864459968775.pdf",
