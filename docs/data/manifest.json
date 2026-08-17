@@ -1,6 +1,6 @@
 {
-  "dataVersion": "msvopz3x",
-  "importedAt": "2026-08-16T10:51:29.661Z",
+  "dataVersion": "mswzq41y",
+  "importedAt": "2026-08-17T08:47:18.022Z",
   "source": "https://ceo.karnataka.gov.in/asddo.html",
   "hash": "SHA-256",
   "shardDepth": 4,
@@ -1249,7 +1249,6 @@
       "DHARWAD",
       "GADAG",
       "GULBARGA",
-      "HASSAN",
       "HAVERI",
       "KODAGU",
       "KOLAR",
@@ -1265,6 +1264,6 @@
       "VIJAYANAGARA",
       "YADGIR"
     ],
-    "at": "2026-08-16T10:51:29.661Z"
+    "at": "2026-08-17T08:47:18.022Z"
   }
 }
