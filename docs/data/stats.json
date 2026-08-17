@@ -1,19 +1,19 @@
 {
-  "dataVersion": "msx865gt",
-  "total": 10846878,
+  "dataVersion": "msxhw7du",
+  "total": 10846382,
   "byCategory": {
-    "absent": 1540260,
-    "shifted": 6563325,
-    "death": 1636624,
-    "duplicate": 702178,
-    "others": 404491
+    "absent": 1539730,
+    "shifted": 6563188,
+    "death": 1636679,
+    "duplicate": 702305,
+    "others": 404480
   },
   "ageBands": {
-    "18-29": 1397682,
-    "30-44": 4196245,
-    "45-59": 2826063,
-    "60-79": 1900140,
-    "80+": 526640,
+    "18-29": 1397534,
+    "30-44": 4195995,
+    "45-59": 2825994,
+    "60-79": 1900109,
+    "80+": 526642,
     "unknown": 108
   },
   "generatedOn": [
@@ -30,6 +30,7 @@
     "13/08/2026",
     "14/08/2026",
     "15/08/2026",
+    "17/08/2026",
     "24/07/2026",
     "26/07/2026",
     "27/07/2026",
@@ -128,14 +129,14 @@
     },
     {
       "name": "BIJAPUR",
-      "total": 298115,
+      "total": 297619,
       "constituencies": 8,
       "booths": 2092,
-      "absent": 60195,
-      "shifted": 152284,
-      "death": 54676,
-      "duplicate": 30417,
-      "others": 543
+      "absent": 59665,
+      "shifted": 152147,
+      "death": 54731,
+      "duplicate": 30544,
+      "others": 532
     },
     {
       "name": "DHARWAD",
@@ -814,13 +815,13 @@
       "no": 30,
       "name": "Bijapur City",
       "district": "BIJAPUR",
-      "total": 80394,
+      "total": 79854,
       "booths": 285,
-      "absent": 39321,
-      "shifted": 24616,
-      "death": 8059,
-      "duplicate": 8267,
-      "others": 131
+      "absent": 38820,
+      "shifted": 24512,
+      "death": 8079,
+      "duplicate": 8320,
+      "others": 123
     },
     {
       "no": 215,
@@ -1378,13 +1379,13 @@
       "no": 26,
       "name": "Muddebihal",
       "district": "BIJAPUR",
-      "total": 35998,
+      "total": 36010,
       "booths": 246,
-      "absent": 2951,
-      "shifted": 19441,
-      "death": 8849,
-      "duplicate": 4733,
-      "others": 24
+      "absent": 2939,
+      "shifted": 19431,
+      "death": 8859,
+      "duplicate": 4758,
+      "others": 23
     },
     {
       "no": 21,
@@ -1714,13 +1715,13 @@
       "no": 27,
       "name": "Devara Hippargi",
       "district": "BIJAPUR",
-      "total": 30528,
+      "total": 30559,
       "booths": 252,
-      "absent": 838,
-      "shifted": 18676,
-      "death": 7943,
-      "duplicate": 2999,
-      "others": 72
+      "absent": 840,
+      "shifted": 18677,
+      "death": 7955,
+      "duplicate": 3017,
+      "others": 70
     },
     {
       "no": 22,
@@ -1978,12 +1979,12 @@
       "no": 28,
       "name": "Basavana Bagevadi",
       "district": "BIJAPUR",
-      "total": 25070,
+      "total": 25078,
       "booths": 231,
-      "absent": 1494,
-      "shifted": 13063,
-      "death": 6041,
-      "duplicate": 4430,
+      "absent": 1483,
+      "shifted": 13049,
+      "death": 6050,
+      "duplicate": 4454,
       "others": 42
     },
     {
@@ -2074,12 +2075,12 @@
       "no": 29,
       "name": "Babaleshwar",
       "district": "BIJAPUR",
-      "total": 24294,
+      "total": 24287,
       "booths": 244,
-      "absent": 1482,
-      "shifted": 15163,
-      "death": 5271,
-      "duplicate": 2339,
+      "absent": 1474,
+      "shifted": 15153,
+      "death": 5275,
+      "duplicate": 2346,
       "others": 39
     },
     {

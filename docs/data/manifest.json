@@ -1,6 +1,6 @@
 {
-  "dataVersion": "msx865gt",
-  "importedAt": "2026-08-17T12:43:43.277Z",
+  "dataVersion": "msxhw7du",
+  "importedAt": "2026-08-17T17:15:55.362Z",
   "source": "https://ceo.karnataka.gov.in/asddo.html",
   "hash": "SHA-256",
   "shardDepth": 4,
@@ -1220,7 +1220,7 @@
   "hasRoll": false,
   "hasSearch": true,
   "counts": {
-    "records": 10846878,
+    "records": 10846382,
     "districts": 34,
     "districtsInSource": 34,
     "constituencies": 224,
@@ -1264,6 +1264,6 @@
       "VIJAYANAGARA",
       "YADGIR"
     ],
-    "at": "2026-08-17T12:43:43.277Z"
+    "at": "2026-08-17T17:15:55.362Z"
   }
 }
