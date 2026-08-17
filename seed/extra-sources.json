@@ -15,7 +15,7 @@
     "VIJAYANAGARA": [
       {
         "folderId": "1RVkIsSCFdkKe34wMhMfQHZQqaAu0MGxh",
-        "why": "AC 89 Hagaribommanahalli (H.B. Halli), from vijayanagara.nic.in — not on asddo.html's own crawl path, so a page-only crawl finds only 2 of 5 constituencies. 254 booths, S10_89_* PDFs, dated 11-08-2026. Nested two folders deep (root -> 'hb halli' -> 'hb halli' -> files); collectPdfs's recursive walk handles that at MAX_DEPTH=5. Verified directly via listDriveFolder(), 2026-08-13."
+        "why": "AC 89 Hagaribommanahalli (H.B. Halli), from vijayanagara.nic.in — not on asddo.html's own crawl path, so a page-only crawl finds only 2 of 5 constituencies. 254 booths, S10_89_* PDFs, dated 11-08-2026 when first added 2026-08-13; 253 of the 254 re-dated to 14-08-2026 (same folder, same booth set, republished content) confirmed via a live 1-discover.mjs crawl, 2026-08-17. Nested two folders deep (root -> 'hb halli' -> 'hb halli' -> files); collectPdfs's recursive walk handles that at MAX_DEPTH=5. Verified directly via listDriveFolder(), 2026-08-13."
       },
       {
         "pdfUrl": "https://cdn.s3waas.gov.in/s3dd45045f8c68db9f54e70c67048d32e8/uploads/2026/08/17867101788826.pdf",
@@ -39,13 +39,13 @@
         "pdfUrl": "https://cdn.s3waas.gov.in/s3dd45045f8c68db9f54e70c67048d32e8/uploads/2026/08/17864460214078.pdf",
         "acNo": 90,
         "acName": "Vijayanagara",
-        "why": "AC 90 Vijayanagara, consolidated PDF (41705 rows, 259 parts). Same shape and provenance as the Hadagali entry above. User-provided link, 2026-08-13. Confirmed via parseBoothPdf() that every row is AC 90."
+        "why": "AC 90 Vijayanagara, consolidated PDF (41705 rows, 259 parts). Same shape and provenance as the Hadagali entry above, including being a live-updating URL: was 11-08-2026 when first added 2026-08-13, confirmed republished 14-08-2026 (259 parts, all newly-dated) as of 2026-08-17. Confirmed via parseBoothPdf() that every row is AC 90."
       },
       {
         "pdfUrl": "https://cdn.s3waas.gov.in/s3dd45045f8c68db9f54e70c67048d32e8/uploads/2026/08/17864459889113.pdf",
         "acNo": 104,
         "acName": "Harapanahalli",
-        "why": "AC 104 Harapanahalli, consolidated PDF (29687 rows, 252 parts). Same shape and provenance as the Hadagali entry above. With all four added alongside the AC 89 folder, Vijayanagara resolves to its full 5/5 expected constituencies. User-provided link, 2026-08-13. Confirmed via parseBoothPdf() that every row is AC 104."
+        "why": "AC 104 Harapanahalli, consolidated PDF (29687 rows, 252 parts). Same shape and provenance as the Hadagali entry above, including being a live-updating URL: was 11-08-2026 when first added 2026-08-13, confirmed republished 14-08-2026 (252 parts, all newly-dated) as of 2026-08-17. With all four added alongside the AC 89 folder, Vijayanagara resolves to its full 5/5 expected constituencies. Confirmed via parseBoothPdf() that every row is AC 104."
       }
     ],
     "MANDYA": [
