@@ -428,3 +428,69 @@ Every district on the source page now yields data. What remains:
 | Dedupe blind spot | The newest-copy rule keys on `(constituency, part)` from the file name. Those 1,221 files without one are deduped by identical file name only, so a reposted list under a new name would survive twice. Stage 3's per-constituency EPIC dedupe catches it downstream. |
 
 `discover` lists all of these at the end of every run — check that report.
+
+---
+
+## Operating with no local checkout
+
+This repo was developed on a laptop that no longer has a copy of it. Nothing was
+lost with it — the notes below are what a person coming back to this needs, and
+why none of it requires the old machine.
+
+**Everything runs from the Actions tab.** All three workflows are
+`workflow_dispatch`: *Import ASDDO data* (the statewide import), *Refresh source
+links* (seed manifest only, cheap), *Build electoral-roll index* (manual on
+purpose — see *Electoral roll*). A full import needs a runner and Drive, not a
+laptop, which is the whole reason the pipeline was written to fan out this way.
+
+**Both crons are paused.** They were commented out on 2026-08-13 while the
+self-healing force-pull and the Drive-throttle retry were being validated; that
+validation never got a written verdict, so treat them as unproven rather than
+broken. Un-comment the `schedule:` blocks in `import.yml` (weekly) and
+`refresh-links.yml` (six-hourly) to resume. Do one manual run of each first and
+read the coverage report before handing them a schedule.
+
+**The one step a runner cannot be trusted to do is `discover`.** It is the only
+stage that talks to `ceo.karnataka.gov.in`, which answers datacentre IPs
+inconsistently. Everything else talks to Drive, which is reliable. That is what
+`seed/manifest.json.gz` is for, and it is only as good as its `discoveredAt` —
+currently the 2026-08-17 crawl, 34 of 34 districts, 58,479 booth PDFs. This is
+not hypothetical: the last import run, on 17-Aug, fell back to the seed and
+imported the 57,496 booths the then-current 15-Aug crawl knew about. When the
+seed goes stale, refresh it from a connection the source will answer, using the
+two-line recipe under *Running the import on GitHub Actions*. A run that falls
+back to a seed says so in its log; a run that falls back to a seed older than a
+fix which recovered a district will fail the coverage guard.
+
+**Re-creating a working copy is just `git clone`.** There is no local state to
+restore. `cache/` is git-ignored scratch — a manifest and the extraction ledgers
+— and `discover` and `extract` rebuild it; `extract` is resumable, so an
+interrupted rebuild resumes rather than restarts. `npm install` is a no-op:
+there are no dependencies.
+
+**Two local files were never committed and are not worth recovering.**
+`roll-csv-urls.txt` and `roll-csv-index.txt` were hand-made reference lists of
+the CEO's per-constituency roll CSVs. They are `A001`–`A224` at
+`https://ceo.karnataka.gov.in/csv_upload/english/<code>.csv`, and the
+constituency names are already in `seed/ac-names.json`, so the lists are a loop,
+not an asset. They stay git-ignored: re-publishing a tidy index of where to
+download every elector roll in the state is exactly the kind of convenience
+*Deliberate omissions* is about not providing.
+
+**State at handover (2026-08-29).** Published: **1,08,46,382 records, 34
+districts, 224 constituencies** (`dataVersion` `msxhw7du`), from source PDFs
+stamped 24/07/2026 through 17/08/2026. `seed/official-asddo.json` carries the
+CEO's own figures as of the 17-Aug-2026 6:00 PM press release, which is what the
+site reconciles against.
+
+The electoral-roll index is built for **ACs 208 and 209 only, in `details`
+mode** — 29,647 elector rows carrying name, relative, age and gender, live on
+the Pages site under `docs/data/roll/`. That is the choice *Electoral roll*
+tells you to make deliberately, and it was made for two constituencies as a
+trial, not for the state. Anyone resuming this should decide whether it stays
+before running *Build electoral-roll index* again; re-running it at `all` in
+`details` mode would re-host the whole Karnataka roll and blow past the Pages
+size cap besides. Nothing here has been re-imported since
+17-Aug: by the standard in *Accuracy and freshness*, that is already stale
+enough to matter, and the first thing a returning maintainer should do is run
+*Import ASDDO data* and check the reconciliation.
