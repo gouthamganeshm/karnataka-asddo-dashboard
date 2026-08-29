@@ -130,6 +130,7 @@ buckets are the only controls that exist. See *Deliberate omissions*.
 | Official figures | `seed/official-asddo.json`, CEO press release of 17-Aug-2026 6:00 PM |
 | Roll index | ACs 208 & 209, `details` mode, 29,647 rows |
 | Schedules | both paused since 2026-08-13 |
+| Live site | <https://gouthamganeshm.github.io/karnataka-asddo-dashboard/> — verified 2026-08-29 serving `msxhw7du`, i.e. current with the repo |
 
 The live numbers always come from `docs/data/stats.json`; this table will drift
 the moment someone runs an import, and that is fine — it is a snapshot of what
@@ -170,6 +171,21 @@ fires:
 | `verify-build.mjs` fails | A row that was extracted is missing or wrong in the built buckets. A build bug, not a network one. Blocks publishing. |
 | `smoke-test.mjs` fails | The lookup itself is broken for a known EPIC. |
 | Reconciliation warns | The build disagrees with the CEO's own published totals in `seed/official-asddo.json`. Usually means the official figures need updating, not the data. |
+
+**A green import does not mean the site updated.** Publishing is two independent
+steps: the workflow commits `docs/data`, and then GitHub's own
+`pages-build-deployment` job deploys it. The second can fail on its own. On
+17-Aug it hit a Pages **503** — a transient outage on GitHub's side, nothing to
+do with this repo — and nothing retried it, so the site served the *previous*
+build for twelve days while the import, the commit and every guard in the table
+above reported success. It only recovered because an unrelated push in late
+August triggered a fresh deploy.
+
+Nothing here watches for that, so after an import: open the
+`pages-build-deployment` run in the Actions tab, or just compare `dataVersion`
+in the committed `docs/data/stats.json` against what the live site serves at
+`/data/stats.json`. If they differ, re-run the failed deployment — that is the
+whole fix.
 
 **Do not set `allow_partial=true` to make a red run go green.** It exists for the
 case where a district genuinely publishes nothing yet, and it makes the site
