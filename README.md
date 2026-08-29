@@ -10,7 +10,7 @@ Source: the per-booth PDFs published by the Chief Electoral Officer, Karnataka
 at <https://ceo.karnataka.gov.in/asddo.html>. This project reformats them; it
 is not official.
 
-**Coverage: all 34 districts on the source page, 224 constituencies, 58,479
+**Coverage: all 34 districts on the source page, 224 constituencies, 59,027
 booth PDFs.** Where a district publishes nothing readable, the import fails
 rather than quietly narrowing — see *The coverage guard*.
 
@@ -65,7 +65,7 @@ npm run serve                            # preview docs/ on :8080
 ```
 
 Drop `--district` to do the whole state: **34 districts, 224 constituencies,
-58,479 booth PDFs**, roughly 16 hours at ~60 booths/min — or ~1 hour on Actions,
+~58,500 booth PDFs** on a fresh crawl, roughly 16 hours at ~60 booths/min — or ~1 hour on Actions,
 where districts run as a matrix. Nothing is written to disk except the extracted
 rows, and every stage is resumable: an interrupted run skips the booths already
 in `<district>.done`. Raise `--concurrency` above the default 6 to go faster, at
@@ -213,13 +213,15 @@ deliberately.
 
 Bucket depth adapts to the dataset (target ≈ 40 records per bucket).
 
-**Size is now the binding constraint.** Currently published: **1,03,67,368
-records across 32 districts → 65,536 buckets → 808 MB**, against GitHub Pages'
-**1 GB** cap. Adding Vijayanagara and Bangalore Rural brings it to roughly
-1.06 crore records and ~830 MB. That leaves little headroom, and it is why the
-electoral-roll index cannot simply be published alongside it. `npm run build`
-prints the size and the workflow warns past 900 MB — check both before
-committing, and prune fields in `3-build-site-data.mjs` if it gets tight.
+**Size is now the binding constraint.** Currently published: **1,08,46,382
+records across all 34 districts → 65,536 buckets**, against GitHub Pages'
+**1 GB** cap. The state is complete now, so the headroom that remains is all
+there is, and it is why the electoral-roll index cannot simply be published
+alongside it — the roll is several times the size of the deletion lists. `npm
+run build` prints the size and the workflow warns past 900 MB; check both
+before committing, and prune fields in `3-build-site-data.mjs` if it gets
+tight. (`docs/data/manifest.json` carries the live counts — treat the figures
+here as a snapshot.)
 
 ---
 
